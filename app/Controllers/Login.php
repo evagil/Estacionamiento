@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\ModeloUsuario;
+
 class Login extends BaseController
 {
     public function index()
@@ -20,22 +22,24 @@ class Login extends BaseController
     {
         $validation = \Config\Services::validation();
         $session = session();
+        $usuarios = new ModeloUsuario();
 
         $ingreso['dni'] = $this->request->getPost('dni');
         $ingreso['clave'] = $this->request->getPost('clave');
 
         if ($validation->run($ingreso, 'formIngreso'))
         {
+            $usuario = $usuarios->encontrarUsuarioDNI($ingreso['dni']);
             $session_data = [
-                'dni' => $ingreso['dni'],
-                'clave' => $ingreso['clave'],
+                'dni' => $usuario['dni'],
+                'clave' => $usuario['clave'],
+                'nombre_rol' => $usuario['nombre_rol'],
                 'isLoggedIn' => 1,
             ];
 
             $session->set($session_data);
 
-            header('Location: usuarios/perfil');
-            die();
+            return redirect()->to(base_url('usuarios/perfil'));
         }
         else
         {

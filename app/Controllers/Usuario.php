@@ -6,7 +6,7 @@ class Usuario extends BaseController
 {
     public function index()
     {
-        return view('usuarios/perfil');
+        return view('usuarios/perfil/perfil');
     }
 
     public function salir()

@@ -14,8 +14,7 @@ class AuthGuard implements FilterInterface
         {
             session()->setFlashdata('mensaje', 'Se requiere identificacion para acceder.');
 
-            header('Location: '.base_url());
-            die();
+            return redirect()->to(base_url());
         }
     }
 
