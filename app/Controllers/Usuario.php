@@ -12,7 +12,7 @@ class Usuario extends BaseController
     public function salir()
     {
         session()->destroy();
-        header('Location: '.base_url());
-        die();
+        return redirect()->to(base_url());
+       
     }
 }
