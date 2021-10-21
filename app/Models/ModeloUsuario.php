@@ -18,4 +18,9 @@ class ModeloUsuario extends Model
             ->where('dni', $dni)
             ->first();
     }
+
+    public function encontrarUsuarios()
+    {
+        return $this->join('roles', 'usuarios.id_rol = roles.id_rol')->findAll();
+    }
 }
