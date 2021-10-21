@@ -12,7 +12,7 @@ class AuthEstaLog implements FilterInterface
     {
         if (session()->get('isLoggedIn')  )
         {
-            session()->setFlashdata('mensaje', 'Error usted ya esta logeado, cierre session ');
+            session()->setFlashdata('mensaje_error', 'Error usted ya esta logeado, cierre session ');
 
             return redirect()->to(base_url('usuarios/perfil'));
             

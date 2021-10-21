@@ -57,11 +57,16 @@
       </label>
     </div>
 
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Identificarse</button>
+    <button class="w-100 btn btn-lg btn-primary mb-1" type="submit">Identificarse</button>
+    <a href="<?= base_url('registro') ?>" class="w-100 btn btn-lg btn-primary">Registrarse</a>
     <p class="mt-5 mb-3 text-muted">&copy; Proyecto de Software</p>
   </form>
+    <?php if (session()->getFlashdata('mensaje_error')): ?>
+        <div class="p-3 mt-3 bg-danger text-white"><?= session()->getFlashdata('mensaje_error') ?></div>
+    <?php endif; ?>
+
     <?php if (session()->getFlashdata('mensaje')): ?>
-        <span class="text-danger"><?= session()->getFlashdata('mensaje') ?></span>
+        <div class="p-3 mt-3 bg-success text-white"><?= session()->getFlashdata('mensaje') ?></div>
     <?php endif; ?>
 </main>
 
