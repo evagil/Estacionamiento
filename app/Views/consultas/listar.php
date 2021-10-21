@@ -26,8 +26,8 @@
                   <td><?php echo $usuario['dni'] ?></td>
                   <td><?php echo $usuario['nombre_rol'] ?></td>                
                   <td> 
-                  <a href = "<?php echo base_url('usuario/modificar').$usuario['id_usuario'] ?>" type="button" class="btn btn-primary">Modificar </a>  
-                  <a href = "<?php echo base_url('usuario/eliminar').$usuario['id_usuario'] ?>" type="button" class="btn btn-danger">Eliminar</a> </td> 
+                  <a href = "<?php echo base_url('usuario/modificar').'/'.$usuario['id_usuario'] ?>" type="button" class="btn btn-primary">Modificar </a>
+                  <a href = "<?php echo base_url('usuario/eliminar').'/'.$usuario['id_usuario'] ?>" type="button" class="btn btn-danger">Eliminar</a> </td>
                   
               </tr>        
          
