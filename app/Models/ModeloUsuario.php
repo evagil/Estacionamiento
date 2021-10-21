@@ -10,12 +10,13 @@ class ModeloUsuario extends Model
     protected $primaryKey = 'id_usuario';
     protected $useAutoIncrement = true;
     protected $returnType     = 'App\Entities\Usuario';
-    protected $allowedFields = ['nombre', 'apellido', 'dni', 'clave', 'id_rol', 'email'];
+    protected $allowedFields = ['nombre', 'apellido', 'dni', 'clave', 'id_rol', 'email','baja'];
 
     public function encontrarUsuarioDNI($dni)
     {
         return $this->join('roles', 'usuarios.id_rol = roles.id_rol')
             ->where('dni', $dni)
+            ->where('baja', 0)
             ->first();
     }
 
@@ -23,11 +24,23 @@ class ModeloUsuario extends Model
     {
         return $this->join('roles', 'usuarios.id_rol = roles.id_rol')
             ->where('id_usuario', $id)
+            ->where('baja', 0)
             ->first();
     }
 
     public function encontrarUsuarios()
     {
-        return $this->join('roles', 'usuarios.id_rol = roles.id_rol')->findAll();
+        return $this->join('roles', 'usuarios.id_rol = roles.id_rol')->where('baja', 0)->findAll();
     }
+
+   public function bajaUsuario($id){
+
+
+    $this->set('baja', 1)->where('id_usuario', $id)->update();
+
+
+             
+   }
+
+
 }

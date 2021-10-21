@@ -45,6 +45,7 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
     $routes->match(['get', 'post'], 'alta', 'Usuario::altaUsuario');
     $routes->match(['get', 'post'], 'modificar/(:num)', 'Usuario::editarUsuario/$1');
     $routes->add('salir', 'Usuario::salir');
+    $routes->add('eliminar/(:num)', 'Usuario::eliminar/$1');
 });
 
 /*

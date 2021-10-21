@@ -126,4 +126,11 @@ class Usuario extends BaseController
         echo view ('usuarios/listar', $data);
         echo view ('usuarios/perfil/perfil-footer', $data);
     }
+
+    public function eliminar($id){
+     $modelo = new ModeloUsuario();
+     $modelo->bajaUsuario($id);
+     return redirect()->to(base_url('usuarios/listar'));
+    }
+
 }
