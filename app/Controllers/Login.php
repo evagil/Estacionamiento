@@ -31,9 +31,14 @@ class Login extends BaseController
         {
             $usuario = $usuarios->encontrarUsuarioDNI($ingreso['dni']);
             $session_data = [
-                'dni' => $usuario['dni'],
-                'clave' => $usuario['clave'],
-                'nombre_rol' => $usuario['nombre_rol'],
+                'nombre' => $usuario->nombre,
+                'apellido' => $usuario->apellido,
+                'dni' => $usuario->dni,
+                'rol' => $usuario->rol,
+                'email' => $usuario->email,
+                'clave' => $usuario->clave,
+                'nombre_rol' => $usuario->nombre_rol,
+                'id_usuario' => $usuario->id_usuario,
                 'isLoggedIn' => 1,
             ];
 

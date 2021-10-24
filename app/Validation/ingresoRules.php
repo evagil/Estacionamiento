@@ -17,6 +17,7 @@ class IngresoRules {
         $row = $db->table($table)
             ->select('1')
             ->where($campo, $valor)
+            ->where('baja', 0)
             ->limit(1);
 
         if (! empty($campoComparar) && ! empty($valorComparar) && ! preg_match('/^\{(\w+)\}$/', $valorComparar)) {

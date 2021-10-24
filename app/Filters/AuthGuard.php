@@ -12,7 +12,7 @@ class AuthGuard implements FilterInterface
     {
         if (session()->get('isLoggedIn') === 0)
         {
-            session()->setFlashdata('mensaje', 'Se requiere identificacion para acceder.');
+            session()->setFlashdata('mensaje_error', 'Se requiere identificacion para acceder.');
 
             return redirect()->to(base_url());
         }

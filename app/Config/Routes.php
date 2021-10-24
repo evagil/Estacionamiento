@@ -17,11 +17,11 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('Home');
+$routes->setDefaultController('Login');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
-$routes->setAutoRoute(true);
+$routes->setAutoRoute(false); // Falso para que no se puedan acceder a los controladores a los que no les definimos una ruta manualmente
 
 /*
  * --------------------------------------------------------------------
@@ -32,20 +32,20 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 
-/*
-$routes->group('usuarios', ['filter' => 'authEstaLog'], function($routes) {
-    $routes->post('ingresar', 'Login::ingresar');
-});
-*/
-
 $routes->group('', ['filter' => 'authEstaLog'], function($routes) {
-$routes->get('/', 'Login::index');
-$routes->post('ingresar', 'Login::ingresar');
+    $routes->get('/', 'Login::index');
+    $routes->post('ingresar', 'Login::ingresar');
+    $routes->match(['get', 'post'], 'registro', 'Usuario::registro');
 });
 
 $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
     $routes->add('perfil', 'Usuario::index');
+    $routes->add('listar', 'Usuario::listar');
+    $routes->add('listar', 'Usuario::listar');
+    $routes->match(['get', 'post'], 'alta', 'Usuario::altaUsuario');
+    $routes->match(['get', 'post'], 'modificar/(:num)', 'Usuario::editarUsuario/$1');
     $routes->add('salir', 'Usuario::salir');
+    $routes->add('eliminar/(:num)', 'Usuario::eliminar/$1');
 });
 
 /*

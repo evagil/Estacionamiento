@@ -61,4 +61,194 @@ class Validation
             ]
         ]
     ];
+
+    public $formAdministrador = [
+        'nombre' => [
+            'rules' => 'required|min_length[3]|max_length[30]',
+            'errors' => [
+                'required' => 'El nombre es requerido.',
+                'min_length' => 'El nombre debe ser minimo de 3 letras.',
+                'max_length' => 'El nombre debe ser maximo de 30 letras.'
+            ]
+        ],
+        'apellido' => [
+            'rules' => 'required|min_length[3]|max_length[255]',
+            'errors' => [
+                'required' => 'El apellido es requerido.',
+                'min_length' => 'El apellido debe ser minimo de 3 letras.',
+                'max_length' => 'El apellido debe ser maximo de 255 letras.'
+            ]
+        ],
+        'dni' => [
+            'rules' => 'required|exact_length[8]|numeric|is_unique[usuarios.dni,id_usuario,{id_usuario}]',
+            'errors' => [
+                'required' => 'El dni es requerido.',
+                'exact_length' => 'El dni debe ser de 8 numeros.',
+                'numeric' => 'El dni debe ser numerico.',
+                'is_unique' => 'Ese dni ya existe.'
+            ]
+        ],
+        'email' => [
+            'rules' => 'required|valid_email',
+            'errors' => [
+                'required' => 'El email es requerido.',
+                'valid_email' => 'El email no tiene un formato valido.'
+            ]
+        ],
+        'id_rol' => [
+            'rules' => 'required|numeric',
+            'errors' => [
+                'required' => 'El rol es requerido.',
+                'numeric' => 'El rol debe ser numerico.'
+            ]
+        ],
+        'clave' => [
+            'rules' => 'required',
+            'errors' => [
+                'required' => 'La clave es requerida.'
+            ]
+        ],
+        'confirmarClave' => [
+            'rules' => 'matches[clave]',
+            'errors' => [
+                'matches' => 'Las claves no coinciden.'
+            ]
+        ]
+    ];
+
+    public $formUsuario = [
+        'nombre' => [
+            'rules' => 'required|min_length[3]|max_length[30]',
+            'errors' => [
+                'required' => 'El nombre es requerido.',
+                'min_length' => 'El nombre debe ser minimo de 3 letras.',
+                'max_length' => 'El nombre debe ser maximo de 30 letras.'
+            ]
+        ],
+        'apellido' => [
+            'rules' => 'required|min_length[3]|max_length[255]',
+            'errors' => [
+                'required' => 'El apellido es requerido.',
+                'min_length' => 'El apellido debe ser minimo de 3 letras.',
+                'max_length' => 'El apellido debe ser maximo de 255 letras.'
+            ]
+        ],
+        'dni' => [
+            'rules' => 'required|exact_length[8]|numeric|is_unique[usuarios.dni,id_usuario,{id_usuario}]',
+            'errors' => [
+                'required' => 'El dni es requerido.',
+                'exact_length' => 'El dni debe ser de 8 numeros.',
+                'numeric' => 'El dni debe ser numerico.',
+                'is_unique' => 'Ese dni ya existe.'
+            ]
+        ],
+        'email' => [
+            'rules' => 'required|valid_email',
+            'errors' => [
+                'required' => 'El email es requerido.',
+                'valid_email' => 'El email no tiene un formato valido.'
+            ]
+        ],
+        'clave' => [
+            'rules' => 'required',
+            'errors' => [
+                'required' => 'La clave es requerida.'
+            ]
+        ],
+        'confirmarClave' => [
+            'rules' => 'matches[clave]',
+            'errors' => [
+                'matches' => 'Las claves no coinciden.'
+            ]
+        ]
+    ];
+
+    public $formEditarAdministrador = [
+        'nombre' => [
+            'rules' => 'required|min_length[3]|max_length[30]',
+            'errors' => [
+                'required' => 'El nombre es requerido.',
+                'min_length' => 'El nombre debe ser minimo de 3 letras.',
+                'max_length' => 'El nombre debe ser maximo de 30 letras.'
+            ]
+        ],
+        'apellido' => [
+            'rules' => 'required|min_length[3]|max_length[255]',
+            'errors' => [
+                'required' => 'El apellido es requerido.',
+                'min_length' => 'El apellido debe ser minimo de 3 letras.',
+                'max_length' => 'El apellido debe ser maximo de 255 letras.'
+            ]
+        ],
+        'dni' => [
+            'rules' => 'required|exact_length[8]|numeric|is_unique[usuarios.dni,id_usuario,{id_usuario}]',
+            'errors' => [
+                'required' => 'El dni es requerido.',
+                'exact_length' => 'El dni debe ser de 8 numeros.',
+                'numeric' => 'El dni debe ser numerico.',
+                'is_unique' => 'Ese dni ya existe.'
+            ]
+        ],
+        'email' => [
+            'rules' => 'required|valid_email',
+            'errors' => [
+                'required' => 'El email es requerido.',
+                'valid_email' => 'El email no tiene un formato valido.'
+            ]
+        ],
+        'id_rol' => [
+            'rules' => 'required|numeric',
+            'errors' => [
+                'required' => 'El rol es requerido.',
+                'numeric' => 'El rol debe ser numerico.'
+            ]
+        ]
+    ];
+
+    public $formEditarUsuario = [
+        'nombre' => [
+            'rules' => 'required|min_length[3]|max_length[30]',
+            'errors' => [
+                'required' => 'El nombre es requerido.',
+                'min_length' => 'El nombre debe ser minimo de 3 letras.',
+                'max_length' => 'El nombre debe ser maximo de 30 letras.'
+            ]
+        ],
+        'apellido' => [
+            'rules' => 'required|min_length[3]|max_length[255]',
+            'errors' => [
+                'required' => 'El apellido es requerido.',
+                'min_length' => 'El apellido debe ser minimo de 3 letras.',
+                'max_length' => 'El apellido debe ser maximo de 255 letras.'
+            ]
+        ],
+        'dni' => [
+            'rules' => 'required|exact_length[8]|numeric|is_unique[usuarios.dni,id_usuario,{id_usuario}]',
+            'errors' => [
+                'required' => 'El dni es requerido.',
+                'exact_length' => 'El dni debe ser de 8 numeros.',
+                'numeric' => 'El dni debe ser numerico.',
+                'is_unique' => 'Ese dni ya existe.'
+            ]
+        ],
+        'email' => [
+            'rules' => 'required|valid_email',
+            'errors' => [
+                'required' => 'El email es requerido.',
+                'valid_email' => 'El email no tiene un formato valido.'
+            ]
+        ],
+        'clave' => [
+            'rules' => 'required',
+            'errors' => [
+                'required' => 'La clave es requerida.'
+            ]
+        ],
+        'confirmarClave' => [
+            'rules' => 'matches[clave]',
+            'errors' => [
+                'matches' => 'Las claves no coinciden.'
+            ]
+        ]
+    ];
 }
