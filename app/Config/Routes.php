@@ -46,6 +46,16 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
     $routes->match(['get', 'post'], 'modificar/(:num)', 'Usuario::editarUsuario/$1');
     $routes->add('salir', 'Usuario::salir');
     $routes->add('eliminar/(:num)', 'Usuario::eliminar/$1');
+
+    $routes->group('clientes', function($routes) {
+        $routes->add('agregarVehiculo', 'Cliente::agregarVehiculo');
+        $routes->post('guardarVehiculo', 'Cliente::guardarVehiculo');
+        $routes->get('vehiculos', 'Cliente::index');
+        $routes->get('obtenerVehiculos', 'Cliente::obtenerVehiculos');
+        $routes->get('obtenerVehiculos/(:any)', 'Cliente::obtenerVehiculos/$1');
+        $routes->get('obtenerVehiculos', 'Cliente::obtenerVehiculos');
+        $routes->add('vincularVehiculo/(:any)', 'Cliente::vincularVehiculo/$1');
+    });
 });
 
 /*
