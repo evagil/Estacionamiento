@@ -73,7 +73,7 @@ class Usuario extends BaseController
             // El metodo deprecado es si se utiliza el parametro uppercase, proximamente se retornara solo en lowercase
             if ($validation->run($this->request->getPost(), $reglas)) {
                 $usuario->save($user);
-                return redirect()->to(base_url('usuarios/perfil'));
+                return redirect()->to(base_url('usuarios/perfil'))->with('mensaje', 'Usuario creado existosamente.');
             }
             else {
                 $data['validacion'] = $validation;
@@ -104,7 +104,7 @@ class Usuario extends BaseController
         if ($this->request->getMethod() === 'post') {
             if ($validation->run($this->request->getPost(), $reglas)) {
                 $usuario->save($user);
-                return redirect()->to(base_url('usuarios/perfil'));
+                return redirect()->to(base_url('usuarios/perfil'))->with('mensaje', 'Usuario editado existosamente.');
             }
             else {
                 $data['validacion'] = $validation;
@@ -130,7 +130,7 @@ class Usuario extends BaseController
     public function eliminar($id){
      $modelo = new ModeloUsuario();
      $modelo->bajaUsuario($id);
-     return redirect()->to(base_url('usuarios/listar'));
+     return redirect()->to(base_url('usuarios/listar'))->with('mensaje', 'Usuario eliminadoMo existosamente.');
     }
 
     public function reestablecerClave($id){

@@ -1,5 +1,9 @@
 <div class="container">
-    <form style="width: 50%; margin: 0 auto" method="post" action="<?= base_url('registro') ?>">
+    <form style="width: 50%; margin: 0 auto" method="post" <?php if (session()->get('nombre_rol') === 'Cliente'): ?>
+                                        action="<?= base_url('registro') ?>"
+                                    <?php else: ?>
+                                        action="<?= base_url('usuarios/alta') ?>"
+                                    <?php endif; ?>>
         <h3>Insertar datos del usuario</h3>
 
         <div class="mb-3">
