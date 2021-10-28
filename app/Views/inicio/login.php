@@ -62,15 +62,26 @@
     <p class="mt-5 mb-3 text-muted">&copy; Proyecto de Software</p>
   </form>
     <?php if (session()->getFlashdata('mensaje_error')): ?>
-        <div class="p-3 mt-3 bg-danger text-white"><?= session()->getFlashdata('mensaje_error') ?></div>
+        <div id="mensaje" class="alert alert-warning alert-dismissible fade show" style="margin: 10px auto" role="alert">
+            <?= session()->getFlashdata('mensaje_error') ?>
+        </div>
     <?php endif; ?>
 
     <?php if (session()->getFlashdata('mensaje')): ?>
-        <div class="p-3 mt-3 bg-success text-white"><?= session()->getFlashdata('mensaje') ?></div>
+        <div id="mensaje" class="alert alert-success alert-dismissible fade show" style="margin: 10px auto" role="alert">
+            <?= session()->getFlashdata('mensaje') ?>
+        </div>
     <?php endif; ?>
 </main>
 
-
-    
-  </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $(document).ready(() => {
+        setTimeout(() => {
+            $('#mensaje').alert('close')
+        }, 5000)
+    })
+</script>
+</body>
 </html>
