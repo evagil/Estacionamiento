@@ -42,5 +42,10 @@ class ModeloUsuario extends Model
              
    }
 
-
+    public function reestablecerClave($id)
+    {
+        $usuario = $this->obtenerUsuarioPorId($id);
+        $usuario->clave = '123456';
+        return $this->save($usuario);
+    }
 }

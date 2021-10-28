@@ -63,10 +63,10 @@ class Cliente extends BaseController
 
         if ($autosUsuarios->vincularUsuarioYAuto(session()->get('id_usuario'), $auto->id_auto))
         {
-            return redirect()->to(base_url('usuarios/perfil'))->with('vehiculoVinculado', 'El vehiculo se vinculo a su cuenta con exito.');
+            return redirect()->to(base_url('usuarios/perfil'))->with('mensaje', 'El vehiculo se vinculo a su cuenta con exito.');
         }
         else {
-            return redirect()->to(base_url('usuarios/perfil'))->with('errorVinculando', 'Hubo un error para vincular el vehiculo a su cuenta.');
+            return redirect()->to(base_url('usuarios/perfil'))->with('mensaje_error', 'Hubo un error para vincular el vehiculo a su cuenta.');
         }
     }
 }

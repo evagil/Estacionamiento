@@ -133,4 +133,9 @@ class Usuario extends BaseController
      return redirect()->to(base_url('usuarios/listar'));
     }
 
+    public function reestablecerClave($id){
+        $modelo = new ModeloUsuario();
+        $modelo->reestablecerClave($id);
+        return redirect()->to(base_url('usuarios/listar'))->with('mensaje', 'Clave reestablecida con exito.');
+    }
 }
