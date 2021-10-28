@@ -1,7 +1,10 @@
 <div class="table-responsive">
     <table class="table"
            id="table"
-           data-search="true">
+           data-search="true"
+           data-pagination="true"
+           data-page-size="3"
+           data-page-list="[3, 6, 9]">
         <thead>
         <tr>
             <th data-field="patente" data-sortable="true">Patente</th>
@@ -19,10 +22,19 @@
             method: 'GET',
             url: "<?= esc(base_url('usuarios/clientes/obtenerVehiculos')) ?>",
             success: (vehiculo) => {
-                console.log(vehiculo)
                 $('#table').bootstrapTable({
-                    data: vehiculo
-                });
+                    data: vehiculo,
+                    columns: [ {},{},{}, {
+                        field: 'opciones',
+                        title: 'Opciones',
+                        align: 'center',
+                        valign: 'middle',
+                        clickToSelect: false,
+                        formatter : (value,row,index) => {
+                            return '<button class=\'btn btn-danger \' id="' + row.patente + '" onclick="console.log(\'Patente: ' + row.patente + ', desvincular coming soon..\')">Desvincular</button> '
+                        }
+                    } ]
+                })
             }
         })
     })
