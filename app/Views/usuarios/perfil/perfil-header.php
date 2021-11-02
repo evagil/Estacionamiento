@@ -9,6 +9,8 @@
     <title>Proyecto</title>
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css">
 
     <style>
       .bd-placeholder-img {
@@ -72,8 +74,25 @@
                             Alta
                         </a>
                     </li>
-                <?php endif; ?>
                 </ul>
+                <?php endif; ?>
+                <?php if (session()->get('nombre_rol') === 'Cliente'): ?>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">Cliente</h6>
+                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url('usuarios/clientes/agregarVehiculo') ?>">
+                                <div class="fas fa-car fa-lg"></div>
+                                Agregar Vehiculo
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url('usuarios/clientes/vehiculos') ?>">
+                                <div class="fas fa-car-side fa-lg"></div>
+                                Ver mis Vehiculos
+                            </a>
+                        </li>
+                    </ul>
+                <?php endif; ?>
             </div>
         </nav>
 

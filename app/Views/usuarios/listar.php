@@ -20,6 +20,7 @@
         <td><?php echo $usuario->nombre_rol ?></td>
         <td>
             <a href="<?php echo base_url('usuarios/modificar').'/'.$usuario->id_usuario ?>" type="button" class="btn btn-primary">Modificar</a>
+            <a href="<?php echo base_url('usuarios/reestablecer').'/'.$usuario->id_usuario ?>" type="button" class="btn btn-primary">Reest. Clave</a>
             <a href="<?php echo base_url('usuarios/eliminar').'/'.$usuario->id_usuario ?>" type="button" class="btn btn-danger">Eliminar</a>
         </td>
     </tr>
