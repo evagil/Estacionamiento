@@ -48,6 +48,18 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
     $routes->add('eliminar/(:num)', 'Usuario::eliminar/$1');
 });
 
+$routes->group('autos', ['filter' => 'authGuard'], function($routes) {
+    $routes->add('perfil', 'Usuario::index');
+    $routes->add('listar', 'vehiculo::listar');
+    $routes->add('listar', 'vehiculo::listar');
+  #  $routes->match(['get', 'post'], 'alta', 'Usuario::altaUsuario');
+  #  $routes->match(['get', 'post'], 'modificar/(:num)', 'Usuario::editarUsuario/$1');
+    $routes->add('salir', 'Usuario::salir');
+    #$routes->add('eliminar/(:num)', 'Usuario::eliminar/$1');
+});
+
+
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

@@ -3,19 +3,18 @@
 namespace App\Controllers;
 
 use App\Models\ModeloRol;
-use App\Models\ModeloUsuario;
-
+use App\Models\ModeloVehiculo;
 
 class Usuario extends BaseController
 {
     public function index()
     {
-        $usuarios = new ModeloUsuario();
+        $usuarios = new ModeloVehiculo();
         $data['titulo'] = "Perfil";
-        $data['usuario'] = $usuarios->obtenerUsuarioPorId(session()->get('id_usuario'));
-        echo view('usuarios/perfil/perfil-header', $data);
-        echo view('usuarios/detalles', $data);
-        echo view('usuarios/perfil/perfil-footer');        
+        $data['vehiculo'] = $auto->obtenerVehiculoPorId(session()->get('id_auto'));
+        echo view('vehiculos/auto/auto-header', $data);
+        echo view('vehiculos/detallesVehiculo', $data);
+        echo view('vehiculos/auto/auto-footer');
     }
 
     public function salir()
@@ -55,7 +54,7 @@ class Usuario extends BaseController
         echo view('inicio/footer');
     }
 
-    public function altaUsuario()
+  /*  public function altaUsuario()
     {
         helper('form');
         $usuario = new ModeloUsuario();
@@ -117,21 +116,23 @@ class Usuario extends BaseController
         echo view('usuarios/perfil/perfil-header', $data);
         echo view('Usuarios/editar', $data);
         echo view('usuarios/perfil/perfil-footer');
-    }
+    }*/
 
     public function listar(){
-        $modelo = new ModeloUsuario();
-        $data['usuarios'] = $modelo->encontrarUsuarios();
-        $data['titulo'] = 'Usuarios';
-        echo view ('usuarios/perfil/perfil-header', $data);
-        echo view ('usuarios/listar', $data);
-        echo view ('usuarios/perfil/perfil-footer', $data);
+        $modelo = new ModeloVehiculo();
+        $data['autos'] = $modelo->encontrarVehiculo();
+        $data['titulo'] = 'Vehiculos';
+        echo view ('vehiculos/auto/auto-header', $data);
+        echo view ('vehiculos/listarVehiculo', $data);
+       echo view ('vehiculos/auto/auto-footer', $data);
     }
 
-    public function eliminar($id){
+   /* public function eliminar($id){
      $modelo = new ModeloUsuario();
      $modelo->bajaUsuario($id);
      return redirect()->to(base_url('usuarios/listar'));
-    }
+    }*/
 
 }
+
+
