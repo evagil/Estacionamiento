@@ -51,7 +51,7 @@ class Cliente extends BaseController
     {
         $autos = new ModeloAutoUsuario();
         $id_usuario = session()->get('id_usuario');
-        $auto = $autos->obtenerAutosDelUsuario($id_usuario);
+        $auto = $autos->obtenerAutosDelUsuario($id_usuario, $patente);
         return $this->response->setJSON($auto);
     }
 
@@ -60,13 +60,20 @@ class Cliente extends BaseController
         $autos = new ModeloAuto();
         $autosUsuarios = new ModeloAutoUsuario();
         $auto = $autos->obtenerAutos($patente);
+        $errores = null;
 
-        if ($autosUsuarios->vincularUsuarioYAuto(session()->get('id_usuario'), $auto->id_auto))
+        if ($autosUsuarios->vincularUsuarioYAuto(session()->get('id_usuario'), $auto->id_auto, $errores))
         {
             return redirect()->to(base_url('usuarios/perfil'))->with('mensaje', 'El vehiculo se vinculo a su cuenta con exito.');
         }
         else {
-            return redirect()->to(base_url('usuarios/perfil'))->with('mensaje_error', 'Hubo un error para vincular el vehiculo a su cuenta.');
+            $mensaje = "desconocido";
+
+            if ($errores === 1062) {
+                $mensaje = "El vehiculo ya esta asociado a su usuario.";
+            }
+
+            return redirect()->to(base_url('usuarios/perfil'))->with('mensaje_error', 'Hubo un error para vincular el vehiculo a su cuenta: '.$mensaje);
         }
     }
 }

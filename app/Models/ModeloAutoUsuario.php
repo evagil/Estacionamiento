@@ -11,13 +11,24 @@ class ModeloAutoUsuario extends Model
     protected $useAutoIncrement = true;
     protected $allowedFields = ['id_usuario', 'id_auto'];
 
-    public function vincularUsuarioYAuto($id_usuario, $id_auto)
+    public function vincularUsuarioYAuto($id_usuario, $id_auto, &$errores)
     {
-        return $this->save(['id_usuario' => $id_usuario, 'id_auto' => $id_auto]);
+        try {
+            return $this->save(['id_usuario' => $id_usuario, 'id_auto' => $id_auto]);
+        }
+        catch (\Exception $e) {
+            $errores = $e->getCode();
+            return false;
+        }
     }
 
-    public function obtenerAutosDelUsuario($id_usuario)
+    public function obtenerAutosDelUsuario($id_usuario, $patente = null)
     {
+        if ($patente) {
+            return $this->select('patente, marca, modelo')->join('autos', 'usuarios_autos.id_auto = autos.id_auto')
+                ->join('usuarios', 'usuarios_autos.id_usuario = usuarios.id_usuario')
+                ->where('usuarios.id_usuario', $id_usuario)->where('autos.patente', $patente)->first();
+        }
         return $this->select('patente, marca, modelo')->join('autos', 'usuarios_autos.id_auto = autos.id_auto')
             ->join('usuarios', 'usuarios_autos.id_usuario = usuarios.id_usuario')
             ->where('usuarios.id_usuario', $id_usuario)->findAll();
