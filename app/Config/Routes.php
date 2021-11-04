@@ -47,6 +47,7 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
     $routes->add('reestablecer/(:num)', 'Usuario::reestablecerClave/$1');
     $routes->add('salir', 'Usuario::salir');
     $routes->add('eliminar/(:num)', 'Usuario::eliminar/$1');
+    
 
     $routes->group('clientes', function($routes) {
         $routes->add('agregarVehiculo', 'Cliente::agregarVehiculo');
@@ -56,20 +57,15 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         $routes->get('obtenerVehiculos/(:any)', 'Cliente::obtenerVehiculos/$1');
         $routes->get('obtenerVehiculos', 'Cliente::obtenerVehiculos');
         $routes->add('vincularVehiculo/(:any)', 'Cliente::vincularVehiculo/$1');
-    });
+    });   
+   
 });
 
-$routes->group('autos', ['filter' => 'authGuard'], function($routes) {
-    $routes->add('perfil', 'Usuario::index');
-    $routes->add('listar', 'vehiculo::listar');
-    $routes->add('listar', 'vehiculo::listar');
-  #  $routes->match(['get', 'post'], 'alta', 'Usuario::altaUsuario');
-  #  $routes->match(['get', 'post'], 'modificar/(:num)', 'Usuario::editarUsuario/$1');
-    $routes->add('salir', 'Usuario::salir');
-    #$routes->add('eliminar/(:num)', 'Usuario::eliminar/$1');
+$routes->group('vehiculos', function($routes) {
+    $routes->add('listarVehiculosEstacionados', 'AutosEstacionados::index');
+    $routes->get('listarVehiculosEstacionados', 'AutosEstacionados::listar');
+   
 });
-
-
 
 /*
  * --------------------------------------------------------------------

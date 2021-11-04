@@ -2,137 +2,80 @@
 
 namespace App\Controllers;
 
-use App\Models\ModeloRol;
-use App\Models\ModeloVehiculo;
+use App\Entities\Auto;
+use App\Models\ModeloAutoEstacionado;
 
-class Usuario extends BaseController
+class vehiculo extends BaseController
 {
     public function index()
     {
-        $usuarios = new ModeloVehiculo();
-        $data['titulo'] = "Perfil";
-        $data['vehiculo'] = $auto->obtenerVehiculoPorId(session()->get('id_auto'));
-        echo view('vehiculos/auto/auto-header', $data);
-        echo view('vehiculos/detallesVehiculo', $data);
-        echo view('vehiculos/auto/auto-footer');
-    }
-
-    public function salir()
-    {
-        session()->destroy();
-        return redirect()->to(base_url());
-    }
-
-    public function registro() {
-        helper('form');
-        $usuario = new ModeloUsuario();
-        $rol = new ModeloRol();
-        $validation =  \Config\Services::validation();
-        $data['validacion'] = null;
-
-        $data['titulo'] = "Registro";
-        $user = new \App\Entities\Usuario($this->request->getPost());
-        $data['usuario'] = $user;
-        $data['roles'] = $rol->obtenerRestoRoles(4);
-
-        session()->get('nombre_rol') === 'Administrador' ? $reglas = 'formAdministrador' : $reglas = 'formUsuario';
-
-        if ($this->request->getMethod() === 'post') {
-            // El metodo deprecado es si se utiliza el parametro uppercase, proximamente se retornara solo en lowercase
-            if ($validation->run($this->request->getPost(), $reglas)) {
-                $usuario->save($user);
-
-                return redirect()->to(base_url())->with('mensaje', 'Usuario creado existosamente.');
-            }
-            else {
-                $data['validacion'] = $validation;
-            }
-        }
-
-        echo view('inicio/header', $data);
-        echo view('usuarios/alta', $data);
-        echo view('inicio/footer');
-    }
-
-  /*  public function altaUsuario()
-    {
-        helper('form');
-        $usuario = new ModeloUsuario();
-        $rol = new ModeloRol();
-        $validation =  \Config\Services::validation();
-        $data['validacion'] = null;
-
-        $data['titulo'] = "Alta";
-        $user = new \App\Entities\Usuario($this->request->getPost());
-        $data['usuario'] = $user;
-        $data['roles'] = $rol->obtenerRestoRoles(4);
-
-        session()->get('nombre_rol') === 'Administrador' ? $reglas = 'formAdministrador' : $reglas = 'formUsuario';
-
-        if ($this->request->getMethod() === 'post') {
-            // El metodo deprecado es si se utiliza el parametro uppercase, proximamente se retornara solo en lowercase
-            if ($validation->run($this->request->getPost(), $reglas)) {
-                $usuario->save($user);
-                return redirect()->to(base_url('usuarios/perfil'));
-            }
-            else {
-                $data['validacion'] = $validation;
-            }
-        }
-
+        $data['titulo'] = "Consulta vehiculos estacionados";
         echo view('usuarios/perfil/perfil-header', $data);
-        echo view('usuarios/alta', $data);
+        echo view('vehiculos/listarVehiculosEstacionados');
         echo view('usuarios/perfil/perfil-footer');
     }
-
-    public function editarUsuario($id)
-    {
-        helper('form');
-        $usuario = new ModeloUsuario();
-        $rol = new ModeloRol();
-        $validation =  \Config\Services::validation();
-        $data['titulo'] = "Editar";
-        $data['validacion'] = null;
-
-        $data['rolActual'] = $rol->obtenerRolDeUsuario($id);
-        $data['roles'] = $rol->obtenerRestoRoles($data['rolActual']->id_rol);
-        $user = new \App\Entities\Usuario($this->request->getPost());
-        $data['usuario'] = $user;
-
-        session()->get('nombre_rol') === 'Administrador' ? $reglas = 'formEditarAdministrador' : $reglas = 'formEditarUsuario';
-
-        if ($this->request->getMethod() === 'post') {
-            if ($validation->run($this->request->getPost(), $reglas)) {
-                $usuario->save($user);
-                return redirect()->to(base_url('usuarios/perfil'));
-            }
-            else {
-                $data['validacion'] = $validation;
-            }
-        } else {
-            $data['usuario'] = $usuario->obtenerUsuarioPorId($id);
-        }
-
-        echo view('usuarios/perfil/perfil-header', $data);
-        echo view('Usuarios/editar', $data);
-        echo view('usuarios/perfil/perfil-footer');
-    }*/
 
     public function listar(){
-        $modelo = new ModeloVehiculo();
-        $data['autos'] = $modelo->encontrarVehiculo();
-        $data['titulo'] = 'Vehiculos';
-        echo view ('vehiculos/auto/auto-header', $data);
-        echo view ('vehiculos/listarVehiculo', $data);
-       echo view ('vehiculos/auto/auto-footer', $data);
+        $modelo = new ModeloAutoEstacionado();
+        $data['ventas'] = $modelo->encontrarUsuarios();
+        $data['titulo'] = 'Autos';
+        echo view ('usuarios/perfil/perfil-header', $data);
+        echo view ('vehiculos/listarVehiculosEstacionados', $data);
+        echo view ('usuarios/perfil/perfil-footer', $data);
     }
 
-   /* public function eliminar($id){
-     $modelo = new ModeloUsuario();
-     $modelo->bajaUsuario($id);
-     return redirect()->to(base_url('usuarios/listar'));
-    }*/
 
+    public function agregarVehiculo()
+    {
+        if (session()->getFlashdata('validation')) {
+            $data['validacion'] = session()->getFlashdata('validation');
+        }
+
+        $data['titulo'] = "Agregar un Vehiculo";
+        echo view('usuarios/perfil/perfil-header', $data);
+        echo view('clientes/agregar-vehiculo', $data);
+        echo view('usuarios/perfil/perfil-footer');
+    }
+
+    public function guardarVehiculo()
+    {
+        $autos = new ModeloAuto();
+        $autosUsuarios = new ModeloAutoUsuario();
+        $validation =  \Config\Services::validation();
+
+        $data['titulo'] = "Agregar un Vehiculo";
+        $auto = new Auto($this->request->getPost());
+        $data['auto'] = $auto;
+
+        if ($validation->run($this->request->getPost(), 'formAuto')) {
+            $autos->save($auto);
+            return redirect()->to(base_url('usuarios/clientes/vincularVehiculo'.'/'.$auto->patente));
+        }
+        else {
+            return redirect()->to(base_url('usuarios/clientes/agregarVehiculo'))->with('validation', $validation)->withInput();
+        }
+    }
+
+    public function obtenerVehiculos($patente = null)
+    {
+        $autos = new ModeloAutoUsuario();
+        $id_usuario = session()->get('id_usuario');
+        $auto = $autos->obtenerAutosDelUsuario($id_usuario);
+        return $this->response->setJSON($auto);
+    }
+
+    public function vincularVehiculo($patente)
+    {
+        $autos = new ModeloAuto();
+        $autosUsuarios = new ModeloAutoUsuario();
+        $auto = $autos->obtenerAutos($patente);
+
+        if ($autosUsuarios->vincularUsuarioYAuto(session()->get('id_usuario'), $auto->id_auto))
+        {
+            return redirect()->to(base_url('usuarios/perfil'))->with('mensaje', 'El vehiculo se vinculo a su cuenta con exito.');
+        }
+        else {
+            return redirect()->to(base_url('usuarios/perfil'))->with('mensaje_error', 'Hubo un error para vincular el vehiculo a su cuenta.');
+        }
+    }
 }
-
-

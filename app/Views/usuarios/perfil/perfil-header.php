@@ -74,6 +74,12 @@
                             Alta
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('vehiculos/listarVehiculosEstacionados') ?>">
+                            <span data-feather="plus-circle"></span>
+                            Autos Estacionados
+                        </a>
+                    </li>
                 </ul>
                 <?php endif; ?>
                 <?php if (session()->get('nombre_rol') === 'Cliente'): ?>
