@@ -11,7 +11,8 @@ class Usuario extends BaseController
     {
         $usuarios = new ModeloUsuario();
         $data['titulo'] = "Perfil";
-        $data['usuario'] = $usuarios->obtenerUsuarioPorId(session()->get('id_usuario'));
+        $data['id'] = session()->get('id_usuario');
+
         echo view('usuarios/perfil/perfil-header', $data);
         echo view('usuarios/detalles', $data);
         echo view('usuarios/perfil/perfil-footer');
@@ -129,10 +130,26 @@ class Usuario extends BaseController
         echo view ('usuarios/perfil/perfil-footer');
     }
 
-    public function encontrarUsuarios()
+    public function encontrarUsuarios($id = null)
     {
         $modelo = new ModeloUsuario();
-        $usuarios = $modelo->encontrarUsuarios();
+
+        if(isset($id)) {
+            $usuarios = $modelo->obtenerUsuarioPorId($id);
+        }
+        else {
+            $usuarios = $modelo->encontrarUsuarios();
+        }
+
+        return $this->response->setJSON($usuarios);
+    }
+
+    public function obtenerDetalleUsuario($id)
+    {
+        $modelo = new ModeloUsuario();
+
+        $usuarios = $modelo->obtenerDetalleUsuario($id);
+
         return $this->response->setJSON($usuarios);
     }
 

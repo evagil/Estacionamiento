@@ -43,6 +43,7 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
     $routes->add('perfil', 'Usuario::index');
     $routes->add('listar', 'Usuario::listar');
     $routes->get('encontrarUsuarios', 'Usuario::encontrarUsuarios');
+    $routes->get('obtenerDetalleUsuario/(:num)', 'Usuario::obtenerDetalleUsuario/$1');
     $routes->add('alta', 'Usuario::altaUsuario');
     $routes->post('alta', 'Usuario::guardarAlta');
     $routes->add('modificar/(:num)', 'Usuario::editarUsuario/$1');
