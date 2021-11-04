@@ -2,19 +2,49 @@
     <div class="card-header">
         Detalles del Usuario
     </div>
-    <div class="card-body">
-        <h5 class="card-title">Nombre</h5>
-        <p class="card-text"><?= esc($usuario->nombre) ?></p>
-        <h5 class="card-title">Apellido</h5>
-        <p class="card-text"><?= esc($usuario->apellido) ?></p>
-        <h5 class="card-title">Usuario</h5>
-        <p class="card-text"><?= esc($usuario->dni) ?></p>
-        <h5 class="card-title">Email</h5>
-        <p class="card-text"><?= esc($usuario->email) ?></p>
-        <h5 class="card-title">Rol</h5>
-        <p class="card-text"><?= esc($usuario->nombre_rol) ?></p>
+    <div class="card-body" id="card-body">
+
     </div>
     <div class="card-footer text-muted d-flex flex-row justify-content-center">
-        <a href="<?php echo base_url('usuarios/modificar').'/'.$usuario->id_usuario ?>" type="button" class="btn btn-primary">Modificar</a>
+        <a href="<?php echo base_url('usuarios/modificar').'/'.$id ?>" type="button" class="btn btn-primary">Modificar</a>
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+    const agregarDetalle = (usuario) => {
+        let container = document.getElementById('card-body')
+
+        for (let key in usuario) {
+            let atributo = key.charAt(0).toUpperCase() + key.slice(1);
+            container.appendChild(agregarAtributo(atributo, usuario[key]))
+        }
+    }
+
+    const agregarAtributo = (nombre, texto) => {
+        let h5 = document.createElement('h5')
+        h5.classList.add('card-title')
+        h5.innerHTML = nombre
+
+        let p = document.createElement('p')
+        p.classList.add('card-text')
+        p.innerHTML = texto
+
+        let div = document.createElement('div')
+        div.classList.add('p-1')
+        div.appendChild(h5)
+        div.appendChild(p)
+
+        return div
+    }
+
+    $(document).ready(() => {
+        $.ajax({
+            method: 'GET',
+            url: "<?= esc(base_url('usuarios/obtenerDetalleUsuario') . '/' . $id) ?>",
+            success: (usuario) => {
+                agregarDetalle(usuario)
+            }
+        })
+    })
+</script>

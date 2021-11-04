@@ -33,17 +33,21 @@ $routes->setAutoRoute(false); // Falso para que no se puedan acceder a los contr
 // route since we don't have to scan directories.
 
 $routes->group('', ['filter' => 'authEstaLog'], function($routes) {
-    $routes->get('/', 'Login::index');
+    $routes->add('/', 'Login::index');
     $routes->post('ingresar', 'Login::ingresar');
-    $routes->match(['get', 'post'], 'registro', 'Usuario::registro');
+    $routes->add('registro', 'Usuario::registro');
+    $routes->post('guardarRegistro', 'Usuario::guardarRegistro');
 });
 
 $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
     $routes->add('perfil', 'Usuario::index');
     $routes->add('listar', 'Usuario::listar');
-    $routes->add('listar', 'Usuario::listar');
-    $routes->match(['get', 'post'], 'alta', 'Usuario::altaUsuario');
-    $routes->match(['get', 'post'], 'modificar/(:num)', 'Usuario::editarUsuario/$1');
+    $routes->get('encontrarUsuarios', 'Usuario::encontrarUsuarios');
+    $routes->get('obtenerDetalleUsuario/(:num)', 'Usuario::obtenerDetalleUsuario/$1');
+    $routes->add('alta', 'Usuario::altaUsuario');
+    $routes->post('alta', 'Usuario::guardarAlta');
+    $routes->add('modificar/(:num)', 'Usuario::editarUsuario/$1');
+    $routes->post('modificar/(:num)', 'Usuario::guardarEdicion');
     $routes->add('reestablecer/(:num)', 'Usuario::reestablecerClave/$1');
     $routes->add('salir', 'Usuario::salir');
     $routes->add('eliminar/(:num)', 'Usuario::eliminar/$1');
