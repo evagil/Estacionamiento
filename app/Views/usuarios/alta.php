@@ -85,7 +85,10 @@
 
         <div style="text-align: center">
             <button type="submit" class="btn btn-primary m-1">Enviar</button><br>
-            <a href="<?= base_url() ?>" type="button" class="btn btn-primary m-1">Volver</a>
+
+            <?php if (!session()->get('id_usuario')): ?>
+                <a href="<?= base_url() ?>" type="button" class="btn btn-primary m-1">Volver</a>
+            <?php endif; ?>
         </div>
     </form>
 </div>
