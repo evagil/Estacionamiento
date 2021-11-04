@@ -84,7 +84,8 @@
         <?php endif; ?>
 
         <div style="text-align: center">
-            <button type="submit" class="btn btn-primary">Enviar</button>
+            <button type="submit" class="btn btn-primary m-1">Enviar</button><br>
+            <a href="<?= base_url() ?>" type="button" class="btn btn-primary m-1">Volver</a>
         </div>
     </form>
 </div>

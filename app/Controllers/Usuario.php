@@ -32,7 +32,6 @@ class Usuario extends BaseController
         }
 
         $data['titulo'] = "Registro";
-        $data['roles'] = $rol->obtenerRestoRoles(4);
 
         echo view('inicio/header', $data);
         echo view('usuarios/alta', $data);
