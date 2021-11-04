@@ -58,32 +58,33 @@ class Usuario extends BaseController
     public function altaUsuario()
     {
         helper('form');
-        $usuario = new ModeloUsuario();
         $rol = new ModeloRol();
-        $validation =  \Config\Services::validation();
-        $data['validacion'] = null;
+
+        if (session()->getFlashdata('validation')) {
+            $data['validacion'] = session()->getFlashdata('validation');
+        }
 
         $data['titulo'] = "Alta";
-        $user = new \App\Entities\Usuario($this->request->getPost());
-        $data['usuario'] = $user;
         $data['roles'] = $rol->obtenerRestoRoles(4);
-
-        session()->get('nombre_rol') === 'Administrador' ? $reglas = 'formAdministrador' : $reglas = 'formUsuario';
-
-        if ($this->request->getMethod() === 'post') {
-            // El metodo deprecado es si se utiliza el parametro uppercase, proximamente se retornara solo en lowercase
-            if ($validation->run($this->request->getPost(), $reglas)) {
-                $usuario->save($user);
-                return redirect()->to(base_url('usuarios/perfil'))->with('mensaje', 'Usuario creado existosamente.');
-            }
-            else {
-                $data['validacion'] = $validation;
-            }
-        }
 
         echo view('usuarios/perfil/perfil-header', $data);
         echo view('usuarios/alta', $data);
         echo view('usuarios/perfil/perfil-footer');
+    }
+
+    public function guardarAlta()
+    {
+        $usuario = new ModeloUsuario();
+        $validation =  \Config\Services::validation();
+        $user = new \App\Entities\Usuario($this->request->getPost());
+
+        if ($validation->run($this->request->getPost(), 'formAdministrador')) {
+            $usuario->save($user);
+            return redirect()->to(base_url('usuarios/perfil'))->with('mensaje', 'Usuario creado existosamente.');
+        }
+        else {
+            return redirect()->to(base_url('usuarios/alta'))->with('validation', $validation)->withInput();
+        }
     }
 
     public function editarUsuario($id)
