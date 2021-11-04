@@ -42,7 +42,6 @@ $routes->group('', ['filter' => 'authEstaLog'], function($routes) {
 $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
     $routes->add('perfil', 'Usuario::index');
     $routes->add('listar', 'Usuario::listar');
-    $routes->add('listar', 'Usuario::listar');
     $routes->get('encontrarUsuarios', 'Usuario::encontrarUsuarios');
     $routes->add('alta', 'Usuario::altaUsuario');
     $routes->post('alta', 'Usuario::guardarAlta');
