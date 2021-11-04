@@ -31,16 +31,13 @@ class Cliente extends BaseController
     public function guardarVehiculo()
     {
         $autos = new ModeloAuto();
-        $autosUsuarios = new ModeloAutoUsuario();
         $validation =  \Config\Services::validation();
 
-        $data['titulo'] = "Agregar un Vehiculo";
         $auto = new Auto($this->request->getPost());
-        $data['auto'] = $auto;
 
         if ($validation->run($this->request->getPost(), 'formAuto')) {
             $autos->save($auto);
-            return redirect()->to(base_url('usuarios/clientes/vincularVehiculo'.'/'.$auto->patente));
+            return redirect()->to(base_url('usuarios/clientes/vincularVehiculo').'/'.$auto->patente);
         }
         else {
             return redirect()->to(base_url('usuarios/clientes/agregarVehiculo'))->with('validation', $validation)->withInput();
