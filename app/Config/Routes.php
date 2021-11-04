@@ -33,7 +33,7 @@ $routes->setAutoRoute(false); // Falso para que no se puedan acceder a los contr
 // route since we don't have to scan directories.
 
 $routes->group('', ['filter' => 'authEstaLog'], function($routes) {
-    $routes->get('/', 'Login::index');
+    $routes->add('/', 'Login::index');
     $routes->post('ingresar', 'Login::ingresar');
     $routes->add('registro', 'Usuario::registro');
     $routes->post('guardarRegistro', 'Usuario::guardarRegistro');
