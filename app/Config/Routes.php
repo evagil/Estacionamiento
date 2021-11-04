@@ -42,6 +42,7 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
     $routes->add('perfil', 'Usuario::index');
     $routes->add('listar', 'Usuario::listar');
     $routes->add('listar', 'Usuario::listar');
+    $routes->get('encontrarUsuarios', 'Usuario::encontrarUsuarios');
     $routes->match(['get', 'post'], 'alta', 'Usuario::altaUsuario');
     $routes->match(['get', 'post'], 'modificar/(:num)', 'Usuario::editarUsuario/$1');
     $routes->add('reestablecer/(:num)', 'Usuario::reestablecerClave/$1');

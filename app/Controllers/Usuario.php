@@ -119,12 +119,17 @@ class Usuario extends BaseController
     }
 
     public function listar(){
-        $modelo = new ModeloUsuario();
-        $data['usuarios'] = $modelo->encontrarUsuarios();
         $data['titulo'] = 'Usuarios';
         echo view ('usuarios/perfil/perfil-header', $data);
-        echo view ('usuarios/listar', $data);
-        echo view ('usuarios/perfil/perfil-footer', $data);
+        echo view ('usuarios/listar');
+        echo view ('usuarios/perfil/perfil-footer');
+    }
+
+    public function encontrarUsuarios()
+    {
+        $modelo = new ModeloUsuario();
+        $usuarios = $modelo->encontrarUsuarios();
+        return $this->response->setJSON($usuarios);
     }
 
     public function eliminar($id){
