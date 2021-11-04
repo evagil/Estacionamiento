@@ -35,7 +35,8 @@ $routes->setAutoRoute(false); // Falso para que no se puedan acceder a los contr
 $routes->group('', ['filter' => 'authEstaLog'], function($routes) {
     $routes->get('/', 'Login::index');
     $routes->post('ingresar', 'Login::ingresar');
-    $routes->match(['get', 'post'], 'registro', 'Usuario::registro');
+    $routes->add('registro', 'Usuario::registro');
+    $routes->post('guardarRegistro', 'Usuario::guardarRegistro');
 });
 
 $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {

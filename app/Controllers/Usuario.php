@@ -25,33 +25,34 @@ class Usuario extends BaseController
 
     public function registro() {
         helper('form');
-        $usuario = new ModeloUsuario();
         $rol = new ModeloRol();
-        $validation =  \Config\Services::validation();
-        $data['validacion'] = null;
+
+        if (session()->getFlashdata('validation')) {
+            $data['validacion'] = session()->getFlashdata('validation');
+        }
 
         $data['titulo'] = "Registro";
-        $user = new \App\Entities\Usuario($this->request->getPost());
-        $data['usuario'] = $user;
         $data['roles'] = $rol->obtenerRestoRoles(4);
-
-        session()->get('nombre_rol') === 'Administrador' ? $reglas = 'formAdministrador' : $reglas = 'formUsuario';
-
-        if ($this->request->getMethod() === 'post') {
-            // El metodo deprecado es si se utiliza el parametro uppercase, proximamente se retornara solo en lowercase
-            if ($validation->run($this->request->getPost(), $reglas)) {
-                $usuario->save($user);
-
-                return redirect()->to(base_url())->with('mensaje', 'Usuario creado existosamente.');
-            }
-            else {
-                $data['validacion'] = $validation;
-            }
-        }
 
         echo view('inicio/header', $data);
         echo view('usuarios/alta', $data);
         echo view('inicio/footer');
+    }
+
+    public function guardarRegistro()
+    {
+        $usuarios = new ModeloUsuario();
+        $validation =  \Config\Services::validation();
+
+        $usuario = new \App\Entities\Usuario($this->request->getPost());
+
+        if ($validation->run($this->request->getPost(), 'formUsuario')) {
+            $usuarios->save($usuario);
+            return redirect()->to(base_url())->with('mensaje', 'Usuario creado existosamente.');
+        }
+        else {
+            return redirect()->to(base_url('registro'))->with('validation', $validation)->withInput();
+        }
     }
 
     public function altaUsuario()
