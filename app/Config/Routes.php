@@ -46,7 +46,8 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
     $routes->get('encontrarUsuarios', 'Usuario::encontrarUsuarios');
     $routes->add('alta', 'Usuario::altaUsuario');
     $routes->post('alta', 'Usuario::guardarAlta');
-    $routes->match(['get', 'post'], 'modificar/(:num)', 'Usuario::editarUsuario/$1');
+    $routes->add('modificar/(:num)', 'Usuario::editarUsuario/$1');
+    $routes->post('modificar/(:num)', 'Usuario::guardarEdicion');
     $routes->add('reestablecer/(:num)', 'Usuario::reestablecerClave/$1');
     $routes->add('salir', 'Usuario::salir');
     $routes->add('eliminar/(:num)', 'Usuario::eliminar/$1');

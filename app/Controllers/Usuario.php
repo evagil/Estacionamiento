@@ -89,34 +89,37 @@ class Usuario extends BaseController
     public function editarUsuario($id)
     {
         helper('form');
-        $usuario = new ModeloUsuario();
         $rol = new ModeloRol();
-        $validation =  \Config\Services::validation();
-        $data['titulo'] = "Editar";
-        $data['validacion'] = null;
+        $usuario = new ModeloUsuario();
+        $user = $usuario->obtenerUsuarioPorId($id);
 
+        if (session()->getFlashdata('validation')) {
+            $data['validacion'] = session()->getFlashdata('validation');
+        }
+
+        $data['titulo'] = "Editar";
         $data['rolActual'] = $rol->obtenerRolDeUsuario($id);
         $data['roles'] = $rol->obtenerRestoRoles($data['rolActual']->id_rol);
-        $user = new \App\Entities\Usuario($this->request->getPost());
         $data['usuario'] = $user;
-
-        session()->get('nombre_rol') === 'Administrador' ? $reglas = 'formEditarAdministrador' : $reglas = 'formEditarUsuario';
-
-        if ($this->request->getMethod() === 'post') {
-            if ($validation->run($this->request->getPost(), $reglas)) {
-                $usuario->save($user);
-                return redirect()->to(base_url('usuarios/perfil'))->with('mensaje', 'Usuario editado existosamente.');
-            }
-            else {
-                $data['validacion'] = $validation;
-            }
-        } else {
-            $data['usuario'] = $usuario->obtenerUsuarioPorId($id);
-        }
 
         echo view('usuarios/perfil/perfil-header', $data);
         echo view('Usuarios/editar', $data);
         echo view('usuarios/perfil/perfil-footer');
+    }
+
+    public function guardarEdicion()
+    {
+        $usuario = new ModeloUsuario();
+        $validation =  \Config\Services::validation();
+        $user = new \App\Entities\Usuario($this->request->getPost());
+
+        if ($validation->run($this->request->getPost(), 'formEditarUsuario')) {
+            $usuario->save($user);
+            return redirect()->to(base_url('usuarios/perfil'))->with('mensaje', 'Usuario editado existosamente.');
+        }
+        else {
+            return redirect()->to(base_url('usuarios/modificar').'/'.$user->id_usuario)->with('validation', $validation);
+        }
     }
 
     public function listar(){
