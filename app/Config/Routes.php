@@ -67,7 +67,7 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
 
 $routes->group('vehiculos', function($routes) {
     $routes->add('listarVehiculosEstacionados', 'AutosEstacionados::index');
-    $routes->get('listarVehiculosEstacionados', 'AutosEstacionados::listar');
+    $routes->get('ObtenerVehiculosEstacionados', 'AutosEstacionados::listar');
    
 });
 

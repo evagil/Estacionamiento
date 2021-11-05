@@ -13,6 +13,10 @@ class ModeloAutosEstacionados extends Model{
     
     public function encontrarVehiculosEstacionados()
     {
-        return $this->orderby('id_venta','ASC')->findAll();
+        
+        return $this->join('usuarios','ventas.id_usuario= usuarios.id_usuario')
+        ->join('autos','autos.id_auto=ventas.id_auto')
+        ->join('zonas','zonas.id_zona=ventas.id_zona_horario')->findAll();
+        
     }
 }

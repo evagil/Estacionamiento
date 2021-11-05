@@ -18,7 +18,8 @@ class AutosEstacionados extends BaseController{
 
     public function listar(){        
         $vehiculo = new ModeloAutosEstacionados();
-        $autos = $vehiculo->encontrarVehiculosEstacionados();       
+        $autos = $vehiculo->encontrarVehiculosEstacionados();    
+        
         return $this->response->setJSON($autos);
     }
 }

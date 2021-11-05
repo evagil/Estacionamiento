@@ -1,30 +1,38 @@
 <div class="table-responsive">
-
-<table class="table table-striped table-sm">
-
-    <thead>
+    <table class="table"
+           id="table"
+           data-search="true"
+           data-pagination="true"
+           data-page-size="3"
+           data-page-list="[3, 6, 9]">
+        <thead>
         <tr>
-            <th scope="col">Hs Inicio</th>
-            <th scope="col">Hs Fin</th>
-            <th scope="col">Cantidad de Hs</th>
-            <th scope="col">Monto</th>   
-            <th scope="col">Usuario</th>   
-            <th scope="col">Auto</th>           
-            <th scope="col">Zona</th>            
+            <th data-field="hora_inicio" data-sortable="true">Hora Inicio</th>
+            <th data-field="hora_fin" data-sortable="true">Hora Fin</th>
+            <th data-field="cantidad_horas" data-sortable="true">Cantidad Hs</th>
+            <th data-field="monto" data-sortable="true">Monto</th>
+            <th data-field="nombre" data-sortable="true">Usuario</th>
+            <th data-field="patente" data-sortable="true">Auto</th>
+            <th data-field="nombre" data-sortable="true">Zona</th>
         </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($autos as $vehiculo): ?>
-            <tr>
-                <td><?php echo $vehiculo->hora_inicio ?></td>
-                <td><?php echo $vehiculo->hora_fin ?></td>
-                <td><?php echo $vehiculo->cantidad_horas ?></td>
-                <td><?php echo $vehiculo->monto ?></td>
-                <td><?php echo $vehiculo->id_usuario ?></td>
-                <td><?php echo $vehiculo->id_auto ?></td>
-                <td><?php echo $vehiculo->id_zona_horario ?></td>        
-            </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+        </thead>
+    </table>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">    
+
+    $(document).ready(() => {
+        $.ajax({
+            method: 'GET',
+            url: "<?= esc(base_url('vehiculos/ObtenerVehiculosEstacionados')) ?>",
+            success: (vehiculos) => {
+                $('#table').bootstrapTable({
+                    data: vehiculos
+                    
+                    
+                })
+            }
+        })
+    })
+</script>
