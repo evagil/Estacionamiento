@@ -254,10 +254,11 @@ class Validation
 
     public $formAuto = [
         'patente' => [
-            'rules' => 'required|exact_length[7]', // patente solo numerica?
+            'rules' => 'required|min_length[6]|max_length[7]',
             'errors' => [
                 'required' => 'Ingrese la patente.',
-                'exact_length' => 'La patente debe ser de 7 numeros.' // hay patentes con menos numeros? Deben ser 7 si o si?
+                'min_length' => 'La patente debe ser de 6 numeros minimo.',
+                'max_length' => 'La patente debe ser de 7 numeros maximo.',
             ]
         ],
         'marca' => [
