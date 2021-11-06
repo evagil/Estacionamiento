@@ -51,8 +51,11 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
     $routes->add('reestablecer/(:num)', 'Usuario::reestablecerClave/$1');
     $routes->add('salir', 'Usuario::salir');
     $routes->add('eliminar/(:num)', 'Usuario::eliminar/$1');
-    
 
+
+    $routes->get('formulario', 'Usuario::formulario');
+    $routes->post('envioPost', 'Usuario::enviarPost');
+ 
     $routes->group('clientes', function($routes) {
         $routes->add('agregarVehiculo', 'Cliente::agregarVehiculo');
         $routes->post('guardarVehiculo', 'Cliente::guardarVehiculo');
@@ -69,7 +72,7 @@ $routes->group('vehiculos', function($routes) {
     $routes->add('listarVehiculosEstacionados', 'AutosEstacionados::index');
     $routes->get('ObtenerVehiculosEstacionados', 'AutosEstacionados::listar');
    
-});
+    });
 
 /*
  * --------------------------------------------------------------------

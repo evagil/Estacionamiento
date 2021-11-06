@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Models\ModeloRol;
 use App\Models\ModeloUsuario;
+use App\Models\ModeloAuto;
+use App\Models\ModeloVenta;
 
 
 class Usuario extends BaseController
@@ -71,6 +73,8 @@ class Usuario extends BaseController
         echo view('usuarios/perfil/perfil-header', $data);
         echo view('usuarios/alta', $data);
         echo view('usuarios/perfil/perfil-footer');
+
+        
     }
 
     public function guardarAlta()
@@ -108,6 +112,7 @@ class Usuario extends BaseController
         echo view('Usuarios/editar', $data);
         echo view('usuarios/perfil/perfil-footer');
     }
+  
 
     public function guardarEdicion()
     {
@@ -165,4 +170,34 @@ class Usuario extends BaseController
         $modelo->reestablecerClave($id);
         return redirect()->to(base_url('usuarios/listar'))->with('mensaje', 'Clave reestablecida con exito.');
     }
+
+   
+
+    public function formulario(){
+        $data['titulo'] = 'Inspeccionar';
+        echo view ('usuarios/perfil/perfil-header', $data);
+        return view ('usuarios/formulario');
+    }
+
+    public function enviarPost(){
+       $valor1 = $_POST['valor1'];
+
+       $autos = new ModeloAuto();
+       $venta = new ModeloVenta();
+      
+
+       $auto = $autos->obtenerAutoPorPatente($valor1);
+    
+       $data['ventas'] = $venta->listarVentas($auto->id_auto);
+
+       // print_r($data['ventas']); die();
+
+       $data['titulo'] = 'Listado de ventas del vehiculo';
+       echo view ('usuarios/perfil/perfil-header', $data);
+       echo view ('usuarios/listarVentas', $data);
+       echo view ('usuarios/perfil/perfil-footer', $data); 
+    }
+
+   
+
 }

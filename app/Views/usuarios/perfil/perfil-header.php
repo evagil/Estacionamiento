@@ -99,6 +99,23 @@
                         </li>
                     </ul>
                 <?php endif; ?>
+
+                <?php if (session()->get('nombre_rol') === 'Inspector'): ?>
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">Inspector</h6>
+                <ul class="nav flex-column mb-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('usuarios/formulario') ?>">
+                            <span data-feather="users"></span>
+                            InspecionarVenta
+                        </a>
+                    </li>
+                    
+                    
+                <?php endif; ?>
+
+
+
+
             </div>
         </nav>
 
