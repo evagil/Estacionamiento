@@ -11,7 +11,7 @@
             <th data-field="hora_fin" data-sortable="true">Hora Fin</th>
             <th data-field="cantidad_horas" data-sortable="true">Cantidad Hs</th>
             <th data-field="monto" data-sortable="true">Monto</th>
-            <th data-field="nombre" data-sortable="true">Usuario</th>
+            <th data-field="nombre_usuario" data-sortable="true">Usuario</th>
             <th data-field="patente" data-sortable="true">Auto</th>
             <th data-field="nombre" data-sortable="true">Zona</th>
         </tr>
@@ -27,10 +27,12 @@
             method: 'GET',
             url: "<?= esc(base_url('usuarios/administrador/ObtenerVehiculosEstacionados')) ?>",
             success: (vehiculos) => {
+                for (let vehiculo of vehiculos){
+                    vehiculo.nombre_usuario = vehiculo.nombre_usuario + " " + vehiculo.apellido
+                }
+
                 $('#table').bootstrapTable({
                     data: vehiculos
-                    
-                    
                 })
             }
         })
