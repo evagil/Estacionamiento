@@ -25,7 +25,7 @@
     $(document).ready(() => {
         $.ajax({
             method: 'GET',
-            url: "<?= esc(base_url('vehiculos/ObtenerVehiculosEstacionados')) ?>",
+            url: "<?= esc(base_url('usuarios/administrador/ObtenerVehiculosEstacionados')) ?>",
             success: (vehiculos) => {
                 $('#table').bootstrapTable({
                     data: vehiculos

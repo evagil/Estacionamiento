@@ -65,14 +65,14 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         $routes->get('obtenerVehiculos', 'Cliente::obtenerVehiculos');
         $routes->add('vincularVehiculo/(:any)', 'Cliente::vincularVehiculo/$1');
     });   
+
+    $routes->group('administrador', function($routes) {
+        $routes->add('listarVehiculosEstacionados', 'AutosEstacionados::index');
+        $routes->get('ObtenerVehiculosEstacionados', 'AutosEstacionados::listar');
+       
+    });
    
 });
-
-$routes->group('vehiculos', function($routes) {
-    $routes->add('listarVehiculosEstacionados', 'AutosEstacionados::index');
-    $routes->get('ObtenerVehiculosEstacionados', 'AutosEstacionados::listar');
-   
-    });
 
 /*
  * --------------------------------------------------------------------

@@ -75,7 +75,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('vehiculos/listarVehiculosEstacionados') ?>">
+                        <a class="nav-link" href="<?= base_url('usuarios/administrador/listarVehiculosEstacionados') ?>">
                             <span data-feather="plus-circle"></span>
                             Autos Estacionados
                         </a>
