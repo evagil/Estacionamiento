@@ -40,5 +40,12 @@ class ModeloUsuario extends Model
 
    }
 
+    public function obtenerDetalleUsuario($id)
+    {
+        return $this->select('nombre, apellido, dni, email, nombre_rol')->join('roles', 'usuarios.id_rol = roles.id_rol')
+            ->where('id_usuario', $id)
+            ->where('baja', 0)
+            ->first();
+    }
 
 }
