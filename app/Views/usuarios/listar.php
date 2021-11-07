@@ -22,11 +22,11 @@
 <script type="text/javascript">
 
     const borrar = (id) => {
-        window.location.replace("<?= base_url('usuarios/eliminar') ?>/" + id)
+        window.location.replace("<?= base_url('usuarios/administrador/eliminar') ?>/" + id)
     }
 
     const reestablecer = (id) => {
-        window.location.replace("<?= base_url('usuarios/reestablecer') ?>/" + id)
+        window.location.replace("<?= base_url('usuarios/administrador/reestablecer') ?>/" + id)
     }
 
     const editar = (id) => {
@@ -36,7 +36,7 @@
     $(document).ready(() => {
         $.ajax({
             method: 'GET',
-            url: "<?= esc(base_url('usuarios/encontrarUsuarios')) ?>",
+            url: "<?= esc(base_url('usuarios/administrador/encontrarUsuarios')) ?>",
             success: (usuarios) => {
                 $('#table').bootstrapTable({
                     data: usuarios,

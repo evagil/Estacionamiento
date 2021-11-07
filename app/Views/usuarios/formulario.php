@@ -2,7 +2,7 @@
     
 
 
-<form method="post" action="<?= base_url('usuarios/envioPost') ?>">
+<form method="post" action="<?= base_url('usuarios/inspectores/envioPost') ?>">
 <input type="text" name="valor1" placeholder="patente">
     <br>
     <br>

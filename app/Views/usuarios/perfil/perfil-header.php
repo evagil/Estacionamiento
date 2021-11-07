@@ -63,15 +63,15 @@
                 <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">Administrador</h6>
                 <ul class="nav flex-column mb-2">
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('usuarios/listar') ?>">
+                        <a class="nav-link" href="<?= base_url('usuarios/administrador/listadoUsuarios') ?>">
                             <span data-feather="users"></span>
-                            Usuarios
+                            Listar Usuarios
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('usuarios/alta') ?>">
+                        <a class="nav-link" href="<?= base_url('usuarios/administrador/altaUsuario') ?>">
                             <span data-feather="plus-circle"></span>
-                            Alta
+                            Crear Usuario
                         </a>
                     </li>
                     <li class="nav-item">
@@ -104,13 +104,12 @@
                 <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">Inspector</h6>
                 <ul class="nav flex-column mb-2">
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('usuarios/formulario') ?>">
+                        <a class="nav-link" href="<?= base_url('usuarios/inspectores/formulario') ?>">
                             <span data-feather="users"></span>
                             InspecionarVenta
                         </a>
                     </li>
-                    
-                    
+                </ul>
                 <?php endif; ?>
 
 

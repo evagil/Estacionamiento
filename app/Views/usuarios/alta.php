@@ -1,6 +1,6 @@
 <div class="container">
     <form style="width: 50%; margin: 0 auto" method="post" <?php if (session()->get('nombre_rol') === 'Administrador'): ?>
-                                        action="<?= base_url('usuarios/alta') ?>"
+                                        action="<?= base_url('usuarios/administrador/altaUsuario') ?>"
                                     <?php else: ?>
                                         action="<?= base_url('guardarRegistro') ?>"
                                     <?php endif; ?>>

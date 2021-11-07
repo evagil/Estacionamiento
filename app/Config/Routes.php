@@ -40,21 +40,11 @@ $routes->group('', ['filter' => 'authEstaLog'], function($routes) {
 });
 
 $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
-    $routes->add('perfil', 'Usuario::index');
-    $routes->add('listar', 'Usuario::listar');
-    $routes->get('encontrarUsuarios', 'Usuario::encontrarUsuarios');
+    $routes->add('perfil', 'Usuario::perfil');
     $routes->get('obtenerDetalleUsuario/(:num)', 'Usuario::obtenerDetalleUsuario/$1');
-    $routes->add('alta', 'Usuario::altaUsuario');
-    $routes->post('alta', 'Usuario::guardarAlta');
     $routes->add('modificar/(:num)', 'Usuario::editarUsuario/$1');
     $routes->post('modificar/(:num)', 'Usuario::guardarEdicion');
-    $routes->add('reestablecer/(:num)', 'Usuario::reestablecerClave/$1');
     $routes->add('salir', 'Usuario::salir');
-    $routes->add('eliminar/(:num)', 'Usuario::eliminar/$1');
-
-
-    $routes->get('formulario', 'Usuario::formulario');
-    $routes->post('envioPost', 'Usuario::enviarPost');
  
     $routes->group('clientes', function($routes) {
         $routes->add('agregarVehiculo', 'Cliente::agregarVehiculo');
@@ -62,16 +52,24 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         $routes->get('vehiculos', 'Cliente::index');
         $routes->get('obtenerVehiculos', 'Cliente::obtenerVehiculos');
         $routes->get('obtenerVehiculos/(:any)', 'Cliente::obtenerVehiculos/$1');
-        $routes->get('obtenerVehiculos', 'Cliente::obtenerVehiculos');
         $routes->add('vincularVehiculo/(:any)', 'Cliente::vincularVehiculo/$1');
     });   
 
     $routes->group('administrador', function($routes) {
-        $routes->add('listarVehiculosEstacionados', 'AutosEstacionados::index');
-        $routes->get('ObtenerVehiculosEstacionados', 'AutosEstacionados::listar');
-       
+        $routes->add('listarVehiculosEstacionados', 'Admin::listarVehiculosEstacionados');
+        $routes->get('obtenerVehiculosEstacionados', 'Admin::obtenerVehiculosEstacionados');
+        $routes->add('listadoUsuarios', 'Admin::listarUsuarios');
+        $routes->get('encontrarUsuarios', 'Admin::encontrarUsuarios');
+        $routes->add('altaUsuario', 'Admin::altaUsuario');
+        $routes->post('altaUsuario', 'Admin::guardarAlta');
+        $routes->add('eliminar/(:num)', 'Admin::eliminar/$1');
+        $routes->add('reestablecer/(:num)', 'Admin::reestablecerClave/$1');
     });
-   
+
+    $routes->group('inspectores', function($routes) {
+        $routes->get('formulario', 'Inspector::formulario'); // Sugerencia. Cambiar nombre para que sea mas representativo, como consultaEstacionamiento
+        $routes->post('envioPost', 'Inspector::enviarPost'); // Sugerencia. Cambiar nombre para que sea mas representativo, como obtenerEstacionamiento
+    });
 });
 
 /*
