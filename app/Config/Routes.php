@@ -41,12 +41,15 @@ $routes->group('', ['filter' => 'authEstaLog'], function($routes) {
 
 $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
     $routes->add('perfil', 'Usuario::perfil');
-    $routes->get('obtenerDetalleUsuario/(:num)', 'Usuario::obtenerDetalleUsuario/$1');
-    $routes->add('modificar/(:num)', 'Usuario::editarUsuario/$1');
-    $routes->post('modificar/(:num)', 'Usuario::guardarEdicion');
     $routes->add('salir', 'Usuario::salir');
+
+    $routes->group('', ['filter' => 'propietaryGuard:3'], function ($routes) {
+        $routes->get('obtenerDetalleUsuario/(:num)', 'Usuario::obtenerDetalleUsuario/$1');
+        $routes->add('modificar/(:num)', 'Usuario::editarUsuario/$1');
+        $routes->post('modificar/(:num)', 'Usuario::guardarEdicion');
+    });
  
-    $routes->group('clientes', function($routes) {
+    $routes->group('clientes', ['filter' => 'rolGuard:Cliente'], function($routes) {
         $routes->add('agregarVehiculo', 'Cliente::agregarVehiculo');
         $routes->post('guardarVehiculo', 'Cliente::guardarVehiculo');
         $routes->get('vehiculos', 'Cliente::index');
@@ -55,7 +58,7 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         $routes->add('vincularVehiculo/(:any)', 'Cliente::vincularVehiculo/$1');
     });   
 
-    $routes->group('administrador', function($routes) {
+    $routes->group('administrador', ['filter' => 'rolGuard:Administrador'], function($routes) {
         $routes->add('listarVehiculosEstacionados', 'Admin::listarVehiculosEstacionados');
         $routes->get('obtenerVehiculosEstacionados', 'Admin::obtenerVehiculosEstacionados');
         $routes->add('listadoUsuarios', 'Admin::listarUsuarios');
@@ -66,9 +69,13 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         $routes->add('reestablecer/(:num)', 'Admin::reestablecerClave/$1');
     });
 
-    $routes->group('inspectores', function($routes) {
+    $routes->group('inspectores', ['filter' => 'rolGuard:Inspector'], function($routes) {
         $routes->get('formulario', 'Inspector::formulario'); // Sugerencia. Cambiar nombre para que sea mas representativo, como consultaEstacionamiento
         $routes->post('envioPost', 'Inspector::enviarPost'); // Sugerencia. Cambiar nombre para que sea mas representativo, como obtenerEstacionamiento
+    });
+
+    $routes->group('vendedores', ['filter' => 'rolGuard:Vendedor'], function($routes) {
+
     });
 });
 

@@ -4,6 +4,8 @@ namespace Config;
 
 use App\Filters\AuthGuard;
 use App\Filters\AuthEstaLog;
+use App\Filters\PropietaryGuard;
+use App\Filters\RolGuard;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
@@ -22,7 +24,9 @@ class Filters extends BaseConfig
         'toolbar'  => DebugToolbar::class,
         'honeypot' => Honeypot::class,
         'authGuard' => AuthGuard::class,
-        'authEstaLog' => AuthEstaLog::class
+        'authEstaLog' => AuthEstaLog::class,
+        'rolGuard' => RolGuard::class,
+        'propietaryGuard' => PropietaryGuard::class
     ];
 
     /**
