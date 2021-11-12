@@ -30,4 +30,8 @@ class Inspector extends BaseController
         echo view ('usuarios/listarVentas', $data);
         echo view ('usuarios/perfil/perfil-footer');
     }
+
+
+    
+
 }

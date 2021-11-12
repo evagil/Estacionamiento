@@ -13,7 +13,7 @@ class ModeloVenta extends Model
     protected $allowedFields = ['hora_inicio','hora_fin','cantidad_horas','monto','id_usuario','id_auto','id_zona_horario','vender', 'pago'];
 
     public function listarVentas($id){
-        return $this->where("ventas.id_auto = $id")->findAll();
+        return $this->where("ventas.id_auto = $id AND ( (current_timestamp() < ventas.hora_fin) OR (ventas.hora_fin IS NULL))")->findAll();
     }
 
     public function encontrarVehiculosEstacionados()
