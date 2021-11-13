@@ -1,6 +1,8 @@
 <?php
 namespace App\Validation;
 
+use App\Models\ModeloZona;
+use CodeIgniter\I18n\Time;
 use Config\Database;
 
 class IngresoRules {
@@ -47,5 +49,41 @@ class IngresoRules {
         }
 
         return $row->get()->getRow() !== null;
+    }
+
+    public function mayorAHora(?string $hora, string $horaMenor)
+    {
+        $horaFinal = new Time('1-1-2021 '.$hora);
+        $horaInicial = new Time('1-1-2021 '.$horaMenor);
+
+        if ($horaFinal->isAfter($horaInicial))
+            return true;
+        else
+            return false;
+    }
+
+    public function horaEnRango(?string $hora, string $horario)
+    {
+        $zonaHorario = new ModeloZona();
+        $horarioBD = $zonaHorario->obtenerHorario($horario);
+        $horaFin = new Time($horarioBD->hora_fin);
+        $horaRango = new Time($hora);
+        $horaInicio = new Time($horarioBD->hora_inicio);
+
+        if (($horaRango->equals($horaInicio) || $horaRango->isAfter($horaInicio)) &&
+            ($horaRango->equals($horaFin)) || $horaRango->isBefore($horaFin))
+            return true;
+        else
+            return false;
+    }
+
+    public function diaEnRango(?string $fecha, string $horario)
+    {
+        $zonaHorario = new ModeloZona();
+        $horarioBD = $zonaHorario->obtenerHorario($horario);
+        $diasHabiles = explode(',', $horarioBD->dias);
+        $diaDeLaSemana = Time::parse($fecha)->getDayOfWeek();
+
+        return in_array($diaDeLaSemana, $diasHabiles);
     }
 }

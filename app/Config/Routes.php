@@ -75,7 +75,11 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
     });
 
     $routes->group('vendedores', ['filter' => 'rolGuard:Vendedor'], function($routes) {
-
+        $routes->get('vender', 'Vendedor::crearEstadia');
+        $routes->post('vender', 'Vendedor::guardarEstadia');
+        $routes->get('precio', 'Vendedor::precioEstadia');
+        $routes->get('zonas', 'Vendedor::obtenerZonas');
+        $routes->get('horarios', 'Vendedor::obtenerHorariosZona');
     });
 });
 
