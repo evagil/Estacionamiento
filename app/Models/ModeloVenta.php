@@ -16,11 +16,31 @@ class ModeloVenta extends Model
         return $this->where("ventas.id_auto = $id")->findAll();
     }
 
+   
     public function encontrarVehiculosEstacionados()
     {
         return $this->select('usuarios.nombre as nombre_usuario, usuarios.apellido, autos.*, zonas.*, ventas.*')
             ->join('usuarios','ventas.id_usuario= usuarios.id_usuario')
             ->join('autos','autos.id_auto=ventas.id_auto')
-            ->join('zonas','zonas.id_zona=ventas.id_zona_horario')->findAll();
+            ->join('zonas','zonas.id_zona=ventas.id_zona_horario')
+            ->findAll();
     }
+
+    #autos estacionados
+    public function obtenerAutosDelUsuarioVentas($id_usuario)
+    {
+        return $this->select('usuarios.nombre as nombre_usuario, usuarios.apellido, autos.*, zonas.*, ventas.*')
+        ->join('usuarios','ventas.id_usuario= usuarios.id_usuario')
+        ->join('autos','autos.id_auto=ventas.id_auto')
+        ->join('zonas','zonas.id_zona=ventas.id_zona_horario')
+        ->where('usuarios.id_usuario', $id_usuario)
+        ->findAll();       
+    }
+
+    public function bajaEstadia($id){
+
+
+        $this->set('baja', 1)->where('id_usuario', $id)->update();
+    
+       }
 }

@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Entities\Auto;
 use App\Models\ModeloAuto;
 use App\Models\ModeloAutoUsuario;
+use App\Models\ModeloVenta;
 
 class Cliente extends BaseController
 {
@@ -73,4 +74,33 @@ class Cliente extends BaseController
             return redirect()->to(base_url('usuarios/perfil'))->with('mensaje_error', 'Hubo un error para vincular el vehiculo a su cuenta: '.$mensaje);
         }
     }
+
+
+    # ver vehiculos estacionados
+   
+
+    public function verMisEstadias(){
+        $data['titulo'] = "Mis Estadias";
+        echo view('usuarios/perfil/perfil-header', $data);
+        echo view('clientes/misVehiculosEstacionados', $data);
+        echo view('usuarios/perfil/perfil-footer');
+    }
+
+    public function obtenerEstadiaVehiculo()
+    {    
+        $auto = new ModeloVenta();
+        $id_usuario = session()->get('id_usuario');
+        $automovil = $auto->obtenerAutosDelUsuarioVentas($id_usuario);
+        return $this->response->setJSON($automovil);       
+    
+    }
+
+
+    public function finalizarEstadia($id){
+        $modelo = new ModeloVenta();
+        $modelo->bajaEstadia($id);
+        #ver en mis-vehiculos-estacionados
+        return redirect()->to(base_url('usuarios/administrador/listadoUsuarios'))->with('mensaje', 'Usuario eliminadoMo existosamente.');
+    }
+
 }

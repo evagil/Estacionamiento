@@ -97,6 +97,12 @@
                                 Ver mis Vehiculos
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url('usuarios/clientes/verMisEstadias') ?>">
+                                <div class="fas fa-car-side fa-lg"></div>
+                                Ver Mis Estadias
+                            </a>
+                        </li>
                     </ul>
                 <?php endif; ?>
 

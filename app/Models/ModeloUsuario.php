@@ -35,8 +35,7 @@ class ModeloUsuario extends Model
 
    public function bajaUsuario($id){
 
-
-    $this->set('baja', 1)->where('id_usuario', $id)->update();
+        $this->set('baja', 1)->where('id_usuario', $id)->update();
 
    }
 
