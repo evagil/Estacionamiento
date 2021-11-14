@@ -252,13 +252,37 @@ class Validation
         ]
     ];
 
-    public $formAuto = [
+    public $formAutoVincular = [
         'patente' => [
             'rules' => 'required|min_length[6]|max_length[7]',
             'errors' => [
                 'required' => 'Ingrese la patente.',
                 'min_length' => 'La patente debe ser de 6 numeros minimo.',
                 'max_length' => 'La patente debe ser de 7 numeros maximo.',
+            ]
+        ],
+        'marca' => [
+            'rules' => 'required',
+            'errors' => [
+                'required' => 'Ingrese la marca.'
+            ]
+        ],
+        'modelo' => [
+            'rules' => 'required',
+            'errors' => [
+                'required' => 'Ingrese el modelo.'
+            ]
+        ]
+    ];
+
+    public $formAuto = [
+        'patente' => [
+            'rules' => 'required|min_length[6]|max_length[7]|campoUnico[autos,patente]',
+            'errors' => [
+                'required' => 'Ingrese la patente.',
+                'min_length' => 'La patente debe ser de 6 numeros minimo.',
+                'max_length' => 'La patente debe ser de 7 numeros maximo.',
+                'campoUnico' => 'Ya existe un auto con esa patente.'
             ]
         ],
         'marca' => [

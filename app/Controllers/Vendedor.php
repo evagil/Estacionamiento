@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 
+use App\Entities\Auto;
 use App\Models\ModeloAuto;
 use App\Models\ModeloVenta;
 use App\Models\ModeloZona;
@@ -42,30 +43,30 @@ class Vendedor extends BaseController
             $autos = new ModeloAuto();
             $zonas = new ModeloZona();
             $post = $this->request->getPost();
-            $auto = $autos->obtenerAutoPorPatente($post['patente']);
+            $auto = $autos->obtenerAutos($post['patente']);
             $precio = $zonas->precioEstadia($post);
             $zonaHorario = $zonas->obtenerZonaHorario($post['zona'], $post['horario']);
 
-            $venta = new \App\Entities\Venta([
-                'hora_inicio' => Time::parse($post['fecha'].' '.$post['horaInicial']),
-                'hora_fin' => Time::parse($post['fecha'].' '.$post['horaFinal']),
-                'monto' => $precio,
-                'id_usuario' => session()->get('id_usuario'),
-                'id_auto' => $auto->id_auto,
-                'id_zona_horario' => $zonaHorario->id_zona_horario,
-                'vender' => 1,
-                'pago' => 1
-            ]);
-
             if ($auto)
             {
+                $venta = new \App\Entities\Venta([
+                    'hora_inicio' => Time::parse($post['fecha'].' '.$post['horaInicial']),
+                    'hora_fin' => Time::parse($post['fecha'].' '.$post['horaFinal']),
+                    'monto' => $precio,
+                    'id_usuario' => session()->get('id_usuario'),
+                    'id_auto' => $auto->id_auto,
+                    'id_zona_horario' => $zonaHorario->id_zona_horario,
+                    'vender' => 1,
+                    'pago' => 1
+                ]);
+
                 if ($ventas->save($venta))
                 {
                     return redirect()->to(base_url('usuarios/perfil'))->with('mensaje', 'Venta existosa.');
                 }
                 else
                 {
-
+                    print_r('No existe el auto wacim'); die();
                 }
             }
         }
@@ -117,6 +118,21 @@ class Vendedor extends BaseController
         if($horario)
         {
             return $this->response->setJSON(['horario' => $zonas->obtenerHorario($horario)]);
+        }
+    }
+
+    public function guardarVehiculo()
+    {
+        $autos = new ModeloAuto();
+        $validation =  \Config\Services::validation();
+        $auto = new Auto($this->request->getPost());
+
+        if ($validation->run($this->request->getPost(), 'formAuto')) {
+            $autos->save($auto);
+            return $this->response->setStatusCode(200, 'Vehiculo creado');
+        }
+        else {
+            return $this->response->setStatusCode(500, 'Vehiculo no creado')->setJSON(json_encode($validation->getErrors()));
         }
     }
 }

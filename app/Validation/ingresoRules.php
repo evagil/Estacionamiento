@@ -51,7 +51,7 @@ class IngresoRules {
         return $row->get()->getRow() !== null;
     }
 
-    public function mayorAHora(?string $hora, string $horaMenor)
+    public function mayorAHora(?string $hora, string $horaMenor): bool
     {
         $horaFinal = new Time('1-1-2021 '.$hora);
         $horaInicial = new Time('1-1-2021 '.$horaMenor);
@@ -62,7 +62,7 @@ class IngresoRules {
             return false;
     }
 
-    public function horaEnRango(?string $hora, string $horario)
+    public function horaEnRango(?string $hora, string $horario): bool
     {
         $zonaHorario = new ModeloZona();
         $horarioBD = $zonaHorario->obtenerHorario($horario);
@@ -77,7 +77,7 @@ class IngresoRules {
             return false;
     }
 
-    public function diaEnRango(?string $fecha, string $horario)
+    public function diaEnRango(?string $fecha, string $horario): bool
     {
         $zonaHorario = new ModeloZona();
         $horarioBD = $zonaHorario->obtenerHorario($horario);
@@ -85,5 +85,18 @@ class IngresoRules {
         $diaDeLaSemana = Time::parse($fecha)->getDayOfWeek();
 
         return in_array($diaDeLaSemana, $diasHabiles);
+    }
+
+    public function campoUnico(?string $valor, string $datos): bool
+    {
+        [$tabla, $campo] = array_pad(explode(',', $datos), 2, null);
+        $db = db_connect();
+
+        $resultado = $db->table($tabla)
+            ->select('1')
+            ->where($campo, $valor)
+            ->get()->getRow();
+
+        return $resultado === null;
     }
 }
