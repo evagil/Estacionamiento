@@ -54,7 +54,7 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         $routes->post('guardarVehiculo', 'Cliente::guardarVehiculo');
         $routes->get('vehiculos', 'Cliente::index');
         $routes->get('obtenerVehiculos', 'Cliente::obtenerVehiculos');
-        $routes->get('obtenerVehiculos/(:any)', 'Cliente::obtenerVehiculos/$1');
+        $routes->get('obtenerVehiculo/(:any)', 'Cliente::obtenerVehiculo/$1');
         $routes->add('vincularVehiculo/(:any)', 'Cliente::vincularVehiculo/$1');
         # ver mis vehiculos
         $routes->add('verMisEstadias', 'Cliente::verMisEstadias');
@@ -78,7 +78,12 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
     });
 
     $routes->group('vendedores', ['filter' => 'rolGuard:Vendedor'], function($routes) {
-
+        $routes->get('vender', 'Vendedor::crearEstadia');
+        $routes->post('vender', 'Vendedor::guardarEstadia');
+        $routes->get('precio', 'Vendedor::precioEstadia');
+        $routes->get('zonas', 'Vendedor::obtenerZonas');
+        $routes->get('horarios', 'Vendedor::obtenerHorariosZona');
+        $routes->post('guardarVehiculo', 'Vendedor::guardarVehiculo');
     });
 });
 

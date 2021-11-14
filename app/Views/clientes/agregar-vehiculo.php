@@ -72,7 +72,7 @@
         $(document).ready(() => {
             $.ajax({
                 method: 'GET',
-                url: "<?= esc(base_url('usuarios/clientes/obtenerVehiculos')) ?>/" + patente,
+                url: "<?= esc(base_url('usuarios/clientes/obtenerVehiculo')) ?>/" + patente,
                 success: (response) => {
                     if (response) {
                         myModal.show()

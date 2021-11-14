@@ -252,7 +252,7 @@ class Validation
         ]
     ];
 
-    public $formAuto = [
+    public $formAutoVincular = [
         'patente' => [
             'rules' => 'required|min_length[6]|max_length[7]',
             'errors' => [
@@ -271,6 +271,116 @@ class Validation
             'rules' => 'required',
             'errors' => [
                 'required' => 'Ingrese el modelo.'
+            ]
+        ]
+    ];
+
+    public $formAuto = [
+        'patente' => [
+            'rules' => 'required|min_length[6]|max_length[7]|campoUnico[autos,patente]',
+            'errors' => [
+                'required' => 'Ingrese la patente.',
+                'min_length' => 'La patente debe ser de 6 numeros minimo.',
+                'max_length' => 'La patente debe ser de 7 numeros maximo.',
+                'campoUnico' => 'Ya existe un auto con esa patente.'
+            ]
+        ],
+        'marca' => [
+            'rules' => 'required',
+            'errors' => [
+                'required' => 'Ingrese la marca.'
+            ]
+        ],
+        'modelo' => [
+            'rules' => 'required',
+            'errors' => [
+                'required' => 'Ingrese el modelo.'
+            ]
+        ]
+    ];
+
+    public $formVentaVendedor = [
+        'patente' => [
+            'rules' => 'required|min_length[6]|max_length[7]',
+            'errors' => [
+                'required' => 'Ingrese la patente.',
+                'min_length' => 'La patente debe ser de 6 numeros minimo.',
+                'max_length' => 'La patente debe ser de 7 numeros maximo.',
+            ]
+        ],
+        'zona' => [
+            'rules' => 'required|greater_than[0]',
+            'errors' => [
+                'required' => 'Ingrese la zona.',
+                'greater_than' => 'Ingrese una zona valida.'
+            ]
+        ],
+        'horario' => [
+            'rules' => 'required|greater_than[0]',
+            'errors' => [
+                'required' => 'Seleccione una franja horaria.',
+                'greater_than' => 'Seleccione un rango horario valido.'
+            ]
+        ],
+        'fecha' => [
+            'rules' => 'required|diaEnRango[{horario}]',
+            'errors' => [
+                'required' => 'Ingrese la horario inicial.',
+                'diaEnRango' => 'La fecha esta fuera del rango.'
+            ]
+        ],
+        'horaInicial' => [
+            'rules' => 'required|horaEnRango[{horario}]',
+            'errors' => [
+                'required' => 'Ingrese la horario inicial.',
+                'horaEnRango' => 'El horario inicial debe estar en el rango horario.'
+            ]
+        ],
+        'horaFinal' => [
+            'rules' => 'required|horaEnRango[{horario}]|mayorAHora[{horaInicial}]',
+            'errors' => [
+                'required' => 'Ingrese la horario final.',
+                'horaEnRango' => 'El horario final debe estar en el rango horario.',
+                'mayorAHora' => 'La hora final debe ser mayor a la hora inicial.'
+            ]
+        ]
+    ];
+
+    public $formPrevisualizacion = [
+        'zona' => [
+            'rules' => 'required|greater_than[0]',
+            'errors' => [
+                'required' => 'Ingrese la zona.',
+                'greater_than' => 'Ingrese una zona valida.'
+            ]
+        ],
+        'horario' => [
+            'rules' => 'required|greater_than[0]',
+            'errors' => [
+                'required' => 'Seleccione una franja horaria.',
+                'greater_than' => 'Seleccione un rango horario valido.'
+            ]
+        ],
+        'fecha' => [
+            'rules' => 'required|diaEnRango[{horario}]',
+            'errors' => [
+                'required' => 'Ingrese la horario inicial.',
+                'diaEnRango' => 'La fecha esta fuera del rango.'
+            ]
+        ],
+        'horaInicial' => [
+            'rules' => 'required|horaEnRango[{horario}]',
+            'errors' => [
+                'required' => 'Ingrese la horario inicial.',
+                'horaEnRango' => 'El horario inicial debe estar en el rango horario.'
+            ]
+        ],
+        'horaFinal' => [
+            'rules' => 'required|horaEnRango[{horario}]|mayorAHora[{horaInicial}]',
+            'errors' => [
+                'required' => 'Ingrese la horario final.',
+                'horaEnRango' => 'El horario final debe estar en el rango horario.',
+                'mayorAHora' => 'La hora final debe ser mayor a la hora inicial.'
             ]
         ]
     ];

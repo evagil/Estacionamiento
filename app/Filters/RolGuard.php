@@ -12,7 +12,7 @@ class RolGuard implements FilterInterface
     {
         $permisos = [
             'Administrador' => ['Administrador'],
-            'Cliente' => ['Cliente', 'Usuario'],
+            'Cliente' => ['Cliente'],
             'Inspector' => ['Inspector', 'Cliente'],
             'Vendedor' => ['Vendedor', 'Cliente']
         ];

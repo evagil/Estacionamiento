@@ -16,7 +16,7 @@ class ModeloAuto extends Model
         return $this->find($id);
     }
 
-    public function obtenerAutos($patente = null) {
+    public function obtenerAutos($patente = null) { // Si le das una patente al metodo busca ese auto, si no busca a todos
         if ($patente)
         {
             return $this->where('patente', $patente)->first();
@@ -26,42 +26,4 @@ class ModeloAuto extends Model
             return $this->findAll();
         }
     }
-
-    public function obtenerAutoPorPatente($patente){
-       // print_r($patente);
-      //  print_r($this->where($patente, 'autos.patente')->first()->id_auto);
-       //return $this->where("patente like '$patente'")->first()->id_auto;
- 
-       $query = $this->where("autos.patente like '$patente'");
-       $auto = $query->first();
-       return $auto;
-
-    }
-
-    // estas 2 no van
-    public function obtenerRolDeUsuario($id)
-    {
-        $query = $this->select(['roles.id_rol', 'roles.nombre_rol'])->join('usuarios', 'usuarios.id_rol = roles.id_rol')->where("usuarios.id_usuario = $id");
-        $rol = $query->first();
-        return $rol;
-    }
-
-    public function listarVentass($id){
-       
-        return $this->select('ventas.monto', 'ventas.id_venta')
-        ->join('ventas', 'ventas.id_auto = autos.id_auto')
-        ->where("ventas.id_auto = $id")
-        ->findAll();
-       
-    }
-
-    public function listarVentas($id){
-       
-        return $this->select('ventas.monto', 'ventas.id_venta','ventas.hora_inicio','ventas.hora_fin','ventas.cantidad.horas')
-        ->join('ventas', 'autos.id_auto = ventas.id_auto')
-        ->where("ventas.id_auto = $id")
-        ->findAll();
-       
-    }
-
 }

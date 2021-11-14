@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models;
-
 use CodeIgniter\Model;
 
 class ModeloVenta extends Model
@@ -13,7 +12,18 @@ class ModeloVenta extends Model
     protected $allowedFields = ['hora_inicio','hora_fin','cantidad_horas','monto','id_usuario','id_auto','id_zona_horario','vender', 'pago'];
 
     public function listarVentas($id){
-        return $this->where("ventas.id_auto = $id")->findAll();
+        return $this->select("hora_inicio, 
+            case when hora_fin is null then 'Indefinida'
+            else hora_fin end as hora_fin,
+            case when hora_fin is null then 'Contando..'
+            else cantidad_horas end as cantidad_horas,
+            case when hora_fin is null then 'Contando..'
+            else monto end as monto, 
+            id_usuario, id_auto, id_zona_horario, vender, pago")
+            ->where("id_auto", $id)
+            ->where("(now() between hora_inicio and hora_fin) 
+                            OR (now() >= hora_inicio and hora_fin IS NULL)")
+            ->findAll();
     }
 
    

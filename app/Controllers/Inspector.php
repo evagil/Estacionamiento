@@ -21,7 +21,7 @@ class Inspector extends BaseController
         $autos = new ModeloAuto();
         $venta = new ModeloVenta();
 
-        $auto = $autos->obtenerAutoPorPatente($valor1);
+        $auto = $autos->obtenerAutos($valor1);
 
         $data['ventas'] = $venta->listarVentas($auto->id_auto);
 
@@ -30,4 +30,8 @@ class Inspector extends BaseController
         echo view ('usuarios/listarVentas', $data);
         echo view ('usuarios/perfil/perfil-footer');
     }
+
+
+    
+
 }

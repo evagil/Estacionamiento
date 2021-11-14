@@ -33,10 +33,9 @@ class Cliente extends BaseController
     {
         $autos = new ModeloAuto();
         $validation =  \Config\Services::validation();
-
         $auto = new Auto($this->request->getPost());
 
-        if ($validation->run($this->request->getPost(), 'formAuto')) {
+        if ($validation->run($this->request->getPost(), 'formAutoVincular')) {
             $autos->save($auto);
             return redirect()->to(base_url('usuarios/clientes/vincularVehiculo').'/'.$auto->patente);
         }
@@ -45,11 +44,18 @@ class Cliente extends BaseController
         }
     }
 
-    public function obtenerVehiculos($patente = null)
+    public function obtenerVehiculo($patente)
+    {
+        $autos = new ModeloAuto();
+        $auto = $autos->obtenerAutos($patente);
+        return $this->response->setJSON($auto);
+    }
+
+    public function obtenerVehiculos()
     {
         $autos = new ModeloAutoUsuario();
         $id_usuario = session()->get('id_usuario');
-        $auto = $autos->obtenerAutosDelUsuario($id_usuario, $patente);
+        $auto = $autos->obtenerAutosDelUsuario($id_usuario);
         return $this->response->setJSON($auto);
     }
 
