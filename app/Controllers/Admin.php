@@ -82,8 +82,8 @@ class Admin extends BaseController
     }
 
     public function obtenerVehiculosEstacionados(){
-        $vehiculo = new ModeloVenta();
-        $autos = $vehiculo->encontrarVehiculosEstacionados();
+        $ventas = new ModeloVenta();
+        $autos = $ventas->listarVentas();
         return $this->response->setJSON($autos);
     }
 }

@@ -12,8 +12,10 @@
             <th data-field="cantidad_horas" data-sortable="true">Cantidad Hs</th>
             <th data-field="monto" data-sortable="true">Monto</th>
             <th data-field="nombre_usuario" data-sortable="true">Usuario</th>
+            <th data-field="venta" data-sortable="true">Por Vendedor</th>
+            <th data-field="pago" data-sortable="true">Pago</th>
             <th data-field="patente" data-sortable="true">Auto</th>
-            <th data-field="nombre" data-sortable="true">Zona</th>
+            <th data-field="nombre_zona" data-sortable="true">Zona</th>
         </tr>
         </thead>
     </table>
