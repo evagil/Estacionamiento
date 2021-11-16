@@ -6,6 +6,7 @@ use App\Entities\Auto;
 use App\Models\ModeloAuto;
 use App\Models\ModeloAutoUsuario;
 use App\Models\ModeloVenta;
+use App\Models\ModeloZona;
 
 class Cliente extends BaseController
 {
@@ -110,13 +111,28 @@ class Cliente extends BaseController
         $autos = new ModeloAutoUsuario();
         $id_usuario = session()->get('id_usuario');
         $auto = $autos->obtenerAutosDelUsuario($id_usuario);
-               
+    }
+
     public function finalizarEstadia(){
-        $modelo = new ModeloVenta();
+
+        $modeloZona = new ModeloZona();
         $idVenta = $this->request->getHeaderLine('idVenta');
-        $modelo->bajaEstadia($idVenta);
+
+        $modeloVenta = new ModeloVenta();
+        $zonahorario = $modeloVenta -> obtenerzonaHoraria( $idVenta);
+       
+        $datos = ['zona'=> $zonahorario ->id_zona,
+            'horario'=> $zonahorario ->id_horario, 
+            'horaInicial'=> $zonahorario -> hora_inicial,
+            'horaFinal'=> $zonahorario ->hora_fin];
+               
+        $precio = $modeloZona->precioEstadia($datos);
+
+        $modeloVenta->bajaEstadia($idVenta, $precio);
         #ver en mis-vehiculos-estacionados
-        return redirect()->to(base_url('usuarios/clientes/listadoUsuarios'))->with('mensaje', 'Venta finalizada existosamente.');
+
+
+        return redirect()->to(base_url('usuarios/clientes/misVehiculosEstacionados'))->with('mensaje', 'Venta finalizada existosamente.');
     }
 
   

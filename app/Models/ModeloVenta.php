@@ -51,11 +51,20 @@ class ModeloVenta extends Model
         return $ventas->findAll();
     }
 
-    public function bajaEstadia($id){
+    public function bajaEstadia($id, $precio){
         helper('date');
         $this->set('hora_fin', now())->where('id_venta', $id)->update();
+        $this->set('monto', $precio)->where('id_venta', $id)->update();
 
        /* $db = db_connect();
         $db->query("update ventas set hora_fin = now() where id_venta = $id");*/
+    }
+
+    public function obtenerzonaHoraria( $idVenta){
+       
+        return $this->select ('id_zona, id_horario, hora_inicio, now() as hora_fin') 
+        ->where ('id_venta', $idVenta )
+        -> join ('zonas_horarios','zonas_horarios.id_zona_horario=ventas.id_zona_horario')
+        -> first();
     }
 }
