@@ -11,46 +11,51 @@ class ModeloVenta extends Model
     protected $returnType     = 'App\Entities\Venta';
     protected $allowedFields = ['hora_inicio','hora_fin','cantidad_horas','monto','id_usuario','id_auto','id_zona_horario','vender', 'pago'];
 
-    public function listarVentas($id){
-        return $this->select("hora_inicio, 
-            case when hora_fin is null then 'Indefinida'
-            else hora_fin end as hora_fin,
-            case when hora_fin is null then 'Contando..'
+    public function listarVentas($idAuto = null, $idUsuario = null, $pendiente = 0){ // pendiente en 1, devuelve los activos y en 0 ambos
+        $ventas = $this->select("ventas.id_venta, hora_inicio, 
+            case when hora_fin is null then 'Indefinida' 
+            else hora_fin end as hora_fin, 
+            case when hora_fin is null then 'Contando..' 
             else cantidad_horas end as cantidad_horas,
-            case when hora_fin is null then 'Contando..'
+            case when hora_fin is null then 'Contando..' 
             else monto end as monto, 
-            id_usuario, id_auto, id_zona_horario, vender, pago")
-            ->where("id_auto", $id)
-            ->where("(now() between hora_inicio and hora_fin) 
-                            OR (now() >= hora_inicio and hora_fin IS NULL)")
-            ->findAll();
-    }
-
-   
-    public function encontrarVehiculosEstacionados()
-    {
-        return $this->select('usuarios.nombre as nombre_usuario, usuarios.apellido, autos.*, zonas.*, ventas.*')
-            ->join('usuarios','ventas.id_usuario= usuarios.id_usuario')
+            concat(usuarios.nombre, ' ', usuarios.apellido) as nombre_usuario,  
+            autos.patente as patente, 
+            zonas.nombre_zona as nombre_zona, 
+            case when vender = 1 then 'Si' 
+            else 'No' end as venta, 
+            case when pago = 1 then 'Si' 
+            else 'No' end as pago, 
+            case when hora_fin is null then 'Activo' 
+            when hora_fin > now() then 'Activo' else 'Finalizado' end as hora_fin")
+            ->join('usuarios','ventas.id_usuario = usuarios.id_usuario')
             ->join('autos','autos.id_auto=ventas.id_auto')
-            ->join('zonas','zonas.id_zona=ventas.id_zona_horario')
-            ->findAll();
+            ->join('zonas_horarios','zonas_horarios.id_zona_horario=ventas.id_zona_horario')
+            ->join('zonas','zonas.id_zona=zonas_horarios.id_zona');
+
+        if ($idAuto !== null)
+        {
+            $ventas->where("ventas.id_auto", $idAuto);
+        }
+
+        if ($idUsuario !== null)
+        {
+            $ventas->where("ventas.id_usuario", $idUsuario);
+        }
+
+        if ($pendiente === 1)
+        {
+            $ventas->where('(now() between hora_inicio and hora_fin OR now() >= hora_inicio and hora_fin IS NULL)');
+        }
+
+        return $ventas->findAll();
     }
 
-    #autos estacionados
-    public function obtenerAutosDelUsuarioVentas($id_usuario)
-    {
-        return $this->select('usuarios.nombre as nombre_usuario, usuarios.apellido, autos.*, zonas.*, ventas.*')
-        ->join('usuarios','ventas.id_usuario= usuarios.id_usuario')
-        ->join('autos','autos.id_auto=ventas.id_auto')
-        ->join('zonas','zonas.id_zona=ventas.id_zona_horario')
-        ->where('usuarios.id_usuario', $id_usuario)
-        ->findAll();       
+    public function bajaEstadia($id){
+        helper('date');
+        $this->set('hora_fin', now())->where('id_venta', $id)->update();
+
+       /* $db = db_connect();
+        $db->query("update ventas set hora_fin = now() where id_venta = $id");*/
     }
-
-    public function bajaEstadia($vehiculo){
-
-
-        $this->set('pago', 1)->where('id_usuario', $vehiculo)->update();
-    
-       }
 }

@@ -14,35 +14,48 @@
             <th data-field="cantidad_horas" data-sortable="true">Cantidad Hs</th>
             <th data-field="monto" data-sortable="true">Monto</th>
             <th data-field="nombre_usuario" data-sortable="true">Usuario</th>
+            <th data-field="pago" data-sortable="true">Pago</th>
             <th data-field="patente" data-sortable="true">Auto</th>
             <th data-field="nombre_zona" data-sortable="true">Zona</th>
-            <th data-field="estado_auto" data-sortable="true">Estado</th>
         </tr>
         </thead>
     </table>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script type="text/javascript">    
+<script type="text/javascript">
+    const finalizarVenta = (idVenta) => {
+        $.ajax({
+            method: 'GET',
+            url: "<?= esc(base_url('usuarios/clientes/finalizarEstadia')) ?>",
+            headers: {
+                "idVenta": idVenta
+            }
+        })
+    }
 
     $(document).ready(() => {
         $.ajax({
             method: 'GET',
             url: "<?= esc(base_url('usuarios/clientes/obtenerEstadiaVehiculo')) ?>",
             success: (vehiculos) => {
-                for (let vehiculo of vehiculos){
-                    vehiculo.nombre_usuario = vehiculo.nombre_usuario + " " + vehiculo.apellido        
-                   
-                    if(vehiculo.pago = 0){
-                        vehiculo.estado_auto = 'Activo';
-                    }
-                    else{
-                        vehiculo.estado_auto = 'Finalizado';
-                    }
-                }
-
                 $('#table').bootstrapTable({
-                    data: vehiculos
+                    data: vehiculos,
+                    columns: [{}, {
+                        field: 'hora_fin',
+                        title: 'Hora Fin',
+                        align: 'center',
+                        valign: 'middle',
+                        formatter: (value, row, index) => {
+                            if (row.hora_fin === 'Activo') {
+                                return '<button class=\'btn btn-danger \' onclick="finalizarVenta(' + row.id_venta + ')">Finalizar</button> '
+                            }
+                            else
+                            {
+                                return row.hora_fin
+                            }
+                        }
+                    }, {}, {}, {}, {}, {}, {}]
                 })
             }
         })

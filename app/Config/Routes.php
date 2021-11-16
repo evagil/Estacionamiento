@@ -60,8 +60,8 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         $routes->add('verMisEstadias', 'Cliente::verMisEstadias');
         $routes->get('obtenerEstadiaVehiculo', 'Cliente::obtenerEstadiaVehiculo');
         
-        $routes->add('verFinalizarEstadia', 'Cliente::verFinalizarEstadia');
-        $routes->get('finalizarEstadia/(:any)', 'Cliente::finalizarEstadia/$1');        
+        $routes->add('verFinalizarEstadia', 'Cliente::verFinalizarEstadia'); 
+        $routes->get('finalizarEstadia', 'Cliente::finalizarEstadia');
     });   
 
     $routes->group('administrador', ['filter' => 'rolGuard:Administrador'], function($routes) {

@@ -93,7 +93,7 @@ class Cliente extends BaseController
     {    
         $auto = new ModeloVenta();
         $id_usuario = session()->get('id_usuario');
-        $automovil = $auto->obtenerAutosDelUsuarioVentas($id_usuario);
+        $automovil = $auto->listarVentas(null, $id_usuario);
         return $this->response->setJSON($automovil);       
     
     }
@@ -111,6 +111,12 @@ class Cliente extends BaseController
         $id_usuario = session()->get('id_usuario');
         $auto = $autos->obtenerAutosDelUsuario($id_usuario);
                
+    public function finalizarEstadia(){
+        $modelo = new ModeloVenta();
+        $idVenta = $this->request->getHeaderLine('idVenta');
+        $modelo->bajaEstadia($idVenta);
+        #ver en mis-vehiculos-estacionados
+        return redirect()->to(base_url('usuarios/clientes/listadoUsuarios'))->with('mensaje', 'Venta finalizada existosamente.');
     }
 
   
