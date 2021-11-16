@@ -62,6 +62,7 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         
         $routes->add('verFinalizarEstadia', 'Cliente::verFinalizarEstadia'); 
         $routes->get('finalizarEstadia', 'Cliente::finalizarEstadia');
+        
     });   
 
     $routes->group('administrador', ['filter' => 'rolGuard:Administrador'], function($routes) {

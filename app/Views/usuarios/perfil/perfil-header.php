@@ -105,7 +105,16 @@
                                 Ver Mis Estadias
                             </a>
                         </li>
+<<<<<<< HEAD
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url('usuarios/clientes/crear') ?>">
+                                <div class="fas fa-car-side fa-lg"></div>
+                                Activar Estadia
+                            </a>
+                        </li>
+=======
                        
+>>>>>>> 0bb3dda0e567cb71a9645c9b7110d3f2a5a92bf8
                     </ul>
                 <?php endif; ?>
 
