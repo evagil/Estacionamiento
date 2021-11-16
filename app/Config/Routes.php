@@ -59,6 +59,7 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         # ver mis vehiculos
         $routes->add('verMisEstadias', 'Cliente::verMisEstadias');
         $routes->get('obtenerEstadiaVehiculo', 'Cliente::obtenerEstadiaVehiculo');
+        $routes->get('finalizarEstadia', 'Cliente::finalizarEstadia');
     });   
 
     $routes->group('administrador', ['filter' => 'rolGuard:Administrador'], function($routes) {
