@@ -33,7 +33,7 @@ class ModeloVenta extends Model
             ->where("(now() between hora_inicio and hora_fin) 
                         OR (now() >= hora_inicio and hora_fin IS NULL)");
 
-            if ($id === null)
+            if ($id !== null)
             {
                 return $ventas->where("ventas.id_auto", $id)->findAll();
             }
