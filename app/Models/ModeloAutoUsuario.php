@@ -33,4 +33,6 @@ class ModeloAutoUsuario extends Model
             ->join('usuarios', 'usuarios_autos.id_usuario = usuarios.id_usuario')
             ->where('usuarios.id_usuario', $id_usuario)->findAll();
     }
+
+   
 }

@@ -135,4 +135,6 @@ class Vendedor extends BaseController
             return $this->response->setStatusCode(500, 'Vehiculo no creado')->setJSON(json_encode($validation->getErrors()));
         }
     }
+
+    
 }

@@ -59,6 +59,18 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         # ver mis vehiculos
         $routes->add('verMisEstadias', 'Cliente::verMisEstadias');
         $routes->get('obtenerEstadiaVehiculo', 'Cliente::obtenerEstadiaVehiculo');
+      
+        //  -----------------------------
+
+       $routes->get('crear', 'Cliente::crearEstadia');
+        $routes->post('crear', 'Cliente::guardarEstadia');
+        $routes->get('precio', 'Cliente::precioEstadia');
+        $routes->get('zonas', 'Cliente::obtenerZonas');
+        $routes->get('horarios', 'Cliente::obtenerHorariosZona');
+        $routes->post('guardarVehiculo', 'Cliente::guardarVehiculo1');
+        $routes->get('autos', 'Cliente::obtenerVehiculosDelCliente');
+
+     
     });   
 
     $routes->group('administrador', ['filter' => 'rolGuard:Administrador'], function($routes) {
