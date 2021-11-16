@@ -53,12 +53,15 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         $routes->add('agregarVehiculo', 'Cliente::agregarVehiculo');
         $routes->post('guardarVehiculo', 'Cliente::guardarVehiculo');
         $routes->get('vehiculos', 'Cliente::index');
-        $routes->get('obtenerVehiculos', 'Cliente::obtenerVehiculos');
         $routes->get('obtenerVehiculo/(:any)', 'Cliente::obtenerVehiculo/$1');
+        $routes->get('obtenerVehiculos', 'Cliente::obtenerVehiculos');       
         $routes->add('vincularVehiculo/(:any)', 'Cliente::vincularVehiculo/$1');
         # ver mis vehiculos
         $routes->add('verMisEstadias', 'Cliente::verMisEstadias');
         $routes->get('obtenerEstadiaVehiculo', 'Cliente::obtenerEstadiaVehiculo');
+        
+        $routes->add('verFinalizarEstadia', 'Cliente::verFinalizarEstadia');
+        $routes->get('finalizarEstadia/(:any)', 'Cliente::finalizarEstadia/$1');        
     });   
 
     $routes->group('administrador', ['filter' => 'rolGuard:Administrador'], function($routes) {

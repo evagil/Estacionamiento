@@ -81,10 +81,7 @@ class Cliente extends BaseController
         }
     }
 
-
     # ver vehiculos estacionados
-   
-
     public function verMisEstadias(){
         $data['titulo'] = "Mis Estadias";
         echo view('usuarios/perfil/perfil-header', $data);
@@ -101,12 +98,20 @@ class Cliente extends BaseController
     
     }
 
-
-    public function finalizarEstadia($id){
-        $modelo = new ModeloVenta();
-        $modelo->bajaEstadia($id);
-        #ver en mis-vehiculos-estacionados
-        return redirect()->to(base_url('usuarios/administrador/listadoUsuarios'))->with('mensaje', 'Usuario eliminadoMo existosamente.');
+    public function verFinalizarEstadia(){
+        $data['titulo'] = "Finalizar Estadia";
+        echo view('usuarios/perfil/perfil-header', $data);
+        echo view('clientes/finalizarEstadia', $data);
+        echo view('usuarios/perfil/perfil-footer');
     }
 
+    public function finalizarEstadiaVehiculo(){
+
+        $autos = new ModeloAutoUsuario();
+        $id_usuario = session()->get('id_usuario');
+        $auto = $autos->obtenerAutosDelUsuario($id_usuario);
+               
+    }
+
+  
 }

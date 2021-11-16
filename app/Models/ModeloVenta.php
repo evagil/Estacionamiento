@@ -47,10 +47,10 @@ class ModeloVenta extends Model
         ->findAll();       
     }
 
-    public function bajaEstadia($id){
+    public function bajaEstadia($vehiculo){
 
 
-        $this->set('baja', 1)->where('id_usuario', $id)->update();
+        $this->set('pago', 1)->where('id_usuario', $vehiculo)->update();
     
        }
 }
