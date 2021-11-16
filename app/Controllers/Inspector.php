@@ -23,7 +23,7 @@ class Inspector extends BaseController
 
         $auto = $autos->obtenerAutos($valor1);
 
-        $data['ventas'] = $venta->listarVentas($auto->id_auto);
+        $data['ventas'] = $venta->listarVentas($auto->id_auto, null, 1);
 
         $data['titulo'] = 'Listado de ventas del vehiculo';
         echo view ('usuarios/perfil/perfil-header', $data);

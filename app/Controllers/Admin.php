@@ -65,7 +65,7 @@ class Admin extends BaseController
     public function eliminar($id){
         $modelo = new ModeloUsuario();
         $modelo->bajaUsuario($id);
-        return redirect()->to(base_url('usuarios/administrador/listadoUsuarios'))->with('mensaje', 'Usuario eliminadoMo existosamente.');
+        return redirect()->to(base_url('usuarios/administrador/listadoUsuarios'))->with('mensaje', 'Usuario eliminado existosamente.');
     }
 
     public function reestablecerClave($id){
@@ -83,7 +83,7 @@ class Admin extends BaseController
 
     public function obtenerVehiculosEstacionados(){
         $ventas = new ModeloVenta();
-        $autos = $ventas->listarVentas();
+        $autos = $ventas->listarVentas(null, null, 1);
         return $this->response->setJSON($autos);
     }
 }
