@@ -46,6 +46,7 @@ class Vendedor extends BaseController
             $auto = $autos->obtenerAutos($post['patente']);
             $precio = $zonas->precioEstadia($post);
             $zonaHorario = $zonas->obtenerZonaHorario($post['zona'], $post['horario']);
+            $errores = "Desconocido";
 
             if ($auto)
             {
@@ -60,13 +61,13 @@ class Vendedor extends BaseController
                     'pago' => 1
                 ]);
 
-                if ($ventas->save($venta))
+                if ($ventas->crearEstadia($venta, $errores))
                 {
                     return redirect()->to(base_url('usuarios/perfil'))->with('mensaje', 'Venta existosa.');
                 }
                 else
                 {
-                    print_r('No existe el auto wacim'); die();
+                    return redirect()->to(base_url('usuarios/vendedores/vender'))->with('mensaje_error', $errores)->withInput();
                 }
             }
         }

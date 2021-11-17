@@ -67,4 +67,15 @@ class ModeloVenta extends Model
         -> join ('zonas_horarios','zonas_horarios.id_zona_horario=ventas.id_zona_horario')
         -> first();
     }
+
+    public function crearEstadia($venta, &$errores)
+    {
+        try {
+            return $this->save($venta);
+        }
+        catch (\Exception $e) {
+            $errores = $e->getMessage();
+            return false;
+        }
+    }
 }
