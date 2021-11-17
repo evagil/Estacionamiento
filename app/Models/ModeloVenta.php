@@ -26,9 +26,10 @@ class ModeloVenta extends Model
             case when pago = 1 then 'Si' 
             else 'No' end as pago, 
             case when now() >= hora_inicio and hora_fin is null then 'Activo' 
-                when now() between hora_inicio and hora_fin then 'Activo'
-                when now() < hora_inicio then 'Pendiente' 
-                else 'Finalizado' end as hora_fin")
+                when now() >= hora_inicio and now() < hora_fin then 'En Curso'
+                when now() < hora_inicio then 'Pendiente'
+                when hora_fin is not null and now() >= hora_fin then 'Finalizado'  
+                else 'Desconocido' end as hora_fin")
             ->join('usuarios','ventas.id_usuario = usuarios.id_usuario')
             ->join('autos','autos.id_auto=ventas.id_auto')
             ->join('zonas_horarios','zonas_horarios.id_zona_horario=ventas.id_zona_horario')
