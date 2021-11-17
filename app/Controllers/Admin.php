@@ -44,7 +44,7 @@ class Admin extends BaseController
     public function listarUsuarios(){
         $data['titulo'] = 'Usuarios';
         echo view ('usuarios/perfil/perfil-header', $data);
-        echo view ('usuarios/listar');
+        echo view ('administrador/listar');
         echo view ('usuarios/perfil/perfil-footer');
     }
 
@@ -77,7 +77,7 @@ class Admin extends BaseController
     public function listarVehiculosEstacionados() {
         $data['titulo'] = "Listado de Vehiculos Estacionados";
         echo view('usuarios/perfil/perfil-header', $data);
-        echo view('vehiculos/listarVehiculosEstacionados');
+        echo view('administrador/listarVehiculosEstacionados');
         echo view('usuarios/perfil/perfil-footer');
     }
 

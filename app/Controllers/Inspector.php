@@ -11,7 +11,7 @@ class Inspector extends BaseController
     public function formulario(){
         $data['titulo'] = 'Inspeccionar';
         echo view ('usuarios/perfil/perfil-header', $data);
-        echo view ('usuarios/formulario');
+        echo view ('inspectores/formulario');
         echo view ('usuarios/perfil/perfil-footer');
     }
 
@@ -27,7 +27,7 @@ class Inspector extends BaseController
 
         $data['titulo'] = 'Listado de ventas del vehiculo';
         echo view ('usuarios/perfil/perfil-header', $data);
-        echo view ('usuarios/listarVentas', $data);
+        echo view ('inspectores/listarVentas', $data);
         echo view ('usuarios/perfil/perfil-footer');
     }
 

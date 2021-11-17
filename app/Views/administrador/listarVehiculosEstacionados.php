@@ -29,10 +29,6 @@
             method: 'GET',
             url: "<?= esc(base_url('usuarios/administrador/obtenerVehiculosEstacionados')) ?>",
             success: (vehiculos) => {
-                for (let vehiculo of vehiculos){
-                    vehiculo.nombre_usuario = vehiculo.nombre_usuario + " " + vehiculo.apellido
-                }
-
                 $('#table').bootstrapTable({
                     data: vehiculos
                 })
