@@ -77,7 +77,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="<?= base_url('usuarios/administrador/listarVehiculosEstacionados') ?>">
-                                <span data-feather="plus-circle"></span>
+                                <span data-feather="list"></span>
                                 Autos Estacionados
                             </a>
                         </li>
@@ -89,19 +89,19 @@
                     <ul class="nav flex-column mb-2">
                         <li class="nav-item">
                             <a class="nav-link" href="<?= base_url('usuarios/clientes/agregarVehiculo') ?>">
-                                <div class="fas fa-car fa-lg"></div>
+                                <span data-feather="plus-circle"></span>
                                 Agregar Vehiculo
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="<?= base_url('usuarios/clientes/vehiculos') ?>">
-                                <div class="fas fa-car-side fa-lg"></div>
+                                <span data-feather="list"></span>
                                 Ver mis Vehiculos
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="<?= base_url('usuarios/clientes/verMisEstadias') ?>">
-                                <div class="fas fa-car-side fa-lg"></div>
+                                <span data-feather="play"></span>
                                 Ver Mis Estadias
                             </a>
                         </li>
@@ -109,7 +109,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link" href="<?= base_url('usuarios/clientes/crear') ?>">
-                                <div class="fas fa-car-side fa-lg"></div>
+                                <span data-feather="shopping-cart"></span>
                                 <i class="bi bi-calendar3"></i> Activar Estadia
                             </a>
                         </li>
