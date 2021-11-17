@@ -90,7 +90,7 @@
         </div>
 
         <div style="text-align: center">
-            <button type="button" class="btn btn-primary" id="enviar" onclick="previsualizar()">Enviar</button>
+            <button type="button" class="btn btn-primary" id="enviar" onclick="estaIndefinido()">Enviar</button>
         </div>
     </form>
 </div>
@@ -311,6 +311,22 @@
             })
     }
 
+    const checkActivo = () => {
+        let formulario = document.getElementById('formulario')
+        let modalCarga = new bootstrap.Modal(document.getElementById('modalCarga'))
+        let hiddenInicial = document.getElementsByName('horaInicial')[0]
+        let hiddenFinal = document.getElementsByName('horaFinal')[0]
+        let pickerInicial = document.querySelectorAll('#horaInicial-input select')
+        let pickerFinal = document.querySelectorAll('#horaFinal-input select')
+        let patente = document.getElementById('patente').value
+
+        hiddenInicial.value = pickerInicial[0].value + ":" + pickerInicial[1].value + ":00"
+        hiddenFinal.value = pickerFinal[0].value + ":" + pickerFinal[1].value + ":00"
+
+        formulario.submit();
+    }
+   
+
     const previsualizar = () => {
         let btnEnviar = document.getElementById('btn-enviar')
         let grow = document.getElementById('grow')
@@ -460,7 +476,16 @@
                     element.style.display='block';
                       }
                     }
-                 
+
+
+                    function estaIndefinido() {
+               
+                        if(document.getElementById("check").checked) {
+                            checkActivo();
+                       } else {
+                         previsualizar();
+                         }
+                 }
 
 
 
