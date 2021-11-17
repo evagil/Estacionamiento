@@ -99,27 +99,10 @@ class Cliente extends BaseController
     
     }
 
-    public function verFinalizarEstadia(){
-        $data['titulo'] = "Finalizar Estadia";
-        echo view('usuarios/perfil/perfil-header', $data);
-        echo view('clientes/finalizarEstadia', $data);
-        echo view('usuarios/perfil/perfil-footer');
-    }
-
-    public function finalizarEstadiaVehiculo(){
-
-        $autos = new ModeloAutoUsuario();
-        $id_usuario = session()->get('id_usuario');
-        $auto = $autos->obtenerAutosDelUsuario($id_usuario);
-    }
-
-    public function finalizarEstadia(){
-
+    public function finalizarEstadia($idVenta){
         $modeloZona = new ModeloZona();
-        $idVenta = $this->request->getHeaderLine('idVenta');
-
         $modeloVenta = new ModeloVenta();
-        $zonahorario = $modeloVenta -> obtenerzonaHoraria( $idVenta);
+        $zonahorario = $modeloVenta -> obtenerzonaHoraria($idVenta);
        
         $datos = ['zona'=> $zonahorario ->id_zona,
             'horario'=> $zonahorario ->id_horario, 

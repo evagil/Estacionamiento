@@ -25,13 +25,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
     const finalizarVenta = (idVenta) => {
-        $.ajax({
-            method: 'GET',
-            url: "<?= esc(base_url('usuarios/clientes/finalizarEstadia')) ?>",
-            headers: {
-                "idVenta": idVenta
-            }
-        })
+        window.location.replace("<?= esc(base_url('usuarios/clientes/finalizarEstadia')) ?>/" + idVenta)
     }
 
     $(document).ready(() => {
