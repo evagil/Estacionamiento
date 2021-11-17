@@ -61,13 +61,12 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         $routes->get('obtenerEstadiaVehiculo', 'Cliente::obtenerEstadiaVehiculo');
         $routes->get('finalizarEstadia/(:num)', 'Cliente::finalizarEstadia/$1');
 
-        # ver mis vehiculos
+        # activar ventas
         $routes->get('crear', 'Cliente::crearEstadia');
         $routes->post('crear', 'Cliente::guardarEstadia');
         $routes->get('precio', 'Cliente::precioEstadia');
         $routes->get('zonas', 'Cliente::obtenerZonas');
         $routes->get('horarios', 'Cliente::obtenerHorariosZona');
-        $routes->post('guardarVehiculo', 'Cliente::guardarVehiculo');
         $routes->get('autos', 'Cliente::obtenerVehiculosDelCliente');
         
     });   

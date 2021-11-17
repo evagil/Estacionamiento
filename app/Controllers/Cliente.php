@@ -31,21 +31,6 @@ class Cliente extends BaseController
         echo view('usuarios/perfil/perfil-footer');
     }
 
-    public function guardarVehiculo()
-    {
-        $autos = new ModeloAuto();
-        $validation =  \Config\Services::validation();
-        $auto = new Auto($this->request->getPost());
-
-        if ($validation->run($this->request->getPost(), 'formAutoVincular')) {
-            $autos->save($auto);
-            return redirect()->to(base_url('usuarios/clientes/vincularVehiculo').'/'.$auto->patente);
-        }
-        else {
-            return redirect()->to(base_url('usuarios/clientes/agregarVehiculo'))->with('validation', $validation)->withInput();
-        }
-    }
-
     public function obtenerVehiculo($patente)
     {
         $autos = new ModeloAuto();
@@ -135,7 +120,7 @@ class Cliente extends BaseController
             $auto = $autos->obtenerAutos($post['patente']);
             $precio = $zonas->precioEstadia($post);
             $zonaHorario = $zonas->obtenerZonaHorario($post['zona'], $post['horario']);
-            
+            $errores = "Desconocido";
          
             if (isset($_POST['check'])) 
             {
@@ -143,7 +128,7 @@ class Cliente extends BaseController
                 $precio = null;
             }else
                 {
-             $ventas->hora_fin = Time::parse($post['fecha'].' '.$post['horaInicial']);
+             $ventas->hora_fin = Time::parse($post['fecha'].' '.$post['horaFinal']);
                 }
 
 
@@ -158,16 +143,16 @@ class Cliente extends BaseController
                     'id_auto' => $auto->id_auto,
                     'id_zona_horario' => $zonaHorario->id_zona_horario,
                     'vender' => 0,
-                    'pago' => 1
+                    'pago' => 0
                 ]);
 
-                if ($ventas->save($venta))
+                if ($ventas->crearEstadia($venta, $errores))
                 {
                     return redirect()->to(base_url('usuarios/perfil'))->with('mensaje', 'Venta existosa.');
                 }
                 else
                 {
-                    print_r('No existe el auto wacim'); die();
+                    return redirect()->to(base_url('usuarios/clientes/crear'))->with('mensaje_error', $errores)->withInput();
                 }
             }
         }
