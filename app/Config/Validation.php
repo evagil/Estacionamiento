@@ -323,10 +323,11 @@ class Validation
             ]
         ],
         'fecha' => [
-            'rules' => 'required|diaEnRango[{horario}]',
+            'rules' => 'required|diaEnRango[{horario}]|diaValido',
             'errors' => [
                 'required' => 'Ingrese la horario inicial.',
-                'diaEnRango' => 'La fecha esta fuera del rango.'
+                'diaEnRango' => 'La fecha esta fuera del rango.',
+                'diaValido' => 'Ingrese el dia de hoy en adelante.'
             ]
         ],
         'horaInicial' => [

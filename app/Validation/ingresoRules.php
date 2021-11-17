@@ -87,6 +87,14 @@ class IngresoRules {
         return in_array($diaDeLaSemana, $diasHabiles);
     }
 
+    public function diaValido(?string $fecha): bool
+    {
+        $hoy = new Time();
+        $fechaDada = Time::parse($fecha);
+
+        return $fechaDada->isAfter($hoy) || $fechaDada->sameAs($hoy);
+    }
+
     public function campoUnico(?string $valor, string $datos): bool
     {
         [$tabla, $campo] = array_pad(explode(',', $datos), 2, null);
