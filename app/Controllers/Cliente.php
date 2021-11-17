@@ -123,16 +123,16 @@ class Cliente extends BaseController
        
         $datos = ['zona'=> $zonahorario ->id_zona,
             'horario'=> $zonahorario ->id_horario, 
-            'horaInicial'=> $zonahorario -> hora_inicial,
+            'horaInicial'=> $zonahorario -> hora_inicio,
             'horaFinal'=> $zonahorario ->hora_fin];
-               
+
         $precio = $modeloZona->precioEstadia($datos);
 
         $modeloVenta->bajaEstadia($idVenta, $precio);
         #ver en mis-vehiculos-estacionados
 
 
-        return redirect()->to(base_url('usuarios/clientes/misVehiculosEstacionados'))->with('mensaje', 'Venta finalizada existosamente.');
+        return redirect()->to(base_url('usuarios/clientes/verMisEstadias'))->with('mensaje', 'Venta finalizada existosamente.');
     }
     
     public function guardarEstadia(){

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 
 class ModeloVenta extends Model
@@ -52,12 +53,10 @@ class ModeloVenta extends Model
     }
 
     public function bajaEstadia($id, $precio){
-        helper('date');
-        $this->set('hora_fin', now())->where('id_venta', $id)->update();
-        $this->set('monto', $precio)->where('id_venta', $id)->update();
-
-       /* $db = db_connect();
-        $db->query("update ventas set hora_fin = now() where id_venta = $id");*/
+        $this->set([
+            'hora_fin' => new Time(),
+            'monto' => $precio
+        ])->where('id_venta', $id)->update();
     }
 
     public function obtenerzonaHoraria( $idVenta){
