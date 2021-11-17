@@ -1,5 +1,5 @@
 <br>
-<!DOCTYPE html>   
+
 
 
 <form method="post" action="<?= base_url('usuarios/inspectores/envioPost') ?>">
@@ -16,58 +16,32 @@
             <button type="submit" class="btn btn-primary">Buscar</button>
         </div>
 
+
+
+   
     
 </form>
 
 
 
-     
-
-
-<!--
-
-<html>
-<head>
-
-   <style>
-    .habilitado{  
-    display: block;
-    }
-
-    .oculto{
-      visibility: hidden;
-     }
-   </style> 
-
-    </head>
-   <body>
-                <div>
-                <input id="check" class="habilitado" onchange="habilitar()" type="checkbox">
-                <input id="toggle" type="time" min="10">
-                </div>
-
-
 <script type="text/javascript">
-        let toggle = document.getElementById('toggle');
-        let check = document.getElementById('check');
-
-        const habilitar = () => {
-           if (toggle.classList.contains('habilitado'))
-             {
-                toggle.classList.remove('habilitado')
-                 toggle.classList.add('oculto')
-             
-              }
-           else
-              {
-                       toggle.classList.remove('oculto')
-                       toogle.classList.add('habilitado')
-               }
-          } 
+    function showContent() {
+        element = document.getElementById("content");
+        check = document.getElementById("check");
+        if (check.checked) {
+            element.style.display='block';
+        }
+        else {
+            element.style.display='none';
+        }
+    }
 </script>
 
- </body>
- </html>
+<b>Mostrar contenido?</b>
+<input type="checkbox" name="check" id="check" value="1" onchange="javascript:showContent()" />
 
-
- -->
+<div id="content" style="display: none;">
+   contenido del div escondido<br/>
+   contenido del div escondido<br/>
+   contenido del div escondido<br/>
+ </div>

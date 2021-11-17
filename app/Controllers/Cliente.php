@@ -7,6 +7,7 @@ use App\Models\ModeloAuto;
 use App\Models\ModeloAutoUsuario;
 use App\Models\ModeloVenta;
 use App\Models\ModeloZona;
+use CodeIgniter\I18n\Time;
 
 class Cliente extends BaseController
 {
@@ -119,24 +120,12 @@ class Cliente extends BaseController
     }
     
     public function guardarEstadia(){
-       // $data['titulo'] = "Agregar un Vehiculo";
-        //echo view('usuarios/perfil/perfil-header', $data);
-        //echo view('usuarios/activarEstadia', $data);
-        //echo view('usuarios/perfil/perfil-footer');
-
       
-
+      
         $validation = \Config\Services::validation();
         if ($validation->run($this->request->getPost(), 'formVentaVendedor'))
         {
-            /*
-             * Comprobar si la patente existe o no.
-             * Si no existe vehículo con esa patente, se crea y vincula a la estadía.
-             * Si existe, se vincula a la estadía.
-             * En la base de datos habría que hacer un trigger para que calcule el precio, porque
-             * esta sería una estadía que tiene fecha de fin y debería ingresarla como pagada.
-            */
-
+            
             $ventas = new ModeloVenta();
             $autos = new ModeloAuto();
             $zonas = new ModeloZona();
@@ -146,12 +135,24 @@ class Cliente extends BaseController
             $auto = $autos->obtenerAutos($post['patente']);
             $precio = $zonas->precioEstadia($post);
             $zonaHorario = $zonas->obtenerZonaHorario($post['zona'], $post['horario']);
+            
+         
+            if (isset($_POST['check'])) 
+            {
+                $ventas->hora_fin = null;
+                $precio = null;
+            }else
+                {
+             $ventas->hora_fin = Time::parse($post['fecha'].' '.$post['horaInicial']);
+                }
+
+
 
             if ($auto)
             {
                 $venta = new \App\Entities\Venta([
                     'hora_inicio' => Time::parse($post['fecha'].' '.$post['horaInicial']),
-                    'hora_fin' => Time::parse($post['fecha'].' '.$post['horaFinal']),
+                    'hora_fin' => $ventas->hora_fin,
                     'monto' => $precio,
                     'id_usuario' => session()->get('id_usuario'),
                     'id_auto' => $auto->id_auto,
@@ -185,10 +186,10 @@ class Cliente extends BaseController
         helper('form');
         $data['titulo'] = 'Activar Estadia';
 
-       // if (session()->getFlashdata('validation'))
-        //{
-         //   $data['validacion'] = session()->getFlashdata('validation');
-        //}
+        if (session()->getFlashdata('validation'))
+        {
+            $data['validacion'] = session()->getFlashdata('validation');
+        }
 
         echo view('usuarios/perfil/perfil-header', $data);
         echo view('clientes/activarEstadia', $data);
@@ -198,6 +199,9 @@ class Cliente extends BaseController
 
 
 public function precioEstadia()
+
+    // Aca hay que cambiar algo para que el precio de estadia sea NULL en indefinido. 
+
     {
         $zonas = new ModeloZona();
         $datos = [

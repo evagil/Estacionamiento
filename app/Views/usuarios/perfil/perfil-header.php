@@ -105,16 +105,19 @@
                                 Ver Mis Estadias
                             </a>
                         </li>
-<<<<<<< HEAD
+
+
                         <li class="nav-item">
                             <a class="nav-link" href="<?= base_url('usuarios/clientes/crear') ?>">
                                 <div class="fas fa-car-side fa-lg"></div>
-                                Activar Estadia
+                                <i class="bi bi-calendar3"></i> Activar Estadia
                             </a>
                         </li>
-=======
-                       
->>>>>>> 0bb3dda0e567cb71a9645c9b7110d3f2a5a92bf8
+                   
+                        
+                     
+
+
                     </ul>
                 <?php endif; ?>
 
@@ -149,3 +152,7 @@
                 <h1><?= $titulo ?></h1>
             </div>
             <!-- Termina el header, abajo va el contenido, despues el footer cierra estas etiquetas -->
+
+
+
+        

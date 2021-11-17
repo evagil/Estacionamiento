@@ -9,14 +9,6 @@
         <h3>Insertar datos de la estadia</h3>
         
      
-        <!-- 
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="patente" name="patente" placeholder="Patente" value="<?= old('patente') ?>">
-            <label for="patente">Patente</label>
-        </div>
-         -->
-
-
 
 
         <div id="seleccionPatente" class="d-flex flex-row justify-content-evenly align-items-center mb-3">
@@ -74,6 +66,13 @@
                 <?= form_hidden('horaInicial'); ?>
 
 
+            
+
+                <b>Horario INDEFINIDO</b>
+                <input type="checkbox" checked="" name="check" id="check" value="1" onchange="javascript:showContent()" />
+               
+                <div id="content" style="display: none;">
+             
 
                 <?php if (isset($validacion) && $validacion->hasError('horaFinal')) { ?>
                     <span class="text-danger"> <?= "*".$validacion->getError('horaFinal'); ?> </span>
@@ -85,12 +84,7 @@
                 <?= form_hidden('horaFinal'); ?>
 
 
-                  <!-- ASDASDASDASDDASADSADDASDA   -->
-
-                <input type="checkbox" name="horarioIndefinido" value="HorarioIndefinido">Horario indefinido</input>
-                
-    
-               <!-- ASDASDASDASDDASADSADDASDA   -->
+                </div>
 
             </div>
         </div>
@@ -123,7 +117,7 @@
 </div>
 
 
-  //Modal (carga vehiculo) 
+
 
 <div class="modal fade" id="modalCarga" aria-labelledby="cargaModelLabel" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
@@ -454,5 +448,20 @@
         })
 
        
+        
+                   function showContent() {
+               
+                  element = document.getElementById("content");
+                  check = document.getElementById("check");
+                   if (check.checked) {
+                    element.style.display='none';
+                    }
+                    else {
+                    element.style.display='block';
+                      }
+                    }
+                 
+
+
 
 </script>
