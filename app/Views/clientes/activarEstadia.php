@@ -7,18 +7,15 @@
 <div class="container">
     <form style="width: 50%; margin: 0 auto" id="formulario" method="post" action="<?= base_url('usuarios/clientes/crear') ?>">
         <h3>Insertar datos de la estadia</h3>
-        
-     
 
-
+        <?php if (isset($validacion) && $validacion->hasError('patente')) { ?>
+            <span class="text-danger"> <?= "*".$validacion->getError('patente'); ?> </span>
+        <?php } ?>
         <div id="seleccionPatente" class="d-flex flex-row justify-content-evenly align-items-center mb-3">
-            <select class="form-select" id="patente" name="patente" ?>">
+            <select class="form-select" id="patente" name="patente">
                 <option selected value="-1">Seleccione una Patente</option>
             </select>
         </div>
-        
-      
-       
 
         <?php if (isset($validacion) && $validacion->hasError('zona')) { ?>
             <span class="text-danger"> <?= "*".$validacion->getError('zona'); ?> </span>
@@ -479,12 +476,15 @@
 
 
                     function estaIndefinido() {
-               
-                        if(document.getElementById("check").checked) {
-                            checkActivo();
-                       } else {
-                         previsualizar();
-                         }
+                        let check = document.getElementById("check")
+                        if(check)
+                        {
+                            if(check.checked) {
+                                checkActivo();
+                            } else {
+                                previsualizar();
+                            }
+                        }
                  }
 
 
