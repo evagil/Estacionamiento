@@ -56,18 +56,10 @@ class ModeloZona extends Model
         $timeInicial = new Time($datos['horaInicial']);
         $timeFinal = new Time($datos['horaFinal']);
         $diferencia = $timeInicial->difference($timeFinal);
-        $horas = $diferencia->getHours();
         $mins = $diferencia->getMinutes();
 
-        if ($horas < 1)
-        {
-            $precio = $mins / 60 * $zonaHorario->costo;
-        }
-        else
-        {
-            $precio = $horas * $zonaHorario->costo;
-        }
+        $costoPorMinuto = ($mins / 60) * $zonaHorario->costo;
 
-        return $precio;
+        return $costoPorMinuto;
     }
 }
