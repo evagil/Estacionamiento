@@ -29,12 +29,19 @@ class Inspector extends BaseController
         {
             $auto = $autos->obtenerAutos($valor1);
 
+           if($auto){
+
+
             $data['ventas'] = $venta->listarVentas($auto->id_auto, null, 1);
 
             $data['titulo'] = 'Listado de ventas del vehiculo';
             echo view ('usuarios/perfil/perfil-header', $data);
             echo view ('inspectores/listarVentas', $data);
             echo view ('usuarios/perfil/perfil-footer');
+              }
+             else{
+            return redirect()->to(base_url('usuarios/inspectores/formulario'))->with('mensaje', 'No existe la patente ingresada en el sistema');
+                }
         }
         else
         {
