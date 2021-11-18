@@ -40,7 +40,7 @@ class Inspector extends BaseController
             echo view ('usuarios/perfil/perfil-footer');
               }
              else{
-            return redirect()->to(base_url('usuarios/inspectores/formulario'))->with('mensaje', 'No existe la patente ingresada en el sistema');
+            return redirect()->to(base_url('usuarios/inspectores/formulario'))->with('mensaje_error', 'No existe la patente ingresada en el sistema');
                 }
         }
         else
