@@ -37,7 +37,7 @@ class Admin extends BaseController
             return redirect()->to(base_url('usuarios/perfil'))->with('mensaje', 'Usuario creado existosamente.');
         }
         else {
-            return redirect()->to(base_url('usuarios/administrador/alta'))->with('validation', $validation)->withInput();
+            return redirect()->to(base_url('usuarios/administrador/altaUsuario'))->with('validation', $validation)->withInput();
         }
     }
 
