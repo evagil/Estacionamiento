@@ -244,7 +244,6 @@
 
                     for (let llave in data)
                     {
-                        console.log(data[llave])
                         let div = document.createElement('div')
                         div.classList.add('errorMensaje')
                         div.classList.add('alert')
