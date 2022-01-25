@@ -24,7 +24,7 @@
     const agregarAtributo = (nombre, texto) => {
         let h5 = document.createElement('h5')
         h5.classList.add('card-title')
-        h5.innerHTML = nombre
+        h5.innerHTML = nombre.replace(/_/g, " ")
 
         let p = document.createElement('p')
         p.classList.add('card-text')
