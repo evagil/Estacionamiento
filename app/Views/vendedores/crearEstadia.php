@@ -105,7 +105,7 @@
             </div>
             <div class="modal-body">
                 <h3>No existe vehiculo con esta patente, ¿desea agregarlo?</h3>
-                <form id="formCarga" method="post" action="<?= base_url('usuarios/vendedores/vender') ?>">
+                <form id="formCarga">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="marca" name="marca">
                         <label for="marca">Marca</label>
