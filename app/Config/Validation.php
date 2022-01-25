@@ -396,4 +396,16 @@ class Validation
             ]
         ]
     ];
+
+    public $formInfraccion = [
+        'patente' => [
+            'rules' => 'required|min_length[6]|max_length[7]|campoExistente[autos,patente]',
+            'errors' => [
+                'required' => 'Ingrese la patente.',
+                'min_length' => 'La patente debe ser de 6 numeros minimo.',
+                'max_length' => 'La patente debe ser de 7 numeros maximo.',
+                'campoExistente' => 'Ingrese la patente de un Vehiculo existente.'
+            ]
+        ]
+    ];
 }

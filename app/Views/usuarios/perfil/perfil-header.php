@@ -130,6 +130,12 @@
                                 InspecionarVenta
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url('usuarios/inspectores/infraccion') ?>">
+                                <span data-feather="plus-circle"></span>
+                                Crear Infraccion
+                            </a>
+                        </li>
                     </ul>
                 <?php endif; ?>
 
