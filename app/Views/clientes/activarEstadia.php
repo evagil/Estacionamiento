@@ -113,58 +113,6 @@
     </div>
 </div>
 
-
-
-
-<div class="modal fade" id="modalCarga" aria-labelledby="cargaModelLabel" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="previsualizacionModelLabel">Carga Vehiculo</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <h3>No existe vehiculo con esta patente, ¿desea agregarlo?</h3>
-                <form id="formCarga">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="marca" name="marca">
-                        <label for="marca">Marca</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="modelo" name="modelo">
-                        <label for="modelo">Modelo</label>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <button type="button" data-bs-dismiss="modal" class="btn btn-primary" onclick="cargarVehiculo()">Guardar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-<!-- Modal (errores) -->
-<div class="modal fade" id="modalErrores" aria-labelledby="erroresModelLabel" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="erroresModelLabel">Carga Vehiculo</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="errorsBody">
-
-            </div>
-            <div class="modal-footer text-center">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.js"></script>
 <script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -231,81 +179,6 @@
                     })
                 })
         }
-    }
-
-    const cargarVehiculo = () => {
-        let patente = document.getElementById('patente').value
-        let formData = new FormData(document.getElementById('formCarga'))
-        formData.append('patente', patente)
-
-        let errorMensaje = document.querySelectorAll('.errorMensaje')
-        for (let elemento of errorMensaje)
-        {
-            elemento.parentNode.removeChild(elemento)
-        }
-
-        fetch("<?= base_url('usuarios/clientes/guardarVehiculo') ?>", {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => {
-                if (response.status == 200)
-                {
-                    let formulario = document.getElementById('formulario')
-                    formulario.submit()
-                }
-                else
-                {
-                    return response.json()
-                }
-            })
-            .then(data => {
-                if (data)
-                {
-                    let errorContainer = document.getElementById('errorsBody')
-                    let modalErrores = new bootstrap.Modal(document.getElementById('modalErrores'))
-
-                    for (let llave in data)
-                    {
-                        console.log(data[llave])
-                        let div = document.createElement('div')
-                        div.classList.add('errorMensaje')
-                        div.classList.add('alert')
-                        div.classList.add('alert-danger')
-                        div.setAttribute('role', 'alert')
-                        div.textContent = data[llave]
-                        errorContainer.appendChild(div)
-                    }
-
-                    modalErrores.show()
-                }
-            })
-    }
-
-    const vehiculoExiste = () => {
-        let formulario = document.getElementById('formulario')
-        let modalCarga = new bootstrap.Modal(document.getElementById('modalCarga'))
-        let hiddenInicial = document.getElementsByName('horaInicial')[0]
-        let hiddenFinal = document.getElementsByName('horaFinal')[0]
-        let pickerInicial = document.querySelectorAll('#horaInicial-input select')
-        let pickerFinal = document.querySelectorAll('#horaFinal-input select')
-        let patente = document.getElementById('patente').value
-
-        hiddenInicial.value = pickerInicial[0].value + ":" + pickerInicial[1].value + ":00"
-        hiddenFinal.value = pickerFinal[0].value + ":" + pickerFinal[1].value + ":00"
-
-        fetch("<?= base_url('usuarios/clientes/obtenerVehiculo') ?>/" + patente, { method: 'GET' })
-            .then(response => response.json())
-            .then(auto => {
-                if (auto)
-                {
-                    formulario.submit()
-                }
-                else
-                {
-                    modalCarga.show()
-                }
-            })
     }
 
     const checkActivo = () => {
@@ -442,7 +315,7 @@
 
 
 
-        fetch("<?= esc(base_url('usuarios/clientes/autos')) ?>", { method: 'GET' })
+    fetch("<?= esc(base_url('usuarios/clientes/autos')) ?>", { method: 'GET' })
         .then(response => response.json())
         .then(data => {
             let autosInput = document.getElementById('patente')
@@ -462,30 +335,29 @@
 
        
         
-                   function showContent() {
-               
-                  element = document.getElementById("content");
-                  check = document.getElementById("check");
-                   if (check.checked) {
-                    element.style.display='none';
-                    }
-                    else {
-                    element.style.display='block';
-                      }
-                    }
+    function showContent() {
+        element = document.getElementById("content");
+        check = document.getElementById("check");
+        if (check.checked) {
+            element.style.display='none';
+        }
+        else {
+            element.style.display='block';
+        }
+    }
 
 
-                    function estaIndefinido() {
-                        let check = document.getElementById("check")
-                        if(check)
-                        {
-                            if(check.checked) {
-                                checkActivo();
-                            } else {
-                                previsualizar();
-                            }
-                        }
-                 }
+    function estaIndefinido() {
+        let check = document.getElementById("check")
+        if(check)
+        {
+            if(check.checked) {
+                checkActivo();
+            } else {
+                previsualizar();
+            }
+        }
+    }
 
 
 
