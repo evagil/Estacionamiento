@@ -6,7 +6,7 @@
         <div class="input-group mb-3">
             <span class="input-group-text">Patente</span>
             <?php if (isset($patente)): ?>
-                <input type="text" class="form-control" id="patente" name="patente" value="<?= $patente ?>" disabled readonly>
+                <input type="text" class="form-control" id="patente" name="patente" value="<?= $patente ?>" readonly>
             <?php else: ?>
                 <input type="text" class="form-control" id="patente" name="patente" value="<?= old('patente') ?>" autocomplete="off">
             <?php endif; ?>

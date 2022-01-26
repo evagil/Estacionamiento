@@ -83,9 +83,10 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
     });
 
     $routes->group('inspectores', ['filter' => 'rolGuard:Inspector'], function($routes) {
-        $routes->get('formulario', 'Inspector::formulario'); // Sugerencia. Cambiar nombre para que sea mas representativo, como consultaEstacionamiento
-        $routes->post('envioPost', 'Inspector::enviarPost'); // Sugerencia. Cambiar nombre para que sea mas representativo, como obtenerEstacionamiento
+        $routes->get('estadia', 'Inspector::consultarEstadia');
+        $routes->post('estadia', 'Inspector::obtenerEstadias');
         $routes->get('infraccion', 'Inspector::crearInfraccion');
+        $routes->get('infraccion/(:any)', 'Inspector::crearInfraccion/$1');
         $routes->post('infraccion', 'Inspector::guardarInfraccion');
         $routes->get('auto/(:any)', 'Inspector::obtenerAuto/$1');
         $routes->post('guardarVehiculo', 'Inspector::guardarVehiculo');

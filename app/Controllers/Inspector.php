@@ -12,56 +12,46 @@ use CodeIgniter\I18n\Time;
 
 class Inspector extends BaseController
 {
-    public function formulario(){
+    public function consultarEstadia(){
         if (session()->getFlashdata('validacion')) {
             $data['validacion'] = session()->getFlashdata('validacion');
         }
 
         $data['titulo'] = 'Inspeccionar';
         echo view ('usuarios/perfil/perfil-header', $data);
-        echo view ('inspectores/formulario');
+        echo view ('inspectores/consultarEstadia');
         echo view ('usuarios/perfil/perfil-footer');
     }
 
-    public function enviarPost(){
+    public function obtenerEstadias(){
         $autos = new ModeloAuto();
         $venta = new ModeloVenta();
-        $valor1 = $_POST['valor1'];
         $validation = \Config\Services::validation();
+        $post = $this->request->getJSON(true);
 
-        if ($validation->run(['patente' => $valor1], 'patenteInspeccion'))
+        if ($validation->run($post, 'formInfraccion'))
         {
-            $auto = $autos->obtenerAutos($valor1);
+            $patente = $post['patente'];
+            $auto = $autos->obtenerAutos($patente);
+            $estadias = $venta->listarVentas($auto->id_auto, null, 1);
 
-           if($auto){
-
-
-            $data['ventas'] = $venta->listarVentas($auto->id_auto, null, 1);
-
-            $data['titulo'] = 'Listado de ventas del vehiculo';
-            echo view ('usuarios/perfil/perfil-header', $data);
-            echo view ('inspectores/listarVentas', $data);
-            echo view ('usuarios/perfil/perfil-footer');
-              }
-             else{
-            return redirect()->to(base_url('usuarios/inspectores/formulario'))->with('mensaje_error', 'No existe la patente ingresada en el sistema');
-                }
+            return $this->response->setStatusCode(200)->setJSON(['estadias' => $estadias]);
         }
         else
         {
-            return redirect()->to(base_url('usuarios/inspectores/formulario'))->with('validacion', $validation);
+            return $this->response->setStatusCode(422, 'Datos invalidos')->setJSON(['errores' => $validation->getErrors()]);
         }
     }
 
-    public function crearInfraccion()
+    public function crearInfraccion($patente = null)
     {
         helper('form');
         if (session()->getFlashdata('validacion')) {
             $data['validacion'] = session()->getFlashdata('validacion');
         }
 
-        if (session()->getFlashdata('patente')) {
-            $data['patente'] = session()->getFlashdata('patente');
+        if (isset($patente)) {
+            $data['patente'] = $patente;
         }
 
         $data['titulo'] = "Crear Infraccion";
