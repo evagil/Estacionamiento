@@ -143,6 +143,7 @@
                 .then(data => {
                     setNewInput(patenteBody.patente)
                     searchButton.disabled = false
+                    addElementHTML('caption', '')
 
                     if (data.estadias)
                     {
