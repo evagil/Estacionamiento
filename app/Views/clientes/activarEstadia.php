@@ -15,6 +15,9 @@
             <select class="form-select" id="patente" name="patente">
                 <option selected value="-1">Seleccione una Patente</option>
             </select>
+            <div id="spinner-patente" class="d-none spinner-border text-primary spinner-border-sm ms-2" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
         </div>
 
         <?php if (isset($validacion) && $validacion->hasError('zona')) { ?>
@@ -107,7 +110,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="btn-enviar" disabled onclick="vehiculoExiste()">Si</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="btn-enviar" disabled onclick="generarEstadia()">Si</button>
             </div>
         </div>
     </div>
@@ -181,14 +184,12 @@
         }
     }
 
-    const checkActivo = () => {
+    const generarEstadia = () => {
         let formulario = document.getElementById('formulario')
-        let modalCarga = new bootstrap.Modal(document.getElementById('modalCarga'))
         let hiddenInicial = document.getElementsByName('horaInicial')[0]
         let hiddenFinal = document.getElementsByName('horaFinal')[0]
         let pickerInicial = document.querySelectorAll('#horaInicial-input select')
         let pickerFinal = document.querySelectorAll('#horaFinal-input select')
-        let patente = document.getElementById('patente').value
 
         hiddenInicial.value = pickerInicial[0].value + ":" + pickerInicial[1].value + ":00"
         hiddenFinal.value = pickerFinal[0].value + ":" + pickerFinal[1].value + ":00"
@@ -319,7 +320,7 @@
         .then(response => response.json())
         .then(data => {
             let autosInput = document.getElementById('patente')
-            let spinner = document.getElementById('spinner')
+            let spinner = document.getElementById('spinner-patente')
 
             for (let auto of data.autos)
             {
@@ -352,7 +353,7 @@
         if(check)
         {
             if(check.checked) {
-                checkActivo();
+                generarEstadia();
             } else {
                 previsualizar();
             }
