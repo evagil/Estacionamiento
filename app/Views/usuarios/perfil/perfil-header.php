@@ -81,6 +81,12 @@
                                 Autos Estacionados
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url('usuarios/administrador/infracciones') ?>">
+                                <span data-feather="clipboard"></span>
+                                Infracciones
+                            </a>
+                        </li>
                     </ul>
                 <?php endif; ?>
 

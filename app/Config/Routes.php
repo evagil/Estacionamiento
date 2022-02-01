@@ -83,6 +83,9 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         $routes->post('altaUsuario', 'Admin::guardarAlta');
         $routes->add('eliminar/(:num)', 'Admin::eliminar/$1');
         $routes->add('reestablecer/(:num)', 'Admin::reestablecerClave/$1');
+        $routes->get('infracciones', 'Admin::listadoInfracciones');
+        $routes->post('infracciones', 'Admin::obtenerInfracciones');
+        $routes->post('infracciones/(:num)', 'Admin::obtenerInfracciones/$1S');
     });
 
     $routes->group('inspectores', ['filter' => 'rolGuard:Inspector'], function($routes) {
