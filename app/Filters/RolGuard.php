@@ -18,10 +18,17 @@ class RolGuard implements FilterInterface
         ];
         $rol = session()->get('nombre_rol');
 
-        if (! in_array($arguments[0], $permisos[$rol])) // Si pertenece al rol correcto para acceder
+        if (isset($rol) && strlen($rol) > 0)
         {
-            return redirect()->to(base_url('usuarios/perfil'))->with('mensaje_error', 'No posee permiso para esta operacion');
+            if (! in_array($arguments[0], $permisos[$rol])) // Si no pertenece al rol correcto para acceder
+            {
+                return redirect()->to(base_url('usuarios/perfil'))->with('mensaje_error', 'No posee permiso para esta operacion');
 
+            }
+        }
+        else
+        {
+            return redirect()->to(base_url(''))->with('mensaje_error', 'No se encontro ningun rol.');
         }
     }
 
