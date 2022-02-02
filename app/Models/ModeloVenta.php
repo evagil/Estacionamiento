@@ -13,7 +13,7 @@ class ModeloVenta extends Model
     protected $allowedFields = ['hora_inicio','hora_fin','cantidad_horas','monto','id_usuario','id_auto','id_zona_horario','vender', 'pago'];
 
     public function listarVentas($idAuto = null, $idUsuario = null, $pendiente = 0){ // pendiente en 1, devuelve los activos y en 0 ambos
-        $ventas = $this->select("ventas.id_venta, hora_inicio, 
+        $ventas = $this->select("ventas.id_venta, hora_inicio, hora_fin, 
             case when hora_fin is null then 'Contando..' 
             else cantidad_horas end as cantidad_horas,
             case when hora_fin is null then 'Contando..' 
@@ -25,11 +25,10 @@ class ModeloVenta extends Model
             else 'No' end as venta, 
             case when pago = 1 then 'Si' 
             else 'No' end as pago, 
-            case when now() >= hora_inicio and hora_fin is null then 'Activo' 
-                when now() >= hora_inicio and now() < hora_fin then 'En Curso'
+            case when now() >= hora_inicio and hora_fin is null or (hora_fin is not null and now() between hora_inicio and hora_fin) then 'Activo' 
                 when now() < hora_inicio then 'Pendiente'
                 when hora_fin is not null and now() >= hora_fin then 'Finalizado'  
-                else 'Desconocido' end as hora_fin")
+                else 'Desconocido' end as estado")
             ->join('usuarios','ventas.id_usuario = usuarios.id_usuario')
             ->join('autos','autos.id_auto=ventas.id_auto')
             ->join('zonas_horarios','zonas_horarios.id_zona_horario=ventas.id_zona_horario')
