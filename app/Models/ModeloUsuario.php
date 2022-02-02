@@ -70,7 +70,12 @@ class ModeloUsuario extends Model
 
     public function cargarSaldo($id, $monto)
     {
-       
+      
+      if (!$this->update($id, ['saldo' => $monto]))
+      {
+        throw new Exception("No se pudo cargar saldo");
+           
+      }
     }
 
 }

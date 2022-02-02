@@ -267,12 +267,26 @@ public function precioEstadia()
         echo view('usuarios/perfil/perfil-footer');
     }
 
-    public function depositarSaldo()
+    public function obtenerSaldo()
     {
         $usuario = new ModeloUsuario();
-        return $this->response->setJSON(['monto' => $usuario->obtenerSaldoUsuario(session()->get('id_usuario')) ]);
-        #$autos->obtenerAutosDelUsuario(session()->get('id_usuario'))
+        return $this->response->setJSON($usuario->obtenerSaldoUsuario(session()->get('id_usuario')));
+       
     }
+
+    public function depositarSaldo(){
+        $usuario = new ModeloUsuario();
+        $monto=$this->request->getPost("monto");
+        $idUsuario=session()->get('id_usuario');
+        
+        try {
+            $usuario->cargarSaldo($idUsuario,$monto);
+            return redirect()->to(base_url('usuarios/clientes/saldo'))->with('mensaje', 'Carga exitosa!');
+        } catch (\Exception $th) {           
+            return redirect()->to(base_url('usuarios/clientes/saldo'))->with('mensaje_error', 'No se pudo cargar monto.');
+        }
+    }
+
 
 
 
