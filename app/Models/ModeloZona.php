@@ -62,4 +62,24 @@ class ModeloZona extends Model
 
         return $costoPorMinuto;
     }
+
+    public function obtenerDatosZonas(){
+
+      return $this->select('zonas_horarios.id_zona_horario, zonas_horarios.id_zona_horario ,zonas.id_zona, zonas.nombre_zona, zonas_horarios.costo, zonas_horarios.f_inicio, zonas_horarios.f_fin, horarios.hora_inicio, horarios.hora_fin, horarios.dias')
+      ->join('zonas', 'zonas.id_zona = zonas_horarios.id_zona', 'right')
+      ->join('horarios', 'horarios.id_horario = zonas_horarios.id_horario')
+      //->groupBy('zonas.id_zona')
+      ->findAll();
+
+    }
+
+    public function obtenerDetalleZona($id)
+    {
+        return $this->select('zonas.id_zona, zonas.nombre_zona, zonas_horarios.costo, zonas_horarios.f_inicio, zonas_horarios.f_fin, horarios.hora_inicio, horarios.hora_fin, horarios.dias, zonas_horarios.id_zona_horario')
+        ->join('zonas', 'zonas.id_zona = zonas_horarios.id_zona', 'right')
+        ->join('horarios', 'horarios.id_horario = zonas_horarios.id_horario')
+        ->where('zonas_horarios.id_zona_horario', $id)->first();
+    }
+
+
 }

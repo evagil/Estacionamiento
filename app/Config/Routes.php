@@ -48,7 +48,8 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         $routes->add('modificar/(:num)', 'Usuario::editarUsuario/$1');
         $routes->post('modificar/(:num)', 'Usuario::guardarEdicion');
     });
- 
+
+
     $routes->group('clientes', ['filter' => 'rolGuard:Cliente'], function($routes) {
         $routes->add('agregarVehiculo', 'Cliente::agregarVehiculo');
         $routes->post('guardarVehiculo', 'Cliente::guardarVehiculo');
@@ -83,6 +84,17 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         $routes->post('altaUsuario', 'Admin::guardarAlta');
         $routes->add('eliminar/(:num)', 'Admin::eliminar/$1');
         $routes->add('reestablecer/(:num)', 'Admin::reestablecerClave/$1');
+        $routes->add('listadoZonas', 'Admin::listarZonas');
+        $routes->get('obtenerZonas', 'Admin::obtenerZonas');
+
+        $routes->get('obtenerDetalleZona/(:num)', 'Admin::obtenerDetalleZona/$1');
+        $routes->add('modificar/(:num)', 'Admin::editarZonas/$1');
+        $routes->post('modificar/(:num)', 'Admin::guardarEdicion');
+
+
+        $routes->get('infracciones', 'Admin::listadoInfracciones');
+        $routes->post('infracciones', 'Admin::obtenerInfracciones');
+        $routes->post('infracciones/(:num)', 'Admin::obtenerInfracciones/$1S');
     });
 
     $routes->group('inspectores', ['filter' => 'rolGuard:Inspector'], function($routes) {
