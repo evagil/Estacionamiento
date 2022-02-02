@@ -282,8 +282,8 @@ public function precioEstadia()
         try {
             $usuario->cargarSaldo($idUsuario,$monto);
             return redirect()->to(base_url('usuarios/clientes/saldo'))->with('mensaje', 'Carga exitosa!');
-        } catch (\Exception $th) {           
-            return redirect()->to(base_url('usuarios/clientes/saldo'))->with('mensaje_error', 'No se pudo cargar monto.');
+        } catch (\Exception $e) {
+            return redirect()->to(base_url('usuarios/clientes/saldo'))->with('mensaje_error', 'No se pudo cargar monto: '.$e->getMessage());
         }
     }
 

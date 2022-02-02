@@ -70,10 +70,19 @@ class ModeloUsuario extends Model
 
     public function cargarSaldo($id, $monto)
     {
-      $monto+= $this->obtenerSaldoUsuario($id);
-      if (!$this->update($id, ['saldo' => $monto]))
+      $saldo = $this->obtenerSaldoUsuario($id);
+      $suma = $saldo->saldo + $monto;
+
+      if ($suma >= 99999999)
       {
-        throw new Exception("No se pudo cargar saldo");           
+          throw new \Exception("Se excedio el monto permitido.");
+      }
+
+      $resultado = $this->set('saldo', $suma)->where('id_usuario', $id)->update();
+
+      if (!$resultado)
+      {
+        throw new \Exception("No se pudo cargar saldo");
       }
     }
 
