@@ -11,8 +11,6 @@ class ModeloInfraccion extends Model
     protected $useAutoIncrement = true;
     protected $returnType = 'App\Entities\Infraccion';
     protected $allowedFields = ['id_auto', 'id_inspector', 'fecha', 'descripcion'];
-<<<<<<< HEAD
-=======
 
     public function encontrarInfracciones($inspector = null, $vehiculo = null, $fechaInicio = null, $fechaFin = null)
     {
@@ -47,5 +45,4 @@ class ModeloInfraccion extends Model
             ->join('autos', 'infracciones.id_auto = autos.id_auto')
             ->join('usuarios', 'infracciones.id_inspector = usuarios.id_usuario')->findAll();
     }
->>>>>>> a687fdab7c487babb668b4744c3f04445e84bdef
 }

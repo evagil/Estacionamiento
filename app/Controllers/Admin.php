@@ -23,7 +23,7 @@ class Admin extends BaseController
 
         $data['titulo'] = "Alta";
         $data['roles'] = $rol->obtenerRestoRoles(4);
-        var_dump($data);
+
         echo view('usuarios/perfil/perfil-header', $data);
         echo view('usuarios/alta', $data);
         echo view('usuarios/perfil/perfil-footer');
