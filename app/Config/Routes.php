@@ -49,13 +49,7 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         $routes->post('modificar/(:num)', 'Usuario::guardarEdicion');
     });
 
-/*
-    $routes->group('', ['filter' => 'propietaryGuard:3'], function ($routes) { 
-        $routes->get('obtenerDetalleZona/(:num)', 'Admin::obtenerDetalleZona/$1');
-        $routes->add('modificar2/(:num)', 'Admin::editarZonas/$1');
-        $routes->post('modificar2/(:num)', 'Admin::guardarEdicion');
-    });
-*/
+
     $routes->group('clientes', ['filter' => 'rolGuard:Cliente'], function($routes) {
         $routes->add('agregarVehiculo', 'Cliente::agregarVehiculo');
         $routes->post('guardarVehiculo', 'Cliente::guardarVehiculo');
@@ -100,7 +94,7 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
 
         $routes->get('infracciones', 'Admin::listadoInfracciones');
         $routes->post('infracciones', 'Admin::obtenerInfracciones');
-        $routes->post('infracciones/(:num)', 'Admin::obtenerInfracciones/$1');
+        $routes->post('infracciones/(:num)', 'Admin::obtenerInfracciones/$1S');
     });
 
     $routes->group('inspectores', ['filter' => 'rolGuard:Inspector'], function($routes) {
