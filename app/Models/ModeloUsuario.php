@@ -10,7 +10,7 @@ class ModeloUsuario extends Model
     protected $primaryKey = 'id_usuario';
     protected $useAutoIncrement = true;
     protected $returnType     = 'App\Entities\Usuario';
-    protected $allowedFields = ['nombre', 'apellido', 'dni', 'clave', 'id_rol', 'email','baja'];
+    protected $allowedFields = ['nombre', 'apellido', 'dni', 'clave', 'id_rol', 'email','baja', 'saldo'];
 
     public function encontrarUsuarioDNI($dni)
     {
