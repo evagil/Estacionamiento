@@ -6,13 +6,13 @@
 
     </div>
     <div class="card-footer text-muted d-flex flex-row justify-content-center">
-        <a href="<?php echo base_url('usuarios/modificar').'/'.$id ?>" type="button" class="btn btn-primary">Modificar</a>
+        <a href="<?php echo base_url('administrador/modificar').'/'.$id ?>" type="button" class="btn btn-primary">Modificar</a>
     </div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
-    const agregarDetalle = (usuario) => {
+    const agregarDetalle = (zonas) => {
         let container = document.getElementById('card-body')
 
         for (let key in usuario) {
@@ -41,9 +41,9 @@
     $(document).ready(() => {
         $.ajax({
             method: 'GET',
-            url: "<?= esc(base_url('usuarios/obtenerDetalleUsuario') . '/' . $id) ?>",
-            success: (usuario) => {
-                agregarDetalle(usuario)
+            url: "<?= esc(base_url('administrador/obtenerDetalleUsuario') . '/' . $id) ?>",
+            success: (zonas) => {
+                agregarDetalle(zonas)
             }
         })
     })

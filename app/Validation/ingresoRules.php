@@ -107,4 +107,17 @@ class IngresoRules {
 
         return $resultado === null;
     }
+
+    public function campoExistente(?string $valor, string $datos): bool
+    {
+        [$tabla, $campo] = array_pad(explode(',', $datos), 2, null);
+        $db = db_connect();
+
+        $resultado = $db->table($tabla)
+            ->select('1')
+            ->where($campo, $valor)
+            ->get()->getRow();
+
+        return $resultado !== null;
+    }
 }

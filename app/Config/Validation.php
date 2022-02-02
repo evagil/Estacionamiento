@@ -299,17 +299,6 @@ class Validation
         ]
     ];
 
-    public $patenteInspeccion = [
-        'patente' => [
-            'rules' => 'required|min_length[6]|max_length[7]',
-            'errors' => [
-                'required' => 'Ingrese la patente.',
-                'min_length' => 'La patente debe ser de 6 numeros minimo.',
-                'max_length' => 'La patente debe ser de 7 numeros maximo.',
-            ]
-        ],
-    ];
-
     public $formVentaVendedor = [
         'patente' => [
             'rules' => 'required|min_length[6]|max_length[7]',
@@ -393,6 +382,18 @@ class Validation
                 'required' => 'Ingrese la horario final.',
                 'horaEnRango' => 'El horario final debe estar en el rango horario.',
                 'mayorAHora' => 'La hora final debe ser mayor a la hora inicial.'
+            ]
+        ]
+    ];
+
+    public $formInfraccion = [
+        'patente' => [
+            'rules' => 'required|min_length[6]|max_length[7]|campoExistente[autos,patente]',
+            'errors' => [
+                'required' => 'Ingrese la patente.',
+                'min_length' => 'La patente debe ser de 6 numeros minimo.',
+                'max_length' => 'La patente debe ser de 7 numeros maximo.',
+                'campoExistente' => 'Ingrese la patente de un Vehiculo existente.'
             ]
         ]
     ];
