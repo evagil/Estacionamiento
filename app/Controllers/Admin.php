@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\ModeloAuto;
+use App\Models\ModeloInfraccion;
 use App\Models\ModeloRol;
 use App\Models\ModeloUsuario;
 use App\Models\ModeloVenta;
@@ -138,8 +140,75 @@ class Admin extends BaseController
         return $this->response->setJSON($autos);
     }
 
+<<<<<<< HEAD
     
     
 
 
+=======
+    public function listadoInfracciones() {
+        helper('date');
+        $data['titulo'] = "Listado de Ifracciones";
+        echo view('usuarios/perfil/perfil-header', $data);
+        echo view('administrador/listadoInfracciones');
+        echo view('usuarios/perfil/perfil-footer');
+    }
+
+    public function obtenerInfracciones($idInfraccion = null)
+    {
+        $modelo = new ModeloInfraccion();
+        $infracciones = null;
+        $errores = [];
+        $inspector = null;
+        $vehiculo = null;
+        $input = $this->request->getJSON(true);
+
+        if (isset($input['inspector']) && strlen($input['inspector']) > 0)
+        {
+            $modeloUsuario = new ModeloUsuario();
+            $inspector = $modeloUsuario->encontrarUsuarioDNI($input['inspector']);
+
+            if (!isset($inspector))
+            {
+                $errores['inspector'] = 'No existe un usuario con ese DNI.';
+            }
+        }
+
+        if (isset($input['patente']) && strlen($input['patente']) > 0)
+        {
+            $modeloAuto = new ModeloAuto();
+            $vehiculo = $modeloAuto->obtenerAutos($input['patente']);
+
+            if (!isset($vehiculo))
+            {
+                $errores['patente'] = 'No existe un vehiculo con esa patente.';
+            }
+        }
+
+        if (isset($input['desde']) && strlen($input['desde']) === 0)
+        {
+            $input['desde'] = null;
+        }
+
+        if (isset($input['hasta']) && strlen($input['hasta']) === 0)
+        {
+            $input['hasta'] = null;
+        }
+
+        if (count($errores) > 0)
+        {
+            return $this->response->setJSON(['errores' => $errores]);
+        }
+        else if (isset($idInfraccion))
+        {
+            $infracciones = $modelo->find($idInfraccion);
+        }
+        else
+        {
+            $infracciones = $modelo->encontrarInfracciones($inspector, $vehiculo, $input['desde'], $input['hasta']);
+        }
+
+        return $this->response->setJSON(['infracciones' => $infracciones]);
+    }
+>>>>>>> a687fdab7c487babb668b4744c3f04445e84bdef
 }

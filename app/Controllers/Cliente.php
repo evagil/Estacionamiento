@@ -258,6 +258,22 @@ public function precioEstadia()
         return $this->response->setJSON(['autos' => $autos->obtenerAutosDelUsuario(session()->get('id_usuario'))]);
     }
 
+    public function cargarSaldo()
+    {
+        $data['titulo'] = "Cargar Saldo";
+        echo view('usuarios/perfil/perfil-header', $data);
+        echo view('clientes/deposito');
+        echo view('usuarios/perfil/perfil-footer');
+    }
+
+    public function depositarSaldo()
+    {
+        $autos = new ModeloAutoUsuario();
+        return $this->response->setJSON(['autos' => $autos->obtenerAutosDelUsuario(session()->get('id_usuario'))]);
+    }
+
+
+
 
   
 }

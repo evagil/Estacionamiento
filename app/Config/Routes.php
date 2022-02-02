@@ -63,6 +63,9 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         $routes->get('obtenerVehiculo/(:any)', 'Cliente::obtenerVehiculo/$1');
         $routes->get('obtenerVehiculos', 'Cliente::obtenerVehiculos');       
         $routes->add('vincularVehiculo/(:any)', 'Cliente::vincularVehiculo/$1');
+        $routes->get('saldo', 'Cliente::cargarSaldo');  #vista
+        $routes->post('saldo', 'Cliente::depositarSaldo');
+
         # ver mis vehiculos
         $routes->add('verMisEstadias', 'Cliente::verMisEstadias');
         $routes->get('obtenerEstadiaVehiculo', 'Cliente::obtenerEstadiaVehiculo');
@@ -95,6 +98,9 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         $routes->post('modificar/(:num)', 'Admin::guardarEdicion');
 
 
+        $routes->get('infracciones', 'Admin::listadoInfracciones');
+        $routes->post('infracciones', 'Admin::obtenerInfracciones');
+        $routes->post('infracciones/(:num)', 'Admin::obtenerInfracciones/$1S');
     });
 
     $routes->group('inspectores', ['filter' => 'rolGuard:Inspector'], function($routes) {
