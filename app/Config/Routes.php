@@ -100,7 +100,7 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
 
         $routes->get('infracciones', 'Admin::listadoInfracciones');
         $routes->post('infracciones', 'Admin::obtenerInfracciones');
-        $routes->post('infracciones/(:num)', 'Admin::obtenerInfracciones/$1S');
+        $routes->post('infracciones/(:num)', 'Admin::obtenerInfracciones/$1');
     });
 
     $routes->group('inspectores', ['filter' => 'rolGuard:Inspector'], function($routes) {
