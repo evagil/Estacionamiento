@@ -22,6 +22,10 @@
             <input type="text" class="form-control" id="costo" name="costo" value="<?= esc($zonas->costo) ?>">
         </div>
         
+        <div class="col">
+                <label for="desde">Desde</label>
+                <input type="datetime-local" class="form-control" id="desde" name="desde" value="<?= esc($zonas->hora_inicio) ?>">
+            </div>
         
 
         <div class="d-flex justify-content-center">

@@ -23,14 +23,12 @@ class Admin extends BaseController
 
         $data['titulo'] = "Alta";
         $data['roles'] = $rol->obtenerRestoRoles(4);
-        var_dump($data);
         echo view('usuarios/perfil/perfil-header', $data);
         echo view('usuarios/alta', $data);
         echo view('usuarios/perfil/perfil-footer');
     }
 
-    public function guardarAlta()
-    {
+    public function guardarAlta(){
         $usuario = new ModeloUsuario();
         $validation = \Config\Services::validation();
         $user = new \App\Entities\Usuario($this->request->getPost());
@@ -112,6 +110,22 @@ class Admin extends BaseController
 
         return $this->response->setJSON($usuarios);
     }
+
+    public function guardarEdicion()
+    {
+        $modelo = new ModeloZona();
+        $validation =  \Config\Services::validation();
+        $zona = new \App\Entities\ZonaHorario($this->request->getPost());
+
+        if ($validation->run($this->request->getPost(), 'formEditarUsuario')) {
+            $modelo->save($zona);
+            return redirect()->to(base_url('usuarios/perfil'))->with('mensaje', 'Usuario editado existosamente.');
+        }
+        else {
+            return redirect()->to(base_url('administrador/modificar').'/'.$zona->id_usuario)->with('validation', $validation);
+        }
+    }
+
 
 
     public function eliminar($id)
