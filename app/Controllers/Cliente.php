@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Entities\Auto;
 use App\Models\ModeloAuto;
 use App\Models\ModeloAutoUsuario;
+use App\Models\ModeloUsuario;
 use App\Models\ModeloVenta;
 use App\Models\ModeloZona;
 use CodeIgniter\I18n\Time;
@@ -268,8 +269,9 @@ public function precioEstadia()
 
     public function depositarSaldo()
     {
-        $autos = new ModeloAutoUsuario();
-        return $this->response->setJSON(['autos' => $autos->obtenerAutosDelUsuario(session()->get('id_usuario'))]);
+        $usuario = new ModeloUsuario();
+        return $this->response->setJSON(['monto' => $usuario->obtenerSaldoUsuario(session()->get('id_usuario')) ]);
+        #$autos->obtenerAutosDelUsuario(session()->get('id_usuario'))
     }
 
 

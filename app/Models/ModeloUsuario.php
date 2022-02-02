@@ -60,4 +60,17 @@ class ModeloUsuario extends Model
         }
     }
 
+    public function obtenerSaldoUsuario($id)
+    {
+        return $this->select('saldo')
+            ->where('id_usuario', $id)
+            ->where('baja', 0)
+            ->first();
+    }
+
+    public function cargarSaldo($id, $monto)
+    {
+       
+    }
+
 }

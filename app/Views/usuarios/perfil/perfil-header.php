@@ -113,9 +113,13 @@
                                 <i class="bi bi-calendar3"></i> Activar Estadia
                             </a>
                         </li>
-                   
-                        
-                     
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url('usuarios/clientes/saldo') ?>">
+                                <span data-feather="shopping-cart"></span>
+                                <i class="bi bi-calendar3"></i> Deposito
+                            </a>
+                        </li>                    
 
 
                     </ul>
