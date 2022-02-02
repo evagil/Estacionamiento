@@ -82,15 +82,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
-<<<<<<< HEAD
                             <a class="nav-link" href="<?= base_url('usuarios/administrador/listadoZonas') ?>">
                                 <span data-feather="list"></span>
                                 Zonas
-=======
                             <a class="nav-link" href="<?= base_url('usuarios/administrador/infracciones') ?>">
                                 <span data-feather="clipboard"></span>
                                 Infracciones
->>>>>>> a687fdab7c487babb668b4744c3f04445e84bdef
                             </a>
                         </li>
                     </ul>
