@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Entities\Auto;
 use App\Models\ModeloAuto;
 use App\Models\ModeloAutoUsuario;
+use App\Models\ModeloUsuario;
 use App\Models\ModeloVenta;
 use App\Models\ModeloZona;
 use CodeIgniter\I18n\Time;
@@ -266,11 +267,26 @@ public function precioEstadia()
         echo view('usuarios/perfil/perfil-footer');
     }
 
-    public function depositarSaldo()
+    public function obtenerSaldo()
     {
-        $autos = new ModeloAutoUsuario();
-        return $this->response->setJSON(['autos' => $autos->obtenerAutosDelUsuario(session()->get('id_usuario'))]);
+        $usuario = new ModeloUsuario();
+        return $this->response->setJSON($usuario->obtenerSaldoUsuario(session()->get('id_usuario')));
+       
     }
+
+    public function depositarSaldo(){
+        $usuario = new ModeloUsuario();
+        $monto=$this->request->getPost("monto");
+        $idUsuario=session()->get('id_usuario');
+        
+        try {
+            $usuario->cargarSaldo($idUsuario,$monto);
+            return redirect()->to(base_url('usuarios/clientes/saldo'))->with('mensaje', 'Carga exitosa!');
+        } catch (\Exception $e) {
+            return redirect()->to(base_url('usuarios/clientes/saldo'))->with('mensaje_error', 'No se pudo cargar monto: '.$e->getMessage());
+        }
+    }
+
 
 
 

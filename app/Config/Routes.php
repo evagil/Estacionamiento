@@ -59,6 +59,7 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         $routes->add('vincularVehiculo/(:any)', 'Cliente::vincularVehiculo/$1');
         $routes->get('saldo', 'Cliente::cargarSaldo');  #vista
         $routes->post('saldo', 'Cliente::depositarSaldo');
+        $routes->get('miDinero', 'Cliente::obtenerSaldo');
 
         # ver mis vehiculos
         $routes->add('verMisEstadias', 'Cliente::verMisEstadias');

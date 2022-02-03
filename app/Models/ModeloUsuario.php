@@ -10,7 +10,7 @@ class ModeloUsuario extends Model
     protected $primaryKey = 'id_usuario';
     protected $useAutoIncrement = true;
     protected $returnType     = 'App\Entities\Usuario';
-    protected $allowedFields = ['nombre', 'apellido', 'dni', 'clave', 'id_rol', 'email','baja'];
+    protected $allowedFields = ['nombre', 'apellido', 'dni', 'clave', 'id_rol', 'email','baja', 'saldo'];
 
     public function encontrarUsuarioDNI($dni)
     {
@@ -58,6 +58,32 @@ class ModeloUsuario extends Model
             $usuario->clave = '123456';
             return $this->save($usuario);
         }
+    }
+
+    public function obtenerSaldoUsuario($id)
+    {
+        return $this->select('saldo')
+            ->where('id_usuario', $id)
+            ->where('baja', 0)
+            ->first();
+    }
+
+    public function cargarSaldo($id, $monto)
+    {
+      $saldo = $this->obtenerSaldoUsuario($id);
+      $suma = $saldo->saldo + $monto;
+
+      if ($suma >= 99999999)
+      {
+          throw new \Exception("Se excedio el monto permitido.");
+      }
+
+      $resultado = $this->set('saldo', $suma)->where('id_usuario', $id)->update();
+
+      if (!$resultado)
+      {
+        throw new \Exception("No se pudo cargar saldo");
+      }
     }
 
 }
