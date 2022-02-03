@@ -11,7 +11,7 @@ class ModeloZona extends Model
     protected $primaryKey = 'id_zona_horario';
     protected $useAutoIncrement = true;
     protected $returnType     = 'App\Entities\ZonaHorario';
-    protected $allowedFields = ['costo, f_inicio, f_fin']; //Horario de inicio y fin donde se crearon, no del estacionamiento medido y pago
+    protected $allowedFields = ['costo','f_inicio','f_fin','id_horario']; //Horario de inicio y fin donde se crearon, no del estacionamiento medido y pago
 
     public function obtenerHorariosDeLaZona($zona)
     {
@@ -68,6 +68,7 @@ class ModeloZona extends Model
       return $this->select('zonas_horarios.id_zona_horario, zonas_horarios.id_zona_horario ,zonas.id_zona, zonas.nombre_zona, zonas_horarios.costo, zonas_horarios.f_inicio, zonas_horarios.f_fin, horarios.hora_inicio, horarios.hora_fin, horarios.dias')
       ->join('zonas', 'zonas.id_zona = zonas_horarios.id_zona', 'right')
       ->join('horarios', 'horarios.id_horario = zonas_horarios.id_horario')
+      //->where('zonas_horarios.f_fin IS NOT NULL')
       //->groupBy('zonas.id_zona')
       ->findAll();
 
@@ -75,7 +76,7 @@ class ModeloZona extends Model
 
     public function obtenerDetalleZona($id)
     {
-        return $this->select('zonas.id_zona, zonas.nombre_zona, zonas_horarios.costo, zonas_horarios.f_inicio, zonas_horarios.f_fin, horarios.hora_inicio, horarios.hora_fin, horarios.dias, zonas_horarios.id_zona_horario')
+        return $this->select('zonas.id_zona, zonas_horarios.costo, horarios.dias, zonas_horarios.id_horario ,zonas_horarios.id_zona_horario, horarios.hora_inicio, horarios.hora_fin')
         ->join('zonas', 'zonas.id_zona = zonas_horarios.id_zona', 'right')
         ->join('horarios', 'horarios.id_horario = zonas_horarios.id_horario')
         ->where('zonas_horarios.id_zona_horario', $id)->first();

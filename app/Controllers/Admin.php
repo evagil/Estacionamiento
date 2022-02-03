@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\ModeloAuto;
+use App\Models\ModeloHorarios;
 use App\Models\ModeloInfraccion;
 use App\Models\ModeloRol;
 use App\Models\ModeloUsuario;
@@ -80,7 +81,7 @@ class Admin extends BaseController
         $modelo = new ModeloZona();
 
         $zona = $modelo->obtenerDetalleZona($id);
-
+       //throw new \Exception(print_r($zona));
         if (session()->getFlashdata('validation')) {
             $data['validacion'] = session()->getFlashdata('validation');
         }
@@ -89,7 +90,7 @@ class Admin extends BaseController
         $data['zonas'] = $zona;
 
 
-        // print_r($zona);
+      
 
         echo view('usuarios/perfil/perfil-header', $data);
         echo view('administrador/editarZonas', $data);
@@ -114,16 +115,23 @@ class Admin extends BaseController
     public function guardarEdicion()
     {
         $modelo = new ModeloZona();
+        $modelo2 = new ModeloHorarios();
         $validation =  \Config\Services::validation();
         $zona = new \App\Entities\ZonaHorario($this->request->getPost());
+        $horarios = new \App\Entities\Horarios($this->request->getPost());
+         //throw new \Exception(print_r($zona));
+        $modelo->save($zona);
+        $modelo2->save($horarios);
+        return redirect()->to(base_url('usuarios/administrador/listadoZonas'))->with('mensaje', 'Zona editada existosamente.');
 
+        /*
         if ($validation->run($this->request->getPost(), 'formEditarUsuario')) {
             $modelo->save($zona);
             return redirect()->to(base_url('usuarios/perfil'))->with('mensaje', 'Usuario editado existosamente.');
         }
         else {
             return redirect()->to(base_url('administrador/modificar').'/'.$zona->id_usuario)->with('validation', $validation);
-        }
+        }*/
     }
 
 
