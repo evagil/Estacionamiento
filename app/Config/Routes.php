@@ -65,6 +65,7 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         $routes->add('verMisEstadias', 'Cliente::verMisEstadias');
         $routes->get('obtenerEstadiaVehiculo', 'Cliente::obtenerEstadiaVehiculo');
         $routes->get('finalizarEstadia/(:num)', 'Cliente::finalizarEstadia/$1');
+        $routes->get('pagarEstadia/(:num)', 'Cliente::pagarEstadia/$1');
 
         # activar ventas
         $routes->get('crear', 'Cliente::crearEstadia');

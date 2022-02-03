@@ -86,4 +86,19 @@ class ModeloUsuario extends Model
       }
     }
 
+    public function pagarMonto($id, $monto)
+    {
+        $usuario = $this->find($id);
+        $saldo = $usuario->saldo - $monto;
+
+        if ($saldo < 0)
+        {
+            throw new \Exception('No tiene saldo suficiente.');
+        }
+
+        if (!$this->update($usuario->id_usuario, ['saldo' => $saldo]))
+        {
+            throw new \Exception('Error desconocido.');
+        }
+    }
 }

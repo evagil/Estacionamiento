@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models;
-use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 
 class ModeloVenta extends Model
@@ -75,6 +74,19 @@ class ModeloVenta extends Model
         catch (\Exception $e) {
             $errores = $e->getMessage();
             return false;
+        }
+    }
+
+    public function pagarEstadia($id_venta)
+    {
+        $modeloUsuario = new ModeloUsuario();
+        $venta = $this->find($id_venta);
+
+        $modeloUsuario->pagarMonto($venta->id_usuario, $venta->monto);
+
+        if (!$this->update($id_venta, ['pago' => 1]))
+        {
+            throw new \Exception('Error desconocido.');
         }
     }
 }
