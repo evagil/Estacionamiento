@@ -101,21 +101,21 @@ class Cliente extends BaseController
     
     }
 
-    public function finalizarEstadia($idVenta){
+    public function finalizarEstadia($idVenta)
+    {
         $modeloZona = new ModeloZona();
         $modeloVenta = new ModeloVenta();
-        $zonahorario = $modeloVenta -> obtenerzonaHoraria($idVenta);
-       
-        $datos = ['zona'=> $zonahorario ->id_zona,
-            'horario'=> $zonahorario ->id_horario, 
-            'horaInicial'=> $zonahorario -> hora_inicio,
-            'horaFinal'=> $zonahorario ->hora_fin];
 
-        $precio = $modeloZona->precioEstadia($datos);
+        $venta = $modeloVenta->find($idVenta);
+        $zonaHorario = $modeloZona->find($venta->id_zona_horario);
 
-        $modeloVenta->bajaEstadia($idVenta, $precio);
-        #ver en mis-vehiculos-estacionados
+        $timeInicial = new Time($venta->hora_inicio);
+        $timeFinal = Time::now();
+        $diferencia = $timeInicial->difference($timeFinal);
+        $mins = $diferencia->getMinutes();
+        $precio = ($mins / 60) * $zonaHorario->costo;
 
+        $modeloVenta->bajaEstadia($idVenta, $precio, $timeFinal);
 
         return redirect()->to(base_url('usuarios/clientes/verMisEstadias'))->with('mensaje', 'Venta finalizada existosamente.');
     }

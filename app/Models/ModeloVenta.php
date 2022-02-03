@@ -52,16 +52,16 @@ class ModeloVenta extends Model
         return $ventas->findAll();
     }
 
-    public function bajaEstadia($id, $precio){
+    public function bajaEstadia($id, $precio, $hora_fin){
         $this->set([
-            'hora_fin' => new Time(),
+            'hora_fin' => $hora_fin,
             'monto' => $precio
         ])->where('id_venta', $id)->update();
     }
 
     public function obtenerzonaHoraria( $idVenta){
-       
-        return $this->select ('id_zona, id_horario, hora_inicio, now() as hora_fin') 
+
+        return $this->select ('id_zona, id_horario, hora_inicio, now() as hora_fin')
         ->where ('id_venta', $idVenta )
         -> join ('zonas_horarios','zonas_horarios.id_zona_horario=ventas.id_zona_horario')
         -> first();
