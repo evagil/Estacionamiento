@@ -3,7 +3,9 @@
         <h1>Cambiar datos de la zona</h1>
 
         <?=form_hidden('id_zona_horario', $zonas->id_zona_horario);?>
-        
+        <?=form_hidden('id_horario', $zonas->id_horario);?>
+        <?=form_hidden('id_zona', $zonas->id_zona);?>
+
         <div class="mb-3">
             <label for="costo" class="form-label">Costo</label>
 
@@ -36,7 +38,7 @@
             <input type="time" step="2" class="form-control" id="hora_fin" name="hora_fin" value="<?= esc($zonas->hora_fin) ?>">
         </div>
 
-       <input type="HIDDEN" class="form-control" id="id_horario" name="id_horario" value="<?= esc($zonas->id_horario) ?>">
+  
      
 
        

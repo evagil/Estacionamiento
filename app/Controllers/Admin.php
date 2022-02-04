@@ -117,23 +117,29 @@ class Admin extends BaseController
     public function guardarEdicion()
     {
         $modelo = new ModeloZona();
+        $input = $this->request->getPost();
+        $ahora = Time::now();
+       // $zona = new \App\Entities\ZonaHorario($this->request->getPost());
+        $zona = $modelo->find($input['id_zona_horario']);
+        $nuevaZona = new \App\Entities\ZonaHorario([
+              'costo' => $input['costo'],
+              'f_inicio' => $ahora,
+              'f_fin' => null,
+              'id_horario' => $zona->id_horario,
+              'id_zona' => $zona->id_zona
+        ]);
+
+        $zona->f_fin = Time::now();
+        $modelo->save($zona); 
+        $modelo->save($nuevaZona);
+
         $modelo2 = new ModeloHorarios();
-        $sinID = new ModeloZonaSinID();
 
         $validation =  \Config\Services::validation();
-        $zona = new \App\Entities\ZonaHorario($this->request->getPost());
-        $sinID = new \App\Entities\ZonaHorarioSinID($this->request->getPost());
         $horarios = new \App\Entities\Horarios($this->request->getPost());
          //throw new \Exception(print_r($zona));
         
-        
-         // actualizo la zona (pongo fecha fin)
-          $zona->f_fin = Time::now();
-          $modelo->save($zona); // actualizo
-        // ahora tengo que crear con los mismos datos
-          $sinID->f_fin = null;
-          $modelo->save($sinID);
-
+    
         $modelo2->save($horarios);
         return redirect()->to(base_url('usuarios/administrador/listadoZonas'))->with('mensaje', 'Zona editada existosamente.');
 

@@ -11,7 +11,7 @@ class ModeloZona extends Model
     protected $primaryKey = 'id_zona_horario';
     protected $useAutoIncrement = true;
     protected $returnType     = 'App\Entities\ZonaHorario';
-    protected $allowedFields = ['costo','f_inicio','f_fin','id_horario']; //Horario de inicio y fin donde se crearon, no del estacionamiento medido y pago
+    protected $allowedFields = ['costo','f_inicio','f_fin','id_horario','id_zona']; //Horario de inicio y fin donde se crearon, no del estacionamiento medido y pago
 
     public function obtenerHorariosDeLaZona($zona)
     {
