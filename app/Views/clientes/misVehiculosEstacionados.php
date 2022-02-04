@@ -1,5 +1,3 @@
-
-
 <div class="table-responsive">
     <table class="table"
            id="table"
@@ -29,6 +27,10 @@
         window.location.replace("<?= esc(base_url('usuarios/clientes/finalizarEstadia')) ?>/" + idVenta)
     }
 
+    const pagarVenta = (idVenta) => {
+        window.location.replace("<?= esc(base_url('usuarios/clientes/pagarEstadia')) ?>/" + idVenta)
+    }
+
     $(document).ready(() => {
         $.ajax({
             method: 'GET',
@@ -36,21 +38,21 @@
             success: (vehiculos) => {
                 $('#table').bootstrapTable({
                     data: vehiculos,
-                    columns: [{}, {
-                        field: 'hora_fin',
-                        title: 'Hora Fin',
+                    columns: [{}, {}, {}, {}, {}, {}, {}, {}, {
+                        field: 'opciones',
+                        title: 'Opciones',
                         align: 'center',
                         valign: 'middle',
                         formatter: (value, row, index) => {
                             if (row.estado === 'Activo' && row.hora_fin === null) {
-                                return '<button class=\'btn btn-danger \' onclick="finalizarVenta(' + row.id_venta + ')">Finalizar</button> '
+                                return '<button class=\'btn btn-primary \' onclick="finalizarVenta(' + row.id_venta + ')">Finalizar</button>'
                             }
-                            else
+                            else if (row.pago === 'No')
                             {
-                                return row.hora_fin
+                                return '<button class=\'btn btn-info \' onclick="pagarVenta(' + row.id_venta + ')">Pagar</button> '
                             }
                         }
-                    }, {}, {}, {}, {}, {}, {}]
+                    }]
                 })
             }
         })

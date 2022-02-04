@@ -101,23 +101,54 @@ class Cliente extends BaseController
     
     }
 
-    public function finalizarEstadia($idVenta){
+    public function finalizarEstadia($idVenta)
+    {
         $modeloZona = new ModeloZona();
         $modeloVenta = new ModeloVenta();
-        $zonahorario = $modeloVenta -> obtenerzonaHoraria($idVenta);
-       
-        $datos = ['zona'=> $zonahorario ->id_zona,
-            'horario'=> $zonahorario ->id_horario, 
-            'horaInicial'=> $zonahorario -> hora_inicio,
-            'horaFinal'=> $zonahorario ->hora_fin];
 
-        $precio = $modeloZona->precioEstadia($datos);
+        $venta = $modeloVenta->find($idVenta);
+        $zonaHorario = $modeloZona->find($venta->id_zona_horario);
 
-        $modeloVenta->bajaEstadia($idVenta, $precio);
-        #ver en mis-vehiculos-estacionados
+        $timeInicial = new Time($venta->hora_inicio);
+        $timeFinal = Time::now();
+        $diferencia = $timeInicial->difference($timeFinal);
+        $mins = $diferencia->getMinutes();
+        $precio = ($mins / 60) * $zonaHorario->costo;
 
+        $modeloVenta->bajaEstadia($idVenta, $precio, $timeFinal);
 
         return redirect()->to(base_url('usuarios/clientes/verMisEstadias'))->with('mensaje', 'Venta finalizada existosamente.');
+    }
+
+    public function pagarEstadia($idVenta)
+    {
+        $modeloVenta = new ModeloVenta();
+        $venta = $modeloVenta->find($idVenta);
+
+        try
+        {
+            if (!isset($venta->hora_fin))
+            {
+                throw new \Exception('La estadia no esta finalizada.');
+            }
+
+            if (!isset($venta->monto))
+            {
+                throw new \Exception('No hay un costo para la estadia, pida el asesoramiento de un administrador.');
+            }
+
+            if ($venta->pago != 0)
+            {
+                throw new \Exception('La estadia ya se encuentra pagada.');
+            }
+
+            $modeloVenta->pagarEstadia($idVenta);
+
+            return redirect()->to(base_url('usuarios/clientes/verMisEstadias'))->with('mensaje', 'Venta pagada existosamente.');
+        } catch (\Exception $e)
+        {
+            return redirect()->to(base_url('usuarios/clientes/verMisEstadias'))->with('mensaje_error', 'Hubo un error: '.$e->getMessage());
+        }
     }
     
     public function guardarEstadia(){

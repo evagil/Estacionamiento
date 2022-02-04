@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models;
-use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 
 class ModeloVenta extends Model
@@ -52,16 +51,16 @@ class ModeloVenta extends Model
         return $ventas->findAll();
     }
 
-    public function bajaEstadia($id, $precio){
+    public function bajaEstadia($id, $precio, $hora_fin){
         $this->set([
-            'hora_fin' => new Time(),
+            'hora_fin' => $hora_fin,
             'monto' => $precio
         ])->where('id_venta', $id)->update();
     }
 
     public function obtenerzonaHoraria( $idVenta){
-       
-        return $this->select ('id_zona, id_horario, hora_inicio, now() as hora_fin') 
+
+        return $this->select ('id_zona, id_horario, hora_inicio, now() as hora_fin')
         ->where ('id_venta', $idVenta )
         -> join ('zonas_horarios','zonas_horarios.id_zona_horario=ventas.id_zona_horario')
         -> first();
@@ -78,7 +77,20 @@ class ModeloVenta extends Model
         }
     }
 
-    public function listarVentaVendedor($id){ // pendiente en 1, devuelve los activos y en 0 ambos
+  public function pagarEstadia($id_venta)
+    {
+        $modeloUsuario = new ModeloUsuario();
+        $venta = $this->find($id_venta);
+
+        $modeloUsuario->pagarMonto($venta->id_usuario, $venta->monto);
+
+        if (!$this->update($id_venta, ['pago' => 1]))
+        {
+            throw new \Exception('Error desconocido.');
+        }
+    }
+
+    public function listarVentaVendedor($id){ 
         return  $this->select("ventas.id_venta, hora_inicio, hora_fin, 
             case when hora_fin is null then 'Contando..' 
             else cantidad_horas end as cantidad_horas,
@@ -101,5 +113,7 @@ class ModeloVenta extends Model
             ->join('zonas','zonas.id_zona=zonas_horarios.id_zona')
             ->where("ventas.id_usuario",$id)
         ->findAll();
+
     }
+
 }
