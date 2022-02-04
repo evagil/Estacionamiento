@@ -115,6 +115,10 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         $routes->get('zonas', 'Vendedor::obtenerZonas');
         $routes->get('horarios', 'Vendedor::obtenerHorariosZona');
         $routes->post('guardarVehiculo', 'Vendedor::guardarVehiculo');
+
+        $routes->add('listarVentas', 'Vendedor::listarVentas');
+        $routes->get('obtenerVentas', 'Vendedor::obtenerVentas');
+
     });
 });
 

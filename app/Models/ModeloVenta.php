@@ -77,4 +77,29 @@ class ModeloVenta extends Model
             return false;
         }
     }
+
+    public function listarVentaVendedor($id){ // pendiente en 1, devuelve los activos y en 0 ambos
+        return  $this->select("ventas.id_venta, hora_inicio, hora_fin, 
+            case when hora_fin is null then 'Contando..' 
+            else cantidad_horas end as cantidad_horas,
+            case when hora_fin is null then 'Contando..' 
+            else monto end as monto, 
+            concat(usuarios.nombre, ' ', usuarios.apellido) as nombre_usuario,  
+            autos.patente as patente, 
+            zonas.nombre_zona as nombre_zona, 
+            case when vender = 1 then 'Si' 
+            else 'No' end as venta, 
+            case when pago = 1 then 'Si' 
+            else 'No' end as pago, 
+            case when now() >= hora_inicio and hora_fin is null or (hora_fin is not null and now() between hora_inicio and hora_fin) then 'Activo' 
+                when now() < hora_inicio then 'Pendiente'
+                when hora_fin is not null and now() >= hora_fin then 'Finalizado'  
+                else 'Desconocido' end as estado")
+            ->join('usuarios','ventas.id_usuario = usuarios.id_usuario')
+            ->join('autos','autos.id_auto=ventas.id_auto')
+            ->join('zonas_horarios','zonas_horarios.id_zona_horario=ventas.id_zona_horario')
+            ->join('zonas','zonas.id_zona=zonas_horarios.id_zona')
+            ->where("ventas.id_usuario",$id)
+        ->findAll();
+    }
 }

@@ -9,6 +9,8 @@ use App\Models\ModeloRol;
 use App\Models\ModeloUsuario;
 use App\Models\ModeloVenta;
 use App\Models\ModeloZona;
+use App\Models\ModeloZonaSinID;
+use CodeIgniter\I18n\Time;
 
 
 class Admin extends BaseController
@@ -116,11 +118,22 @@ class Admin extends BaseController
     {
         $modelo = new ModeloZona();
         $modelo2 = new ModeloHorarios();
+        $sinID = new ModeloZonaSinID();
+
         $validation =  \Config\Services::validation();
         $zona = new \App\Entities\ZonaHorario($this->request->getPost());
+        $sinID = new \App\Entities\ZonaHorarioSinID($this->request->getPost());
         $horarios = new \App\Entities\Horarios($this->request->getPost());
          //throw new \Exception(print_r($zona));
-        $modelo->save($zona);
+        
+        
+         // actualizo la zona (pongo fecha fin)
+          $zona->f_fin = Time::now();
+          $modelo->save($zona); // actualizo
+        // ahora tengo que crear con los mismos datos
+          $sinID->f_fin = null;
+          $modelo->save($sinID);
+
         $modelo2->save($horarios);
         return redirect()->to(base_url('usuarios/administrador/listadoZonas'))->with('mensaje', 'Zona editada existosamente.');
 

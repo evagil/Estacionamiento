@@ -161,6 +161,12 @@
                                 Vender
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url('usuarios/vendedores/listarVentas') ?>">
+                                <span data-feather="list"></span>
+                                Ventas
+                            </a>
+                        </li>
                     </ul>
                 <?php endif; ?>
             </div>

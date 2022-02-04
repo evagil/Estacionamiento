@@ -37,8 +37,8 @@
         </div>
 
        <input type="HIDDEN" class="form-control" id="id_horario" name="id_horario" value="<?= esc($zonas->id_horario) ?>">
-        
-        
+     
+
        
         
         <div class="d-flex justify-content-center">

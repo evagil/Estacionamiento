@@ -137,5 +137,23 @@ class Vendedor extends BaseController
         }
     }
 
+    public function listarVentas()
+    {
+        $data['titulo'] = "Listado de Ventas realizadas";
+        echo view('usuarios/perfil/perfil-header', $data);
+        echo view('vendedores/listarVentas');
+        echo view('usuarios/perfil/perfil-footer');
+    }
+
+    public function obtenerVentas()
+    {
+    
+        $id = session()->get('id_usuario');
+        $modelo = new ModeloVenta();
+        $ventas = $modelo->listarVentaVendedor($id);
+        return $this->response->setJSON($ventas);
+    }
+
+
     
 }
