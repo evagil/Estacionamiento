@@ -8,64 +8,85 @@
 
         <div class="mb-3">
             <label for="costo" class="form-label">Costo</label>
-
-            <?php if (isset($validacion) && $validacion->hasError('costo')) { ?>
-                <span class="text-danger"> <?= "*".$validacion->getError('costo'); ?> </span>
-            <?php } ?>
-
             <input type="text" class="form-control" id="costo" name="costo" value="<?= esc($zonas->costo) ?>">
         </div>
 
 
         <div class="mb-3">
-            <label for="hora_inicio" class="form-label">Hora Inicial</label>
-
-            <?php if (isset($validacion) && $validacion->hasError('hora_inicio')) { ?>
-                <span class="text-danger"> <?= "*".$validacion->getError('hora_inicio'); ?> </span>
-            <?php } ?>
-
-            <input type="time" step="2" class="form-control" id="hora_inicio" name="hora_inicio" value="<?= esc($zonas->hora_inicio) ?>">
+            <label for="horario" class="form-label">Horario</label>
+            <select id="horario" name="horario" class="form-control">
+                <option value="<?= $zonas->id_horario ?>"><?= $zonas->hora_inicio." - ".$zonas->hora_fin ?></option>
+            </select>
+            <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalHorario">Agregar</a>
         </div>
 
-
-        <div class="mb-3">
-            <label for="hora_fin" class="form-label">Hora Inicial</label>
-
-            <?php if (isset($validacion) && $validacion->hasError('hora_fin')) { ?>
-                <span class="text-danger"> <?= "*".$validacion->getError('hora_fin'); ?> </span>
-            <?php } ?>
-
-            <input type="time" step="2" class="form-control" id="hora_fin" name="hora_fin" value="<?= esc($zonas->hora_fin) ?>">
-        </div>
-
-  
-     
-
-       
-        
         <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary">Cargar</button>
+            <input type="submit" class="btn btn-primary" value="Cargar">
         </div>
     </form>
-
-    <script type="text/javascript">
-    fetch("<?= esc(base_url('usuarios/administrador/horariosZonas')) ?>", { method: 'GET' })
-        .then(response => response.json())
-        .then(data => {
-            let horaInput = document.getElementById('hora_inicio')
-            let spinner = document.getElementById('spinner-patente')
-
-            for (let horarios of data.horarios)
-            {
-                let opcion = document.createElement('option')
-                opcion.setAttribute('value', horarios.hora_inicio)
-                opcion.innerText = horarios.hora_inicio
-                horariosInput.append(opcion)
-            }
-
-            autosInput.disabled = false
-            spinner.parentNode.removeChild(spinner)
-        })
-        </script>
-
 </div>
+
+<!-- Modal Horario Nuevo -->
+<div class="modal fade" id="modalHorario" tabindex="-1" aria-labelledby="modalHorarioLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalHorarioLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modalHorario" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modalHorario">Close</button>
+                <button type="button" class="btn btn-primary" onclick="agregarHorario()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function agregarHorario() {
+        let input = {
+            hora_inicio: '11111',
+            horarioFinal: '2222',
+        }
+
+        fetch("<?= esc(base_url('usuarios/administrador/agregarHorario')) ?>", { method: 'POST',
+            body: JSON.stringify(input)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error)
+                {
+                    console.log(data.error)
+                }
+                else
+                {
+                    cargarHorarios()
+                }
+            })
+    }
+
+    function cargarHorarios()
+    {
+        fetch("<?= esc(base_url('usuarios/administrador/horarios')) ?>", { method: 'GET'})
+            .then(response => response.json())
+            .then(data => {
+                let horaInput = document.getElementById('horario')
+
+                for (let horarios of data.horarios)
+                {
+                    if (horarios.id_horario != <?= $zonas->id_horario ?>)
+                    {
+                        let opcion = document.createElement('option')
+                        opcion.setAttribute('value', horarios.id_horario)
+                        opcion.innerText = horarios.hora_inicio + " - " + horarios.hora_fin
+                        horaInput.append(opcion)
+                    }
+                }
+            })
+    }
+
+    cargarHorarios()
+</script>

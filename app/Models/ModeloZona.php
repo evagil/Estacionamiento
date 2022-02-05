@@ -82,11 +82,4 @@ class ModeloZona extends Model
         ->join('horarios', 'horarios.id_horario = zonas_horarios.id_horario')
         ->where('zonas_horarios.id_zona_horario', $id)->first();
     }
-
-    public function obtenerHorariosZonas($id_zona){
-        return $this->select('horarios.hora_inicio, horarios.hora_fin')
-        ->join('horarios', 'horarios.id_horario = zonas_horarios.id_horario')
-        ->where('zonas_horarios.id_zona', $id_zona)->findAll();
-    }
-  
 }

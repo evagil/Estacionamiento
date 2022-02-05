@@ -10,7 +10,10 @@ use App\Models\ModeloUsuario;
 use App\Models\ModeloVenta;
 use App\Models\ModeloZona;
 use App\Models\ModeloZonaSinID;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\I18n\Time;
+use Psr\Log\LoggerInterface;
 
 
 class Admin extends BaseController
@@ -119,38 +122,36 @@ class Admin extends BaseController
         $modelo = new ModeloZona();
         $input = $this->request->getPost();
         $ahora = Time::now();
-       // $zona = new \App\Entities\ZonaHorario($this->request->getPost());
+
         $zona = $modelo->find($input['id_zona_horario']);
-        $nuevaZona = new \App\Entities\ZonaHorario([
-              'costo' => $input['costo'],
-              'f_inicio' => $ahora,
-              'f_fin' => null,
-              'id_horario' => $zona->id_horario,
-              'id_zona' => $zona->id_zona
-        ]);
 
-        $zona->f_fin = Time::now();
-        $modelo->save($zona); 
-        $modelo->save($nuevaZona);
+        if (bccomp($zona->costo, $input['costo']) !== 0)
+        {
+            $nuevaZona = new \App\Entities\ZonaHorario([
+                'costo' => $input['costo'],
+                'f_inicio' => $ahora,
+                'f_fin' => null,
+                'id_horario' => $zona->id_horario,
+                'id_zona' => $zona->id_zona
+            ]);
 
-        $modelo2 = new ModeloHorarios();
+            if ($zona->id_horario !== $input['horario'])
+            {
+                $nuevaZona->id_horario = $input['horario'];
+            }
 
-        $validation =  \Config\Services::validation();
-        $horarios = new \App\Entities\Horarios($this->request->getPost());
-         //throw new \Exception(print_r($zona));
-        
-    
-        $modelo2->save($horarios);
-        return redirect()->to(base_url('usuarios/administrador/listadoZonas'))->with('mensaje', 'Zona editada existosamente.');
-
-        /*
-        if ($validation->run($this->request->getPost(), 'formEditarUsuario')) {
-            $modelo->save($zona);
-            return redirect()->to(base_url('usuarios/perfil'))->with('mensaje', 'Usuario editado existosamente.');
+            $modelo->update($zona->id_zona_horario, ['f_fin' => Time::now()]);
+            $modelo->save($nuevaZona);
         }
-        else {
-            return redirect()->to(base_url('administrador/modificar').'/'.$zona->id_usuario)->with('validation', $validation);
-        }*/
+        else
+        {
+            if ($zona->id_horario !== $input['horario'])
+            {
+                $modelo->update($zona->id_zona_horario, ['id_horario' => $input['horario']]);
+            }
+        }
+
+        return redirect()->to(base_url('usuarios/administrador/listadoZonas'))->with('mensaje', 'Zona editada existosamente.');
     }
 
 
@@ -239,10 +240,17 @@ class Admin extends BaseController
         return $this->response->setJSON(['infracciones' => $infracciones]);
     }
 
-    public function obtenerHorariosZonas()
+    public function obtenerHorarios()
     {
-        $horarios= new ModeloZona();
-        return $this->response->setJSON(['horarios' => $horarios->obtenerHorariosZona(session()->get('id_usuario'))]);
+        $modeloHorarios = new ModeloHorarios();
+        $horarios = $modeloHorarios->findAll();
+        return $this->response->setJSON(['horarios' => $horarios]);
     }
 
+    public function agregarHorario()
+    {
+        $modeloHorarios = new ModeloHorarios();
+        $input = $this->request->getJSON(true);
+        return $this->response->setJSON(['error' => $input]);
+    }
 }
