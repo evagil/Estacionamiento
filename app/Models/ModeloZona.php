@@ -46,6 +46,7 @@ class ModeloZona extends Model
     {
         return $this->select('zonas.id_zona, zonas.nombre_zona')
             ->join('zonas', 'zonas.id_zona = zonas_horarios.id_zona', 'right')
+            ->where('zonas_horarios.fecha_fin', null)
             ->groupBy('zonas.id_zona')
             ->findAll();
     }
