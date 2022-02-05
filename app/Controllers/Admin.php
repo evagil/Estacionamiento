@@ -238,4 +238,11 @@ class Admin extends BaseController
 
         return $this->response->setJSON(['infracciones' => $infracciones]);
     }
+
+    public function obtenerHorariosZonas()
+    {
+        $horarios= new ModeloZona();
+        return $this->response->setJSON(['horarios' => $horarios->obtenerHorariosZona(session()->get('id_usuario'))]);
+    }
+
 }

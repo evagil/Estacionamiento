@@ -97,6 +97,9 @@ $routes->group('usuarios', ['filter' => 'authGuard'], function($routes) {
         $routes->get('infracciones', 'Admin::listadoInfracciones');
         $routes->post('infracciones', 'Admin::obtenerInfracciones');
         $routes->post('infracciones/(:num)', 'Admin::obtenerInfracciones/$1S');
+
+        $routes->get('horariosZonas', 'Admin::obtenerHorariosZonas');
+
     });
 
     $routes->group('inspectores', ['filter' => 'rolGuard:Inspector'], function($routes) {

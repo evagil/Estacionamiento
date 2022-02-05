@@ -47,4 +47,25 @@
             <button type="submit" class="btn btn-primary">Cargar</button>
         </div>
     </form>
+
+    <script type="text/javascript">
+    fetch("<?= esc(base_url('usuarios/administrador/horariosZonas')) ?>", { method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+            let horaInput = document.getElementById('hora_inicio')
+            let spinner = document.getElementById('spinner-patente')
+
+            for (let horarios of data.horarios)
+            {
+                let opcion = document.createElement('option')
+                opcion.setAttribute('value', horarios.hora_inicio)
+                opcion.innerText = horarios.hora_inicio
+                horariosInput.append(opcion)
+            }
+
+            autosInput.disabled = false
+            spinner.parentNode.removeChild(spinner)
+        })
+        </script>
+
 </div>
