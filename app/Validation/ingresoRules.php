@@ -62,6 +62,17 @@ class IngresoRules {
             return false;
     }
 
+    public function mayorAHoraHorarios(?string $hora, string $horaMenor): bool
+    {
+        $horaFinal = new Time($hora);
+        $horaInicial = new Time($horaMenor);
+
+        if ($horaFinal->isAfter($horaInicial))
+            return true;
+        else
+            return false;
+    }
+
     public function horaEnRango(?string $hora, string $horario): bool
     {
         $zonaHorario = new ModeloZona();

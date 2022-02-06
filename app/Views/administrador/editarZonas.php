@@ -71,6 +71,7 @@
             })
             .then(response => response.json())
             .then(data => {
+                console.log(data)
                 if (data.error)
                 {
                     console.log(data.error)
@@ -91,7 +92,6 @@
             $("#modalHorario").modal('hide');//ocultamos el modal
             $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
             $('.modal-backdrop').remove();//eliminamos el backdrop del moda
-            window.location.reload();
             alert("¡Horario generado con exito!");
     }
 
