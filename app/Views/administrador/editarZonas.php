@@ -11,13 +11,11 @@
             <input type="text" class="form-control" id="costo" name="costo" value="<?= esc($zonas->costo) ?>">
         </div>
 
-
-        <div class="mb-3">
-            <label for="horario" class="form-label">Horario</label>
+        <div class="input-group mb-3">
             <select id="horario" name="horario" class="form-control">
                 <option value="<?= $zonas->id_horario ?>"><?= $zonas->hora_inicio." - ".$zonas->hora_fin ?></option>
             </select>
-            <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalHorario">Agregar</a>
+            <a class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalHorario">Agregar</a>
         </div>
 
         <div class="d-flex justify-content-center">
@@ -25,8 +23,8 @@
         </div>
     </form>
 
-    <div id="resultado_ok" class="alert alert-success alert-dismissible fade show w-50 mt-3 d-none" role="alert"></div>
-    <div id="resultado_error" class="alert alert-warning alert-dismissible fade show w-50 mt-3 d-none" role="alert"></div>
+    <div id="resultado_ok" class="alert alert-success alert-dismissible fade show w-50 mt-3 d-none" style="margin: auto" role="alert"></div>
+    <div id="resultado_error" class="alert alert-warning alert-dismissible fade show w-50 mt-3 d-none" style="margin: auto" role="alert"></div>
 </div>
 
 <div class="modal fade" id="modalHorario" aria-labelledby="modalHorarioLabel" tabindex="-1" aria-hidden="true">
@@ -71,10 +69,14 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 if (data.error)
                 {
-                    console.log(data.error)
+                    let mensaje = document.getElementById('resultado_error')
+                    mensaje.innerHTML = data.error
+                    mensaje.classList.remove('d-none')
+                    setTimeout(() => {
+                        mensaje.classList.add('d-none')
+                    }, 3000)
                 }
                 else if (data.ok)
                 {
@@ -83,16 +85,12 @@
                     mensaje.innerHTML = data.ok
                     mensaje.classList.remove('d-none')
                     setTimeout(() => {
-                        mensaje.classList.remove('d-none')
+                        mensaje.classList.add('d-none')
                     }, 3000)
                 }
-            })
 
-            
-            $("#modalHorario").modal('hide');//ocultamos el modal
-            $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
-            $('.modal-backdrop').remove();//eliminamos el backdrop del moda
-            alert("¡Horario generado con exito!");
+                $("#modalHorario").modal('hide');
+            })
     }
 
     function cargarHorarios()

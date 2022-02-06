@@ -400,14 +400,14 @@ class Validation
 
     public $formCrearHorario = [
 
-        'hora_inicial' => [
+        'hora_inicio' => [
             'rules' => 'required',
             'errors' => [
                 'required' => 'Ingrese la horario inicial.',
             ]
         ],
         'hora_fin' => [
-            'rules' => 'required|mayorAHoraHorarios[{hora_inicial}]',
+            'rules' => 'required|mayorAHoraHorarios[{hora_inicio}]',
             'errors' => [
                 'required' => 'Ingrese la horario final.',
                 'mayorAHoraHorarios' => 'La hora final debe ser mayor a la hora inicial.'

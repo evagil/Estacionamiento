@@ -249,13 +249,11 @@ class Admin extends BaseController
 
     public function agregarHorario()
     {
-    
         try
         {
             $validation = \Config\Services::validation();
             $modeloHorarios = new ModeloHorarios();
             $input = $this->request->getJSON(true);
-           // $modeloHorarios->save($input);
 
             if($validation->run($this->request->getJSON(true), 'formCrearHorario')){
             $modeloHorarios->save($input);
@@ -274,16 +272,6 @@ class Admin extends BaseController
 
 
     }
-
-    /*
-    if ($validation->run($this->request->getPost(), 'formAutoVincular')) {
-        $autos->save($auto);
-        return redirect()->to(base_url('usuarios/clientes/vincularVehiculo').'/'.$auto->patente);
-    }
-    else {
-        return redirect()->to(base_url('usuarios/clientes/agregarVehiculo'))->with('validation', $validation)->withInput();
-    }
-*/
 
 
 }
