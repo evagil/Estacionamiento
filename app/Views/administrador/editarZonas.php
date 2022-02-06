@@ -26,30 +26,44 @@
     </form>
 </div>
 
-<!-- Modal Horario Nuevo -->
-<div class="modal fade" id="modalHorario" tabindex="-1" aria-labelledby="modalHorarioLabel" aria-hidden="true">
+<div class="modal fade" id="modalHorario" aria-labelledby="modalHorarioLabel" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalHorarioLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modalHorario" aria-label="Close"></button>
+                <h5 class="modal-title" id="existenteModelLabel">Agregar un nuevo horario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <input>
+                <p>¿Desea agregar un nuevo horario?</p>
             </div>
+
+            <div class="mb-3">
+            <label for="hora_inicial" class="form-label">Hora inicial</label>
+            <input type="time" step="2" class="form-control" id="hora_inicial" name="hora_inicial" ?>
+        </div>
+
+        <div class="mb-3">
+            <label for="hora_final" class="form-label">Hora final</label>
+            <input type="time" step="2" class="form-control" id="hora_final" name="hora_final" ?> 
+        </div>
+
+
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modalHorario">Close</button>
-                <button type="button" class="btn btn-primary" onclick="agregarHorario()">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" onclick="agregarHorario()">Si</button>
             </div>
         </div>
     </div>
 </div>
 
+
+
 <script type="text/javascript">
     function agregarHorario() {
         let input = {
-            hora_inicio: '11111',
-            horarioFinal: '2222',
+            hora_inicio: document.getElementById('hora_inicial').value,
+            hora_fin: document.getElementById('hora_final').value,
+            dias: '2,3,4,5,6',
         }
 
         fetch("<?= esc(base_url('usuarios/administrador/agregarHorario')) ?>", { method: 'POST',
@@ -66,6 +80,13 @@
                     cargarHorarios()
                 }
             })
+
+            
+            $("#modalHorario").modal('hide');//ocultamos el modal
+            $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
+            $('.modal-backdrop').remove();//eliminamos el backdrop del moda
+            window.location.reload();
+            alert("¡Horario generado con exito!");
     }
 
     function cargarHorarios()
@@ -89,4 +110,8 @@
     }
 
     cargarHorarios()
+
+
+
+
 </script>

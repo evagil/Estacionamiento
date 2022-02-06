@@ -69,8 +69,7 @@ class ModeloZona extends Model
       return $this->select('zonas_horarios.id_zona_horario, zonas_horarios.id_zona_horario ,zonas.id_zona, zonas.nombre_zona, zonas_horarios.costo, zonas_horarios.f_inicio, zonas_horarios.f_fin, horarios.hora_inicio, horarios.hora_fin, horarios.dias')
       ->join('zonas', 'zonas.id_zona = zonas_horarios.id_zona', 'right')
       ->join('horarios', 'horarios.id_horario = zonas_horarios.id_horario')
-      //->where('zonas_horarios.f_fin IS NOT NULL')
-      //->groupBy('zonas.id_zona')
+      ->where('zonas_horarios.f_fin IS NULL')
       ->findAll();
 
     }

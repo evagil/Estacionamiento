@@ -251,6 +251,7 @@ class Admin extends BaseController
     {
         $modeloHorarios = new ModeloHorarios();
         $input = $this->request->getJSON(true);
+        $modeloHorarios->save($input);
         return $this->response->setJSON(['error' => $input]);
     }
 }
