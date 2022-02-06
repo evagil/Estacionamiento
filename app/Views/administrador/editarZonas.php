@@ -24,6 +24,9 @@
             <input type="submit" class="btn btn-primary" value="Cargar">
         </div>
     </form>
+
+    <div id="resultado_ok" class="alert alert-success alert-dismissible fade show w-50 mt-3 d-none" role="alert"></div>
+    <div id="resultado_error" class="alert alert-warning alert-dismissible fade show w-50 mt-3 d-none" role="alert"></div>
 </div>
 
 <div class="modal fade" id="modalHorario" aria-labelledby="modalHorarioLabel" tabindex="-1" aria-hidden="true">
@@ -34,19 +37,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>¿Desea agregar un nuevo horario?</p>
+                <div class="mb-3">
+                    <label for="hora_inicial" class="form-label">Hora inicial</label>
+                    <input type="time" step="2" class="form-control" id="hora_inicial" name="hora_inicial" ?>
+                </div>
+
+                <div class="mb-3">
+                    <label for="hora_final" class="form-label">Hora final</label>
+                    <input type="time" step="2" class="form-control" id="hora_final" name="hora_final" ?>
+                </div>
             </div>
-
-            <div class="mb-3">
-            <label for="hora_inicial" class="form-label">Hora inicial</label>
-            <input type="time" step="2" class="form-control" id="hora_inicial" name="hora_inicial" ?>
-        </div>
-
-        <div class="mb-3">
-            <label for="hora_final" class="form-label">Hora final</label>
-            <input type="time" step="2" class="form-control" id="hora_final" name="hora_final" ?> 
-        </div>
-
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
@@ -75,9 +75,15 @@
                 {
                     console.log(data.error)
                 }
-                else
+                else if (data.ok)
                 {
                     cargarHorarios()
+                    let mensaje = document.getElementById('resultado_ok')
+                    mensaje.innerHTML = data.ok
+                    mensaje.classList.remove('d-none')
+                    setTimeout(() => {
+                        mensaje.classList.remove('d-none')
+                    }, 3000)
                 }
             })
 
