@@ -125,7 +125,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link" href="<?= base_url('usuarios/clientes/saldo') ?>">
-                                <span data-feather="shopping-cart"></span>
+                                <span data-feather="dollar-sign"></span>
                                 <i class="bi bi-calendar3"></i> Deposito
                             </a>
                         </li>                    
