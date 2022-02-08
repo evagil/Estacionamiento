@@ -228,7 +228,46 @@ class Cliente extends BaseController
         echo view('usuarios/perfil/perfil-footer');
     }
 
+    public function cancelarEstadia($idEstadia)
+    {
+        $modelo = new ModeloVenta();
+        $estadia = $modelo->find($idEstadia);
+        $errores = [];
 
+        if (!isset($estadia))
+        {
+            array_push($errores, 'No existe la estadia.');
+        }
+        else
+        {
+            $ahora = Time::now();
+            $inicio = new Time($estadia->hora_inicio);
+
+            if (!$ahora->isBefore($inicio))
+            {
+                array_push($errores, 'No se puede cancelar una estadia activa o expirada.');
+            }
+
+            if (session()->get('id_usuario') !== $estadia->id_usuario)
+            {
+                array_push($errores, 'No posee permisos para esta accion.');
+            }
+
+            if (empty($errores))
+            {
+                if ($modelo->delete($idEstadia))
+                {
+                    return redirect()->to(base_url('usuarios/clientes/verMisEstadias'))->with('mensaje', 'Estadia cancelada exitosamente.');
+                }
+                else
+                {
+                    array_push($errores, 'No se pudo cancelar la estadia.');
+                }
+            }
+        }
+
+        return redirect()->to(base_url('usuarios/clientes/verMisEstadias'))->with('mensaje_error', implode("<br>", $errores));
+    }
 
 public function precioEstadia()
 

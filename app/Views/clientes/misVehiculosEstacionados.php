@@ -31,6 +31,10 @@
         window.location.replace("<?= esc(base_url('usuarios/clientes/pagarEstadia')) ?>/" + idVenta)
     }
 
+    const cancelarVenta = (idVenta) => {
+        window.location.replace("<?= esc(base_url('usuarios/clientes/cancelarEstadia')) ?>/" + idVenta)
+    }
+
     $(document).ready(() => {
         $.ajax({
             method: 'GET',
@@ -47,7 +51,11 @@
                             if (row.estado === 'Activo' && row.hora_fin === null) {
                                 return '<button class=\'btn btn-primary \' onclick="finalizarVenta(' + row.id_venta + ')">Finalizar</button>'
                             }
-                            else if (row.pago === 'No')
+                            else if (row.estado === 'Pendiente')
+                            {
+                                return '<button class=\'btn btn-danger \' onclick="cancelarVenta(' + row.id_venta + ')">Cancelar</button>'
+                            }
+                            else if (row.estado === 'Finalizado' && row.pago === 'No')
                             {
                                 return '<button class=\'btn btn-info \' onclick="pagarVenta(' + row.id_venta + ')">Pagar</button> '
                             }
