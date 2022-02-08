@@ -243,6 +243,11 @@ class Cliente extends BaseController
             $ahora = Time::now();
             $inicio = new Time($estadia->hora_inicio);
 
+            if ($estadia->vender)
+            {
+                array_push($errores, 'La estadia no se puede cancelar, ya esta paga.');
+            }
+
             if (!$ahora->isBefore($inicio))
             {
                 array_push($errores, 'No se puede cancelar una estadia activa o expirada.');
